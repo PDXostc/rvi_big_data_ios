@@ -30,8 +30,8 @@
     self = [super init];
     if (self) {
         // Create the data model.
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        _pageData = [[dateFormatter monthSymbols] copy];
+        //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        _pageData = @[@"ConfigurationViewController", @"MapDisplayViewController", @"DefaultSignalsViewController", @"AllSignalsViewController"];//[[dateFormatter monthSymbols] copy];
     }
     return self;
 }
@@ -43,7 +43,7 @@
     }
 
     // Create a new view controller and pass suitable data.
-    DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
+    DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:self.pageData[index]];
     dataViewController.dataObject = self.pageData[index];
     return dataViewController;
 }

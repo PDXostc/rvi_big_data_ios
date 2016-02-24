@@ -17,6 +17,11 @@
 		2335C7CB1C7D0D2400BE6E80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2335C7C91C7D0D2400BE6E80 /* LaunchScreen.storyboard */; };
 		2335C7D61C7D0D2400BE6E80 /* BigDataDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7D51C7D0D2400BE6E80 /* BigDataDemoTests.m */; };
 		2335C7E11C7D0D2400BE6E80 /* BigDataDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7E01C7D0D2400BE6E80 /* BigDataDemoUITests.m */; };
+		2335C7EF1C7D29A300BE6E80 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2335C7EE1C7D29A300BE6E80 /* MapKit.framework */; };
+		62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234830517C28E235471F75B /* DefaultSignalsViewController.m */; };
+		623483CB5F4ED59BB8CCF196 /* AllSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623488DDC6180586F7B07837 /* AllSignalsViewController.m */; };
+		623487C874689FB9317C1978 /* ConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623487909240E3AD3C9062E2 /* ConfigurationViewController.m */; };
+		62348936D9F75EC51920CB7B /* MapDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +62,15 @@
 		2335C7DC1C7D0D2400BE6E80 /* BigDataDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BigDataDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2335C7E01C7D0D2400BE6E80 /* BigDataDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BigDataDemoUITests.m; sourceTree = "<group>"; };
 		2335C7E21C7D0D2400BE6E80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2335C7EE1C7D29A300BE6E80 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6234830517C28E235471F75B /* DefaultSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSignalsViewController.m; sourceTree = "<group>"; };
+		62348367695CE99B258175E9 /* ConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationViewController.h; sourceTree = "<group>"; };
+		6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDisplayViewController.m; sourceTree = "<group>"; };
+		623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSignalsViewController.h; sourceTree = "<group>"; };
+		623487909240E3AD3C9062E2 /* ConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationViewController.m; sourceTree = "<group>"; };
+		623488DDC6180586F7B07837 /* AllSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSignalsViewController.m; sourceTree = "<group>"; };
+		62348A3F87D1877491D507CD /* MapDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDisplayViewController.h; sourceTree = "<group>"; };
+		62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSignalsViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2335C7EF1C7D29A300BE6E80 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +102,7 @@
 		2335C7A91C7D0D2400BE6E80 = {
 			isa = PBXGroup;
 			children = (
+				2335C7EE1C7D29A300BE6E80 /* MapKit.framework */,
 				2335C7B41C7D0D2400BE6E80 /* BigDataDemo */,
 				2335C7D41C7D0D2400BE6E80 /* BigDataDemoTests */,
 				2335C7DF1C7D0D2400BE6E80 /* BigDataDemoUITests */,
@@ -120,6 +136,14 @@
 				2335C7C91C7D0D2400BE6E80 /* LaunchScreen.storyboard */,
 				2335C7CC1C7D0D2400BE6E80 /* Info.plist */,
 				2335C7B51C7D0D2400BE6E80 /* Supporting Files */,
+				623487909240E3AD3C9062E2 /* ConfigurationViewController.m */,
+				62348367695CE99B258175E9 /* ConfigurationViewController.h */,
+				6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */,
+				62348A3F87D1877491D507CD /* MapDisplayViewController.h */,
+				6234830517C28E235471F75B /* DefaultSignalsViewController.m */,
+				62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */,
+				623488DDC6180586F7B07837 /* AllSignalsViewController.m */,
+				623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */,
 			);
 			path = BigDataDemo;
 			sourceTree = "<group>";
@@ -285,6 +309,10 @@
 				2335C7C31C7D0D2400BE6E80 /* ModelController.m in Sources */,
 				2335C7B71C7D0D2400BE6E80 /* main.m in Sources */,
 				2335C7BD1C7D0D2400BE6E80 /* RootViewController.m in Sources */,
+				623487C874689FB9317C1978 /* ConfigurationViewController.m in Sources */,
+				62348936D9F75EC51920CB7B /* MapDisplayViewController.m in Sources */,
+				62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */,
+				623483CB5F4ED59BB8CCF196 /* AllSignalsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +538,7 @@
 				2335C7E71C7D0D2400BE6E80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2335C7E81C7D0D2400BE6E80 /* Build configuration list for PBXNativeTarget "BigDataDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +547,7 @@
 				2335C7EA1C7D0D2400BE6E80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2335C7EB1C7D0D2400BE6E80 /* Build configuration list for PBXNativeTarget "BigDataDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +556,7 @@
 				2335C7ED1C7D0D2400BE6E80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
