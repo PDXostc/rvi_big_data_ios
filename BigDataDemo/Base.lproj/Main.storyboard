@@ -114,31 +114,61 @@
                                     <constraint firstAttribute="height" constant="30" id="Ed6-F6-II4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="QMy-5U-gz2" id="djg-aH-4z5"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server Port" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a14-MH-rDk">
+                                <rect key="frame" x="20" y="176" width="560" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="pQ8-AH-4Am"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Server Port" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="r1k-EC-dmS" userLabel="Server Port Text Field">
+                                <rect key="frame" x="20" y="216" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="rAf-gZ-S6c"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="QMy-5U-gz2" id="Xvd-4E-KYl"/>
                                 </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="a14-MH-rDk" secondAttribute="leading" id="1rH-lJ-f0D"/>
                             <constraint firstAttribute="leadingMargin" secondItem="P8D-2A-Sva" secondAttribute="leading" id="7h7-ra-Ez2"/>
                             <constraint firstItem="jAk-QJ-hqy" firstAttribute="top" secondItem="lf0-6S-9BG" secondAttribute="bottom" constant="8" id="9rJ-TW-xqf"/>
                             <constraint firstItem="lf0-6S-9BG" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="AvJ-FS-5HF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="P8D-2A-Sva" secondAttribute="trailing" id="Cgd-ON-CaA"/>
                             <constraint firstItem="jAk-QJ-hqy" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="MLj-zB-E4K"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="a14-MH-rDk" secondAttribute="trailing" id="OwD-xZ-OEy"/>
                             <constraint firstAttribute="leadingMargin" secondItem="lf0-6S-9BG" secondAttribute="leading" id="Rgm-EU-chh"/>
+                            <constraint firstItem="r1k-EC-dmS" firstAttribute="top" secondItem="a14-MH-rDk" secondAttribute="bottom" id="Ro1-FH-nJ7"/>
                             <constraint firstItem="yZN-YY-lVu" firstAttribute="top" secondItem="jAk-QJ-hqy" secondAttribute="bottom" id="UB4-lq-XJY"/>
+                            <constraint firstItem="r1k-EC-dmS" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="W55-AT-CRL"/>
                             <constraint firstItem="P8D-2A-Sva" firstAttribute="top" secondItem="4or-ZG-gmu" secondAttribute="bottom" id="XoC-eQ-X7n"/>
+                            <constraint firstItem="r1k-EC-dmS" firstAttribute="top" secondItem="a14-MH-rDk" secondAttribute="bottom" id="XvW-v9-aQE"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="r1k-EC-dmS" secondAttribute="leading" id="ZXq-fr-Hky"/>
                             <constraint firstItem="lf0-6S-9BG" firstAttribute="top" secondItem="P8D-2A-Sva" secondAttribute="bottom" id="a7t-VS-88S"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="r1k-EC-dmS" secondAttribute="trailing" id="bm0-m6-CGR"/>
+                            <constraint firstItem="a14-MH-rDk" firstAttribute="top" secondItem="yZN-YY-lVu" secondAttribute="bottom" constant="8" id="ckD-Xl-muN"/>
                             <constraint firstAttribute="leadingMargin" secondItem="yZN-YY-lVu" secondAttribute="leading" id="dap-HF-SCe"/>
                             <constraint firstItem="P8D-2A-Sva" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="fWv-8J-XGC"/>
                             <constraint firstItem="yZN-YY-lVu" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="gnG-LA-igc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lf0-6S-9BG" secondAttribute="trailing" id="nNL-Lg-GBg"/>
+                            <constraint firstItem="a14-MH-rDk" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="u5b-jF-PNv"/>
                             <constraint firstAttribute="leadingMargin" secondItem="jAk-QJ-hqy" secondAttribute="leading" id="xnf-bp-L9R"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="serverPortTextField" destination="r1k-EC-dmS" id="mVQ-JS-PUy"/>
                         <outlet property="serverUrlTextField" destination="yZN-YY-lVu" id="Tfp-yv-JCI"/>
                         <outlet property="vehicleIdTextField" destination="lf0-6S-9BG" id="IHW-3G-fte"/>
                     </connections>

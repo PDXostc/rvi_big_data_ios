@@ -21,8 +21,9 @@
 
 }
 
-#define kVehicleIdPrefsKey @"vehicle_id_prefs_key"
-#define kServerUrlPrefsKey @"server_url_prefs_key"
+#define kVehicleIdPrefsKey  @"vehicle_id_prefs_key"
+#define kServerUrlPrefsKey  @"server_url_prefs_key"
+#define kServerPortPrefsKey @"server_port_prefs_key"
 
 + (void)setString:(NSString *)string forKey:(NSString *)key
 {
@@ -55,10 +56,22 @@
     [ConfigurationDataManager setString:serverUrl forKey:kServerUrlPrefsKey];
 }
 
++ (NSString *)getServerPort
+{
+    return [ConfigurationDataManager getStringForKey:kServerPortPrefsKey];
+}
+
++ (void)setServerPort:(NSString *)serverPort
+{
+    [ConfigurationDataManager setString:serverPort forKey:kServerPortPrefsKey];
+}
+
 + (BOOL)hasValidConfigurationData
 {
     return ([ConfigurationDataManager getVehicleId] && ![[ConfigurationDataManager getVehicleId] isEqualToString:@""]) &&
             ([ConfigurationDataManager getServerUrl] && ![[ConfigurationDataManager getServerUrl] isEqualToString:@""]) &&
-            ([NSURL URLWithString:[ConfigurationDataManager getServerUrl]]);
+            ([NSURL URLWithString:[ConfigurationDataManager getServerUrl]]) &&
+            ([ConfigurationDataManager getServerPort] && ![[ConfigurationDataManager getServerPort] isEqualToString:@""]) &&
+            ([[ConfigurationDataManager getServerPort] integerValue]);
 }
 @end
