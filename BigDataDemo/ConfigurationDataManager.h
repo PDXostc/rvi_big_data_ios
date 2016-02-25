@@ -21,4 +21,6 @@
 + (void)setVehicleId:(NSString *)vehicleId;
 + (NSString *)getServerUrl;
 + (void)setServerUrl:(NSString *)serverUrl;
+
++(BOOL)hasValidConfigurationData;
 @end

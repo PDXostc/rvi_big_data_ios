@@ -55,4 +55,10 @@
     [ConfigurationDataManager setString:serverUrl forKey:kServerUrlPrefsKey];
 }
 
++ (BOOL)hasValidConfigurationData
+{
+    return ([ConfigurationDataManager getVehicleId] && ![[ConfigurationDataManager getVehicleId] isEqualToString:@""]) &&
+            ([ConfigurationDataManager getServerUrl] && ![[ConfigurationDataManager getServerUrl] isEqualToString:@""]) &&
+            ([NSURL URLWithString:[ConfigurationDataManager getServerUrl]]);
+}
 @end
