@@ -17,5 +17,5 @@
 #import <UIKit/UIKit.h>
 #import "DataViewController.h"
 
-@interface ConfigurationViewController : DataViewController
+@interface ConfigurationViewController : DataViewController <UITextFieldDelegate>
 @end

@@ -80,7 +80,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vehicle Identifier" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8D-2A-Sva">
-                                <rect key="frame" x="20" y="20" width="565" height="40"/>
+                                <rect key="frame" x="20" y="20" width="560" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="WRx-NA-LBO"/>
                                 </constraints>
@@ -88,31 +88,60 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lf0-6S-9BG">
-                                <rect key="frame" x="20" y="60" width="565" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vehicle Identifier" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lf0-6S-9BG">
+                                <rect key="frame" x="20" y="60" width="560" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="yTL-Nv-7Do"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="QMy-5U-gz2" id="sSq-1c-c81"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAk-QJ-hqy">
+                                <rect key="frame" x="20" y="98" width="560" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1a6-6Z-K7H"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Server URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yZN-YY-lVu">
+                                <rect key="frame" x="20" y="138" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Ed6-F6-II4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="QMy-5U-gz2" id="djg-aH-4z5"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="lf0-6S-9BG" firstAttribute="leading" secondItem="P8D-2A-Sva" secondAttribute="trailing" constant="-565" id="6vc-Sz-a6d"/>
                             <constraint firstAttribute="leadingMargin" secondItem="P8D-2A-Sva" secondAttribute="leading" id="7h7-ra-Ez2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="P8D-2A-Sva" secondAttribute="trailing" constant="-5" id="P2w-EM-AHt"/>
+                            <constraint firstItem="jAk-QJ-hqy" firstAttribute="top" secondItem="lf0-6S-9BG" secondAttribute="bottom" constant="8" id="9rJ-TW-xqf"/>
+                            <constraint firstItem="lf0-6S-9BG" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="AvJ-FS-5HF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="P8D-2A-Sva" secondAttribute="trailing" id="Cgd-ON-CaA"/>
+                            <constraint firstItem="jAk-QJ-hqy" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="MLj-zB-E4K"/>
                             <constraint firstAttribute="leadingMargin" secondItem="lf0-6S-9BG" secondAttribute="leading" id="Rgm-EU-chh"/>
+                            <constraint firstItem="yZN-YY-lVu" firstAttribute="top" secondItem="jAk-QJ-hqy" secondAttribute="bottom" id="UB4-lq-XJY"/>
                             <constraint firstItem="P8D-2A-Sva" firstAttribute="top" secondItem="4or-ZG-gmu" secondAttribute="bottom" id="XoC-eQ-X7n"/>
                             <constraint firstItem="lf0-6S-9BG" firstAttribute="top" secondItem="P8D-2A-Sva" secondAttribute="bottom" id="a7t-VS-88S"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="lf0-6S-9BG" secondAttribute="trailing" constant="-5" id="sbI-R7-alW"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="yZN-YY-lVu" secondAttribute="leading" id="dap-HF-SCe"/>
+                            <constraint firstItem="P8D-2A-Sva" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="fWv-8J-XGC"/>
+                            <constraint firstItem="yZN-YY-lVu" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="gnG-LA-igc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lf0-6S-9BG" secondAttribute="trailing" id="nNL-Lg-GBg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="jAk-QJ-hqy" secondAttribute="leading" id="xnf-bp-L9R"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="6vc-Sz-a6d"/>
-                            </mask>
-                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="serverUrlTextField" destination="yZN-YY-lVu" id="Tfp-yv-JCI"/>
+                        <outlet property="vehicleIdTextField" destination="lf0-6S-9BG" id="IHW-3G-fte"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4sl-fA-qCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
