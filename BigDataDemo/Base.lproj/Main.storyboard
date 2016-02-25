@@ -159,8 +159,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lOy-dh-X7H">
-                                <rect key="frame" x="20" y="20" width="560" height="440"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOy-dh-X7H">
+                                <rect key="frame" x="20" y="40" width="560" height="420"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9m-9E-3BR">
                                 <rect key="frame" x="20" y="496" width="560" height="84"/>
@@ -203,7 +203,7 @@
                             <constraint firstItem="Y9m-9E-3BR" firstAttribute="centerX" secondItem="Ebo-LD-cWm" secondAttribute="centerX" id="5ej-Gw-tZA"/>
                             <constraint firstItem="lOy-dh-X7H" firstAttribute="centerX" secondItem="Ebo-LD-cWm" secondAttribute="centerX" id="Aea-RT-v3j"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Y9m-9E-3BR" secondAttribute="leading" id="QNN-MN-aik"/>
-                            <constraint firstItem="lOy-dh-X7H" firstAttribute="top" secondItem="dVb-0w-j3D" secondAttribute="bottom" id="cIu-EE-qPt"/>
+                            <constraint firstItem="lOy-dh-X7H" firstAttribute="top" secondItem="dVb-0w-j3D" secondAttribute="bottom" constant="20" id="cIu-EE-qPt"/>
                             <constraint firstItem="zbJ-4f-nbc" firstAttribute="top" secondItem="Y9m-9E-3BR" secondAttribute="bottom" constant="20" id="ir8-EU-BW7"/>
                             <constraint firstItem="Y9m-9E-3BR" firstAttribute="top" secondItem="lOy-dh-X7H" secondAttribute="bottom" constant="36" id="slT-TG-5g9"/>
                             <constraint firstAttribute="leadingMargin" secondItem="lOy-dh-X7H" secondAttribute="leading" id="tmI-iz-27D"/>
