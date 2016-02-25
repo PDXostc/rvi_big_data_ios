@@ -17,6 +17,45 @@
 #import "Util.h"
 #import "ConfigurationDataManager.h"
 
+@interface UITextField (BorderStuff)
+- (void)addRedBorder;
+- (void)removeRedBorder;
+@end
+
+@implementation UITextField (BorderStuff)
+- (CALayer *)borderLayer
+{   /* Probs not the most efficient to loop through on every character change, but whatevs. */
+    for (CALayer *layer in [[self layer] sublayers])
+        if ([layer.name isEqualToString:@"border_layer"])
+            return layer;
+
+    CALayer *borderLayer = [CALayer layer];
+
+    borderLayer.frame = self.bounds;
+    borderLayer.backgroundColor = [UIColor clearColor].CGColor;
+    borderLayer.borderColor = [UIColor redColor].CGColor;
+    borderLayer.cornerRadius = 5.0f;
+    borderLayer.borderWidth = 2.0f;
+
+    borderLayer.name = @"border_layer";
+
+    [[self layer] addSublayer:borderLayer];
+
+    return borderLayer;
+}
+
+- (void)addRedBorder
+{
+    [[self borderLayer] setHidden:NO];
+}
+
+- (void)removeRedBorder
+{
+    [[self borderLayer] setHidden:YES];
+}
+@end
+
+
 @interface ConfigurationViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *vehicleIdTextField;
 @property (nonatomic, weak) IBOutlet UITextField *serverUrlTextField;
@@ -80,6 +119,8 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
+    [textField removeRedBorder];
+
     return YES;
 }
 
@@ -93,11 +134,15 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    [textField addRedBorder];
+
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
+    [textField addRedBorder];
+
     return YES;
 }
 
