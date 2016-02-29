@@ -21,8 +21,10 @@
 		623480C9A8CF30C58360C5D3 /* ConfigurationDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */; };
 		62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234830517C28E235471F75B /* DefaultSignalsViewController.m */; };
 		623483CB5F4ED59BB8CCF196 /* AllSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623488DDC6180586F7B07837 /* AllSignalsViewController.m */; };
+		6234847B7B90628E51EE7513 /* VehicleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 623484143479B1A740B702F1 /* VehicleManager.m */; };
 		623487C874689FB9317C1978 /* ConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623487909240E3AD3C9062E2 /* ConfigurationViewController.m */; };
 		62348936D9F75EC51920CB7B /* MapDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */; };
+		62348A359AD6AA77CBCB6B29 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234874162D6ADD0C15AF271 /* Vehicle.m */; };
 		62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348A28D36AD5D2095F9FAC /* BackendServerManager.m */; };
 		62348FE8B8C093617AF43F3C /* StreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 623483ADBD9E9337582EACB3 /* StreamWrapper.m */; };
 /* End PBXBuildFile section */
@@ -71,11 +73,15 @@
 		62348337AF8B5B9D3CFEC044 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		62348367695CE99B258175E9 /* ConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationViewController.h; sourceTree = "<group>"; };
 		623483ADBD9E9337582EACB3 /* StreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamWrapper.m; sourceTree = "<group>"; };
+		623484143479B1A740B702F1 /* VehicleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VehicleManager.m; sourceTree = "<group>"; };
 		6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDisplayViewController.m; sourceTree = "<group>"; };
+		623485DB8F12112BEC708F0E /* VehicleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VehicleManager.h; sourceTree = "<group>"; };
 		623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSignalsViewController.h; sourceTree = "<group>"; };
+		6234874162D6ADD0C15AF271 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vehicle.m; sourceTree = "<group>"; };
 		6234875BFB35FD02EDFD59AA /* StreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamWrapper.h; sourceTree = "<group>"; };
 		623487909240E3AD3C9062E2 /* ConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationViewController.m; sourceTree = "<group>"; };
 		623488DDC6180586F7B07837 /* AllSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSignalsViewController.m; sourceTree = "<group>"; };
+		62348A0F511A21B920BE73F4 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
 		62348A28D36AD5D2095F9FAC /* BackendServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendServerManager.m; sourceTree = "<group>"; };
 		62348A3F87D1877491D507CD /* MapDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDisplayViewController.h; sourceTree = "<group>"; };
 		62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSignalsViewController.h; sourceTree = "<group>"; };
@@ -161,6 +167,10 @@
 				6234875BFB35FD02EDFD59AA /* StreamWrapper.h */,
 				62348A28D36AD5D2095F9FAC /* BackendServerManager.m */,
 				62348F3880F80A91A664D073 /* BackendServerManager.h */,
+				6234874162D6ADD0C15AF271 /* Vehicle.m */,
+				62348A0F511A21B920BE73F4 /* Vehicle.h */,
+				623484143479B1A740B702F1 /* VehicleManager.m */,
+				623485DB8F12112BEC708F0E /* VehicleManager.h */,
 			);
 			path = BigDataDemo;
 			sourceTree = "<group>";
@@ -333,6 +343,8 @@
 				623480C9A8CF30C58360C5D3 /* ConfigurationDataManager.m in Sources */,
 				62348FE8B8C093617AF43F3C /* StreamWrapper.m in Sources */,
 				62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */,
+				62348A359AD6AA77CBCB6B29 /* Vehicle.m in Sources */,
+				6234847B7B90628E51EE7513 /* VehicleManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

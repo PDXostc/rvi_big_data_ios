@@ -11,6 +11,7 @@
 #import "DataViewController.h"
 #import "ConfigurationDataManager.h"
 #import "BackendServerManager.h"
+#import "VehicleManager.h"
 
 @interface RootViewController ()
 
@@ -24,8 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [VehicleManager start];
     [BackendServerManager start];
-
 
     // Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.

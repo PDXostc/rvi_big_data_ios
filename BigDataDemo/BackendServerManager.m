@@ -18,6 +18,16 @@
 #import "Util.h"
 #import "StreamWrapper.h"
 
+NSString *const kBackendServerDidConnectNotification        = @"backend_server_did_connect_notification";
+NSString *const kBackendServerDidFailToConnectNotification  = @"backend_server_did_fail_to_connect_notification";
+NSString *const kBackendServerDidDisconnectNotification     = @"backend_server_did_disconnect_notification";
+NSString *const kBackendServerDidSendDataNotification       = @"backend_server_did_send_data_notification";
+NSString *const kBackendServerDidFailToSendDataNotification = @"backend_server_did_fail_to_send_data_notification";
+NSString *const kBackendServerDidReceiveDataNotification    = @"backend_server_did_receive_data_notification";
+NSString *const kBackendServerNotificationDataKey           = @"backend_server_notification_data_key";
+NSString *const kBackendServerNotificationErrorKey          = @"backend_server_notification_error_key";
+
+
 @interface BackendServerManager () <StreamWrapperDelegate>
 @property (nonatomic) BOOL isConnected;
 @end
@@ -54,22 +64,27 @@
 
 }
 
-+ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
++ (void)sendData:(NSString *)data
 {
-
+    [StreamWrapper sendData:data];
 }
 
-+ (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
-{
-
-}
+//+ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
+//{
+//
+//}
+//
+//+ (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
+//{
+//
+//}
 
 - (void)registerObservers
 {
-    [ConfigurationDataManager addObserver:self
-                               forKeyPath:kConfigurationDataManagerVehicleIdKeyPath
-                                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                                  context:NULL];
+//    [ConfigurationDataManager addObserver:self
+//                               forKeyPath:kConfigurationDataManagerVehicleIdKeyPath
+//                                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+//                                  context:NULL];
 
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerServerUrlKeyPath
@@ -84,8 +99,8 @@
 
 - (void)unregisterObservers
 {
-    [ConfigurationDataManager removeObserver:self
-                                  forKeyPath:kConfigurationDataManagerVehicleIdKeyPath];
+//    [ConfigurationDataManager removeObserver:self
+//                                  forKeyPath:kConfigurationDataManagerVehicleIdKeyPath];
 
     [ConfigurationDataManager removeObserver:self
                                   forKeyPath:kConfigurationDataManagerServerUrlKeyPath];
@@ -100,43 +115,61 @@
 
     if ([keyPath isEqualToString:kConfigurationDataManagerServerUrlKeyPath] || [keyPath isEqualToString:kConfigurationDataManagerServerPortKeyPath])
         [BackendServerManager reconnectToServer];
-    else if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath])
-        [BackendServerManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]],
-        [BackendServerManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
+//    else if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath])
+//        [BackendServerManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]],
+//        [BackendServerManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
 }
 
 - (void)onRemoteConnectionDidConnect
 {
     self.isConnected = YES;
 
-    [BackendServerManager resubscribeDefaultsForVehicle:[ConfigurationDataManager getVehicleId]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidConnectNotification
+                                                        object:[BackendServerManager class]
+                                                      userInfo:nil];
 }
 
 - (void)onRemoteConnectionDidDisconnect:(NSError *)error
 {
     DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
     self.isConnected = NO;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
+                                                        object:[BackendServerManager class]
+                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
 }
 
 - (void)onRemoteConnectionDidFailToConnect:(NSError *)error
 {
     DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
     self.isConnected = NO;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidDisconnectNotification
+                                                        object:[BackendServerManager class]
+                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
 }
 
 - (void)onRemoteConnectionDidReceiveData:(NSString *)data
 {
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidReceiveDataNotification
+                                                        object:[BackendServerManager class]
+                                                      userInfo:@{kBackendServerNotificationDataKey : data}];
 }
 
 - (void)onDidSendDataToRemoteConnection:(NSString *)data
 {
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidSendDataNotification
+                                                        object:[BackendServerManager class]
+                                                      userInfo:@{kBackendServerNotificationDataKey : data}];
 }
 
-- (void)onDidFailToSendDataToRemoteConnection:(NSError *)error
+- (void)    onDidFailToSendDataToRemoteConnection:(NSError *)error
 {
     DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToSendDataNotification
+                                                        object:[BackendServerManager class]
+                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
 }
 
 

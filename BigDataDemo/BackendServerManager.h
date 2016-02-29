@@ -16,9 +16,17 @@
 #import <Foundation/Foundation.h>
 
 
+extern NSString *const kBackendServerDidConnectNotification;
+extern NSString *const kBackendServerDidFailToConnectNotification;
+extern NSString *const kBackendServerDidDisconnectNotification;
+extern NSString *const kBackendServerDidSendDataNotification;
+extern NSString *const kBackendServerDidFailToSendDataNotification;
+extern NSString *const kBackendServerDidReceiveDataNotification;
+extern NSString *const kBackendServerNotificationDataKey;
+extern NSString *const kBackendServerNotificationErrorKey;
+
 @interface BackendServerManager : NSObject
 
 + (void)start;
-
-+ (void)resubscribeDefaultsForVehicle;
++ (void)sendData:(NSString *)data;
 @end
