@@ -20,4 +20,5 @@
 
 + (void)start;
 
++ (void)resubscribeDefaultsForVehicle;
 @end

@@ -17,10 +17,13 @@
 #import "Util.h"
 
 @interface StreamWrapper () <NSStreamDelegate>
-@property (nonatomic, strong) NSInputStream  *inputStream;
-@property (nonatomic, strong) NSOutputStream *outputStream;
-@property (nonatomic) BOOL                    isConnected;
-@property (nonatomic) BOOL                    isConnecting;
+@property (nonatomic, strong)   NSInputStream  *inputStream;
+@property (nonatomic, strong)   NSOutputStream *outputStream;
+@property (nonatomic) BOOL                      isConnected;
+@property (nonatomic) BOOL                      isConnecting;
+@property (nonatomic, strong)   NSString       *serverUrl;
+@property (nonatomic)           UInt32          serverPort;
+@property (nonatomic, weak) id<StreamWrapperDelegate> delegate;
 @end
 
 @implementation StreamWrapper
@@ -28,26 +31,39 @@
 
 }
 
-- (id)init
++ (StreamWrapper *)instance
 {
-    if ((self = [super init]))
-    {
+    static StreamWrapper *_instance = nil;
+    static dispatch_once_t onceToken;
+ 
+    dispatch_once(&onceToken, ^{
+        _instance = [[StreamWrapper alloc] init];
+    });
+  
+    return _instance;
+} 
 
++ (void)connectStreamToUrl:(NSString *)serverUrl port:(NSUInteger)serverPort delegate:(id<StreamWrapperDelegate>)delegate
+{
+    [[StreamWrapper instance] setServerUrl:serverUrl];
+    [[StreamWrapper instance] setServerPort:serverPort];
+    [[StreamWrapper instance] setDelegate:delegate];
+
+    [[StreamWrapper instance] connect];
+}
+
++ (void)sendData:(NSString *)data
+{
+    if (![[StreamWrapper instance] isConnected])
+    {
+        [[[StreamWrapper instance] delegate] onDidFailToSendDataToRemoteConnection:[NSError errorWithDomain:@"com.jaguarlandrover.bigdata"
+                                                                                                       code:1000
+                                                                                                   userInfo:@{ NSLocalizedDescriptionKey : @"Can't send data; not connected" }]];
+        return;
     }
 
-    return self;
-}
-
-+ (id)streamWrapper
-{
-    return [[StreamWrapper alloc] init];
-}
-
-- (void)sendRequest:(NSString *)request
-{
-    [self writeString:request];
-
-    DLog(@"Sending request: %@", request);
+    [[StreamWrapper instance] writeString:data];
+    [[[StreamWrapper instance] delegate] onDidSendDataToRemoteConnection:data];
 }
 
 - (void)connect
@@ -57,7 +73,10 @@
     if ([self isConnected])
         [self disconnect:nil];
 
-    [self connectSocket];
+    self.isConnecting = YES;
+
+    [self setup];
+    [self open];
 }
 
 - (void)disconnect:(NSError *)trigger
@@ -68,14 +87,6 @@
 
     if (trigger != nil)
         [self.delegate onRemoteConnectionDidDisconnect:trigger];
-}
-
-- (void)connectSocket
-{
-    self.isConnecting = YES;
-
-    [self setup];
-    [self open];
 }
 
 - (void)errorConnecting:(NSInteger)code underlyingError:(NSError *)underlyingError
@@ -98,7 +109,7 @@
 
 - (void)setup
 {
-    NSURL    *url    = [NSURL URLWithString:self.serverUrl];
+    NSURL *url = [NSURL URLWithString:self.serverUrl];
 
     DLog(@"Setting up connection to %@ : %i", [url absoluteString], (int)self.serverPort);
 

@@ -16,7 +16,11 @@
 #import "BackendServerManager.h"
 #import "ConfigurationDataManager.h"
 #import "Util.h"
+#import "StreamWrapper.h"
 
+@interface BackendServerManager () <StreamWrapperDelegate>
+@property (nonatomic) BOOL isConnected;
+@end
 
 @implementation BackendServerManager
 {
@@ -38,23 +42,43 @@
 + (void)start
 {
     [[BackendServerManager sharedManager] registerObservers];
+    [BackendServerManager reconnectToServer];
+}
+
++ (void)reconnectToServer
+{
+    if ([ConfigurationDataManager hasValidConfigurationData])
+        [StreamWrapper connectStreamToUrl:[ConfigurationDataManager getServerUrl]
+                                     port:(NSUInteger)[[ConfigurationDataManager getServerPort] integerValue]
+                                 delegate:[BackendServerManager sharedManager]];
+
+}
+
++ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
+{
+
+}
+
++ (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
+{
+
 }
 
 - (void)registerObservers
 {
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerVehicleIdKeyPath
-                                  options:NSKeyValueObservingOptionNew
+                                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                                   context:NULL];
 
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerServerUrlKeyPath
-                                  options:NSKeyValueObservingOptionNew
+                                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                                   context:NULL];
 
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerServerPortKeyPath
-                                  options:NSKeyValueObservingOptionNew
+                                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                                   context:NULL];
 }
 
@@ -72,7 +96,47 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    DLog(@"Key: %@ old val: %@ new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
+    DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
+
+    if ([keyPath isEqualToString:kConfigurationDataManagerServerUrlKeyPath] || [keyPath isEqualToString:kConfigurationDataManagerServerPortKeyPath])
+        [BackendServerManager reconnectToServer];
+    else if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath])
+        [BackendServerManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]],
+        [BackendServerManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
+}
+
+- (void)onRemoteConnectionDidConnect
+{
+    self.isConnected = YES;
+
+    [BackendServerManager resubscribeDefaultsForVehicle:[ConfigurationDataManager getVehicleId]];
+}
+
+- (void)onRemoteConnectionDidDisconnect:(NSError *)error
+{
+    DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
+    self.isConnected = NO;
+}
+
+- (void)onRemoteConnectionDidFailToConnect:(NSError *)error
+{
+    DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
+    self.isConnected = NO;
+}
+
+- (void)onRemoteConnectionDidReceiveData:(NSString *)data
+{
+
+}
+
+- (void)onDidSendDataToRemoteConnection:(NSString *)data
+{
+
+}
+
+- (void)onDidFailToSendDataToRemoteConnection:(NSError *)error
+{
+    DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
 }
 
 

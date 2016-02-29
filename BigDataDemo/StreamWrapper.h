@@ -21,17 +21,13 @@
 - (void)onRemoteConnectionDidDisconnect:(NSError *)error;
 - (void)onRemoteConnectionDidFailToConnect:(NSError *)error;
 - (void)onRemoteConnectionDidReceiveData:(NSString *)data;
-- (void)onDidSendDataToRemoteConnection:(NSString *)packet;
+- (void)onDidSendDataToRemoteConnection:(NSString *)data;
 - (void)onDidFailToSendDataToRemoteConnection:(NSError *)error;
 @end
 
 @interface StreamWrapper : NSObject
 
-@property (nonatomic, strong) NSString *serverUrl;
-@property (nonatomic)         UInt32 serverPort;
-@property (nonatomic, readonly) BOOL isConnected;
-@property (nonatomic, weak) id<StreamWrapperDelegate> delegate;
-
-+ (id)streamWrapper;
++ (void)connectStreamToUrl:(NSString *)serverUrl port:(NSUInteger)serverPort delegate:(id<StreamWrapperDelegate>)delegate;
++ (void)sendData:(NSString *)data;
 
 @end
