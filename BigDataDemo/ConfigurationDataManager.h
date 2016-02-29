@@ -16,6 +16,10 @@
 #import <Foundation/Foundation.h>
 
 
+#define kConfigurationDataManagerVehicleIdKeyPath  @"vehicleId"
+#define kConfigurationDataManagerServerUrlKeyPath  @"serverUrl"
+#define kConfigurationDataManagerServerPortKeyPath @"serverPort"
+
 @interface ConfigurationDataManager : NSObject
 + (NSString *)getVehicleId;
 + (void)setVehicleId:(NSString *)vehicleId;
@@ -25,4 +29,9 @@
 + (void)setServerPort:(NSString *)serverPort;
 
 +(BOOL)hasValidConfigurationData;
+
++ (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
++ (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
++ (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void *)context;
+
 @end

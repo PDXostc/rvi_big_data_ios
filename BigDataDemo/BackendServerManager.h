@@ -17,4 +17,7 @@
 
 
 @interface BackendServerManager : NSObject
+
++ (void)start;
+
 @end

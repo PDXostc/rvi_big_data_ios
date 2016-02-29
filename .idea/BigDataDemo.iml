@@ -13,27 +13,27 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/StreamWrapper.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Base.lproj/LaunchScreen.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Base.lproj/Main.storyboard" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RootViewController.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/MapDisplayViewController.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/StreamWrapper.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ConfigurationViewController.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsViewController.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RootViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/MapDisplayViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AppDelegate.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DataViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DataViewController.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RootViewController.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RootViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ConfigurationViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ModelController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/BackendServerManager.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ModelController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/BackendServerManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ConfigurationDataManager.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/MapDisplayViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AppDelegate.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Util.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController.m" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
