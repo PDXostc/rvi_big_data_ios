@@ -39,7 +39,6 @@
 		62348D7F8333FB80D8F7F2A2 /* ServerPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E62137D90DA95975B0F /* ServerPacket.m */; };
 		62348DBE2F73C4E26CD7FE87 /* SubscribePacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348743C22922C6AE7D84D0 /* SubscribePacket.m */; };
 		62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348A28D36AD5D2095F9FAC /* BackendServerManager.m */; };
-		62348FE8B8C093617AF43F3C /* StreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 623483ADBD9E9337582EACB3 /* StreamWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +93,6 @@
 		6234834867D9014479C08414 /* UnsubscribePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnsubscribePacket.m; sourceTree = "<group>"; };
 		62348367695CE99B258175E9 /* ConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationViewController.h; sourceTree = "<group>"; };
 		6234839A127A1C0BBBEF6A2B /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
-		623483ADBD9E9337582EACB3 /* StreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamWrapper.m; sourceTree = "<group>"; };
 		623483F7DDBBE91DD6380AED /* SignalsPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalsPacket.m; sourceTree = "<group>"; };
 		623483F9F78C24A5144968D3 /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
 		623484143479B1A740B702F1 /* VehicleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VehicleManager.m; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 		623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSignalsViewController.h; sourceTree = "<group>"; };
 		6234874162D6ADD0C15AF271 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vehicle.m; sourceTree = "<group>"; };
 		62348743C22922C6AE7D84D0 /* SubscribePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribePacket.m; sourceTree = "<group>"; };
-		6234875BFB35FD02EDFD59AA /* StreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamWrapper.h; sourceTree = "<group>"; };
 		623487909240E3AD3C9062E2 /* ConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationViewController.m; sourceTree = "<group>"; };
 		623488743E7C1E6747242DEE /* EventPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventPacket.m; sourceTree = "<group>"; };
 		623488DDC6180586F7B07837 /* AllSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSignalsViewController.m; sourceTree = "<group>"; };
@@ -154,6 +151,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23198E6E1C8644C100A0CB4A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				623487909240E3AD3C9062E2 /* ConfigurationViewController.m */,
+				62348367695CE99B258175E9 /* ConfigurationViewController.h */,
+				6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */,
+				62348A3F87D1877491D507CD /* MapDisplayViewController.h */,
+				6234830517C28E235471F75B /* DefaultSignalsViewController.m */,
+				62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */,
+				623488DDC6180586F7B07837 /* AllSignalsViewController.m */,
+				623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */,
+				2335C7BB1C7D0D2400BE6E80 /* RootViewController.h */,
+				2335C7BC1C7D0D2400BE6E80 /* RootViewController.m */,
+				2335C7BE1C7D0D2400BE6E80 /* DataViewController.h */,
+				2335C7BF1C7D0D2400BE6E80 /* DataViewController.m */,
+				2335C7C11C7D0D2400BE6E80 /* ModelController.h */,
+				2335C7C21C7D0D2400BE6E80 /* ModelController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		23198E6F1C8644E200A0CB4A /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				623484143479B1A740B702F1 /* VehicleManager.m */,
+				623485DB8F12112BEC708F0E /* VehicleManager.h */,
+				6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */,
+				62348E5292349802270DD60D /* ConfigurationDataManager.h */,
+				62348A28D36AD5D2095F9FAC /* BackendServerManager.m */,
+				62348F3880F80A91A664D073 /* BackendServerManager.h */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		23198E701C86450800A0CB4A /* Packets */ = {
+			isa = PBXGroup;
+			children = (
+				62348E284E733680422B9F11 /* PacketParser.m */,
+				6234895333D54BB6BA8FF163 /* PacketParser.h */,
+				62348E62137D90DA95975B0F /* ServerPacket.m */,
+				62348E28DD8CF198088A8DA3 /* ServerPacket.h */,
+				62348743C22922C6AE7D84D0 /* SubscribePacket.m */,
+				62348D59C5B45893B50992EA /* SubscribePacket.h */,
+				6234834867D9014479C08414 /* UnsubscribePacket.m */,
+				623484C40B36882F3B97A460 /* UnsubscribePacket.h */,
+				623488743E7C1E6747242DEE /* EventPacket.m */,
+				623481839B33B6AA422CCF7C /* EventPacket.h */,
+				623483F7DDBBE91DD6380AED /* SignalsPacket.m */,
+				623482ED61640C3C66B12694 /* SignalsPacket.h */,
+			);
+			name = Packets;
+			sourceTree = "<group>";
+		};
+		23198E711C86451000A0CB4A /* VehicleData */ = {
+			isa = PBXGroup;
+			children = (
+				6234874162D6ADD0C15AF271 /* Vehicle.m */,
+				62348A0F511A21B920BE73F4 /* Vehicle.h */,
+			);
+			name = VehicleData;
+			sourceTree = "<group>";
+		};
 		2335C7A91C7D0D2400BE6E80 = {
 			isa = PBXGroup;
 			children = (
@@ -182,50 +241,18 @@
 		2335C7B41C7D0D2400BE6E80 /* BigDataDemo */ = {
 			isa = PBXGroup;
 			children = (
+				23198E711C86451000A0CB4A /* VehicleData */,
+				23198E701C86450800A0CB4A /* Packets */,
+				23198E6F1C8644E200A0CB4A /* Singletons */,
+				23198E6E1C8644C100A0CB4A /* ViewControllers */,
 				2335C7B81C7D0D2400BE6E80 /* AppDelegate.h */,
 				2335C7B91C7D0D2400BE6E80 /* AppDelegate.m */,
-				2335C7BB1C7D0D2400BE6E80 /* RootViewController.h */,
-				2335C7BC1C7D0D2400BE6E80 /* RootViewController.m */,
-				2335C7BE1C7D0D2400BE6E80 /* DataViewController.h */,
-				2335C7BF1C7D0D2400BE6E80 /* DataViewController.m */,
-				2335C7C11C7D0D2400BE6E80 /* ModelController.h */,
-				2335C7C21C7D0D2400BE6E80 /* ModelController.m */,
 				2335C7C41C7D0D2400BE6E80 /* Main.storyboard */,
 				2335C7C71C7D0D2400BE6E80 /* Assets.xcassets */,
 				2335C7C91C7D0D2400BE6E80 /* LaunchScreen.storyboard */,
 				2335C7CC1C7D0D2400BE6E80 /* Info.plist */,
 				2335C7B51C7D0D2400BE6E80 /* Supporting Files */,
-				623487909240E3AD3C9062E2 /* ConfigurationViewController.m */,
-				62348367695CE99B258175E9 /* ConfigurationViewController.h */,
-				6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */,
-				62348A3F87D1877491D507CD /* MapDisplayViewController.h */,
-				6234830517C28E235471F75B /* DefaultSignalsViewController.m */,
-				62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */,
-				623488DDC6180586F7B07837 /* AllSignalsViewController.m */,
-				623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */,
-				6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */,
-				62348E5292349802270DD60D /* ConfigurationDataManager.h */,
 				62348337AF8B5B9D3CFEC044 /* Util.h */,
-				623483ADBD9E9337582EACB3 /* StreamWrapper.m */,
-				6234875BFB35FD02EDFD59AA /* StreamWrapper.h */,
-				62348A28D36AD5D2095F9FAC /* BackendServerManager.m */,
-				62348F3880F80A91A664D073 /* BackendServerManager.h */,
-				6234874162D6ADD0C15AF271 /* Vehicle.m */,
-				62348A0F511A21B920BE73F4 /* Vehicle.h */,
-				623484143479B1A740B702F1 /* VehicleManager.m */,
-				623485DB8F12112BEC708F0E /* VehicleManager.h */,
-				62348E284E733680422B9F11 /* PacketParser.m */,
-				6234895333D54BB6BA8FF163 /* PacketParser.h */,
-				62348E62137D90DA95975B0F /* ServerPacket.m */,
-				62348E28DD8CF198088A8DA3 /* ServerPacket.h */,
-				62348743C22922C6AE7D84D0 /* SubscribePacket.m */,
-				62348D59C5B45893B50992EA /* SubscribePacket.h */,
-				6234834867D9014479C08414 /* UnsubscribePacket.m */,
-				623484C40B36882F3B97A460 /* UnsubscribePacket.h */,
-				623488743E7C1E6747242DEE /* EventPacket.m */,
-				623481839B33B6AA422CCF7C /* EventPacket.h */,
-				623483F7DDBBE91DD6380AED /* SignalsPacket.m */,
-				623482ED61640C3C66B12694 /* SignalsPacket.h */,
 				623489B313480A440E1716AD /* SocketRocket */,
 			);
 			path = BigDataDemo;
@@ -410,7 +437,6 @@
 				62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */,
 				623483CB5F4ED59BB8CCF196 /* AllSignalsViewController.m in Sources */,
 				623480C9A8CF30C58360C5D3 /* ConfigurationDataManager.m in Sources */,
-				62348FE8B8C093617AF43F3C /* StreamWrapper.m in Sources */,
 				62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */,
 				62348A359AD6AA77CBCB6B29 /* Vehicle.m in Sources */,
 				6234847B7B90628E51EE7513 /* VehicleManager.m in Sources */,
