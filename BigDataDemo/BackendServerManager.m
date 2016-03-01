@@ -16,21 +16,18 @@
 #import "BackendServerManager.h"
 #import "ConfigurationDataManager.h"
 #import "Util.h"
-#import "StreamWrapper.h"
-
 #import "SRWebSocket.h"
 
 NSString *const kBackendServerDidConnectNotification        = @"backend_server_did_connect_notification";
 NSString *const kBackendServerDidFailToConnectNotification  = @"backend_server_did_fail_to_connect_notification";
 NSString *const kBackendServerDidDisconnectNotification     = @"backend_server_did_disconnect_notification";
-NSString *const kBackendServerDidSendDataNotification       = @"backend_server_did_send_data_notification";
 NSString *const kBackendServerDidFailToSendDataNotification = @"backend_server_did_fail_to_send_data_notification";
 NSString *const kBackendServerDidReceiveDataNotification    = @"backend_server_did_receive_data_notification";
 NSString *const kBackendServerNotificationDataKey           = @"backend_server_notification_data_key";
 NSString *const kBackendServerNotificationErrorKey          = @"backend_server_notification_error_key";
 
 
-@interface BackendServerManager () <SRWebSocketDelegate, StreamWrapperDelegate>
+@interface BackendServerManager () <SRWebSocketDelegate>
 @property (nonatomic, strong) SRWebSocket *webSocket;
 @property (nonatomic) BOOL isConnected;
 @end
@@ -70,20 +67,12 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
         [self.webSocket setDelegate:self];
         [self.webSocket open];
     }
-
-//        [StreamWrapper connectStreamToUrl:[ConfigurationDataManager getServerUrl]
-//                                     port:(NSUInteger)[[ConfigurationDataManager getServerPort] integerValue]
-//                                 delegate:[BackendServerManager sharedManager]];
-
 }
 
 + (void)sendData:(NSString *)data
 {
     DLog(@"Socket send: @%", data);
     [[[BackendServerManager sharedManager] webSocket] send:data];
-
-    //[StreamWrapper sendData:data];
-
 }
 
 + (BOOL)isConnected
@@ -121,58 +110,6 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
         [self reconnectToServer];
 }
 
-- (void)onRemoteConnectionDidConnect
-{
-    self.isConnected = YES;
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidConnectNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:nil];
-}
-
-- (void)onRemoteConnectionDidDisconnect:(NSError *)error
-{
-    DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
-    self.isConnected = NO;
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
-}
-
-- (void)onRemoteConnectionDidFailToConnect:(NSError *)error
-{
-    DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
-    self.isConnected = NO;
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidDisconnectNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
-}
-
-- (void)onRemoteConnectionDidReceiveData:(NSString *)data
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidReceiveDataNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationDataKey : data}];
-}
-
-- (void)onDidSendDataToRemoteConnection:(NSString *)data
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidSendDataNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationDataKey : data}];
-}
-
-- (void)onDidFailToSendDataToRemoteConnection:(NSError *)error
-{
-    DLog(@"Failed to connect to the backend server: %@", error.localizedDescription);
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToSendDataNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
-}
-
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
     DLog(@"Socket open");
@@ -194,7 +131,6 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
                                                         object:[BackendServerManager class]
                                                       userInfo:@{kBackendServerNotificationErrorKey : reason}];
 }
-
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
@@ -218,8 +154,6 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
 - (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload
 {
     DLog(@"Socket pong");
-
 }
-
 
 @end
