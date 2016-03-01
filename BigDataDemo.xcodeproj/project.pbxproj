@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23198E661C8615D300A0CB4A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E651C8615D300A0CB4A /* Security.framework */; };
+		23198E681C8615DC00A0CB4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E671C8615DC00A0CB4A /* Foundation.framework */; };
+		23198E6A1C8615E800A0CB4A /* libicucore.A.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E691C8615E800A0CB4A /* libicucore.A.tbd */; };
+		23198E6C1C8615EF00A0CB4A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E6B1C8615EF00A0CB4A /* CFNetwork.framework */; };
+		23198E6D1C863F0E00A0CB4A /* ConfigurationDataManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */; };
 		2335C7B71C7D0D2400BE6E80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7B61C7D0D2400BE6E80 /* main.m */; };
 		2335C7BA1C7D0D2400BE6E80 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7B91C7D0D2400BE6E80 /* AppDelegate.m */; };
 		2335C7BD1C7D0D2400BE6E80 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7BC1C7D0D2400BE6E80 /* RootViewController.m */; };
@@ -18,11 +23,23 @@
 		2335C7D61C7D0D2400BE6E80 /* BigDataDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7D51C7D0D2400BE6E80 /* BigDataDemoTests.m */; };
 		2335C7E11C7D0D2400BE6E80 /* BigDataDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7E01C7D0D2400BE6E80 /* BigDataDemoUITests.m */; };
 		2335C7EF1C7D29A300BE6E80 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2335C7EE1C7D29A300BE6E80 /* MapKit.framework */; };
+		62348017B0F0B03098D0B0A9 /* PacketParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E284E733680422B9F11 /* PacketParser.m */; };
 		623480C9A8CF30C58360C5D3 /* ConfigurationDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */; };
 		62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234830517C28E235471F75B /* DefaultSignalsViewController.m */; };
 		623483CB5F4ED59BB8CCF196 /* AllSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623488DDC6180586F7B07837 /* AllSignalsViewController.m */; };
+		623483D7CC665A24722B690B /* UnsubscribePacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234834867D9014479C08414 /* UnsubscribePacket.m */; };
+		6234847B7B90628E51EE7513 /* VehicleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 623484143479B1A740B702F1 /* VehicleManager.m */; };
+		623484DED45BE6D15E9DBBE7 /* EventPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 623488743E7C1E6747242DEE /* EventPacket.m */; };
+		6234868834BC2F1FA7D8D3F2 /* SignalsPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 623483F7DDBBE91DD6380AED /* SignalsPacket.m */; };
+		623487A31634350C32E0DE06 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 62348E2B69D7214D19301BCE /* Makefile */; };
 		623487C874689FB9317C1978 /* ConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 623487909240E3AD3C9062E2 /* ConfigurationViewController.m */; };
+		6234885BC52950FF883ADE77 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234839A127A1C0BBBEF6A2B /* SRWebSocket.m */; };
 		62348936D9F75EC51920CB7B /* MapDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */; };
+		62348A359AD6AA77CBCB6B29 /* Vehicle.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234874162D6ADD0C15AF271 /* Vehicle.m */; };
+		62348D7F8333FB80D8F7F2A2 /* ServerPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E62137D90DA95975B0F /* ServerPacket.m */; };
+		62348DBE2F73C4E26CD7FE87 /* SubscribePacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348743C22922C6AE7D84D0 /* SubscribePacket.m */; };
+		62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348A28D36AD5D2095F9FAC /* BackendServerManager.m */; };
+		62348FE8B8C093617AF43F3C /* StreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 623483ADBD9E9337582EACB3 /* StreamWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +60,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23198E651C8615D300A0CB4A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		23198E671C8615DC00A0CB4A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		23198E691C8615E800A0CB4A /* libicucore.A.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.A.tbd; path = usr/lib/libicucore.A.tbd; sourceTree = SDKROOT; };
+		23198E6B1C8615EF00A0CB4A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2335C7B21C7D0D2400BE6E80 /* BigDataDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BigDataDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2335C7B61C7D0D2400BE6E80 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2335C7B81C7D0D2400BE6E80 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -64,17 +85,43 @@
 		2335C7E01C7D0D2400BE6E80 /* BigDataDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BigDataDemoUITests.m; sourceTree = "<group>"; };
 		2335C7E21C7D0D2400BE6E80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2335C7EE1C7D29A300BE6E80 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		623481839B33B6AA422CCF7C /* EventPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventPacket.h; sourceTree = "<group>"; };
 		6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationDataManager.m; sourceTree = "<group>"; };
+		623482ED61640C3C66B12694 /* SignalsPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalsPacket.h; sourceTree = "<group>"; };
 		6234830517C28E235471F75B /* DefaultSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSignalsViewController.m; sourceTree = "<group>"; };
 		62348337AF8B5B9D3CFEC044 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		6234834745B017F23DF18402 /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
+		6234834867D9014479C08414 /* UnsubscribePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnsubscribePacket.m; sourceTree = "<group>"; };
 		62348367695CE99B258175E9 /* ConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationViewController.h; sourceTree = "<group>"; };
+		6234839A127A1C0BBBEF6A2B /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
+		623483ADBD9E9337582EACB3 /* StreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamWrapper.m; sourceTree = "<group>"; };
+		623483F7DDBBE91DD6380AED /* SignalsPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalsPacket.m; sourceTree = "<group>"; };
+		623483F9F78C24A5144968D3 /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
+		623484143479B1A740B702F1 /* VehicleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VehicleManager.m; sourceTree = "<group>"; };
+		623484C40B36882F3B97A460 /* UnsubscribePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnsubscribePacket.h; sourceTree = "<group>"; };
 		6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDisplayViewController.m; sourceTree = "<group>"; };
+		623485DB8F12112BEC708F0E /* VehicleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VehicleManager.h; sourceTree = "<group>"; };
 		623486DF9913BFCAB4EB38B3 /* AllSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSignalsViewController.h; sourceTree = "<group>"; };
+		6234874162D6ADD0C15AF271 /* Vehicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vehicle.m; sourceTree = "<group>"; };
+		62348743C22922C6AE7D84D0 /* SubscribePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribePacket.m; sourceTree = "<group>"; };
+		6234875BFB35FD02EDFD59AA /* StreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamWrapper.h; sourceTree = "<group>"; };
 		623487909240E3AD3C9062E2 /* ConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationViewController.m; sourceTree = "<group>"; };
+		623488743E7C1E6747242DEE /* EventPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventPacket.m; sourceTree = "<group>"; };
 		623488DDC6180586F7B07837 /* AllSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSignalsViewController.m; sourceTree = "<group>"; };
+		6234895333D54BB6BA8FF163 /* PacketParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketParser.h; sourceTree = "<group>"; };
+		62348A0F511A21B920BE73F4 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
+		62348A28D36AD5D2095F9FAC /* BackendServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendServerManager.m; sourceTree = "<group>"; };
 		62348A3F87D1877491D507CD /* MapDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDisplayViewController.h; sourceTree = "<group>"; };
 		62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSignalsViewController.h; sourceTree = "<group>"; };
+		62348C02BD08EBB3581175B7 /* SocketRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocket.h; sourceTree = "<group>"; };
+		62348D59C5B45893B50992EA /* SubscribePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribePacket.h; sourceTree = "<group>"; };
+		62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationDataManagerTest.m; sourceTree = "<group>"; };
+		62348E284E733680422B9F11 /* PacketParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketParser.m; sourceTree = "<group>"; };
+		62348E28DD8CF198088A8DA3 /* ServerPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerPacket.h; sourceTree = "<group>"; };
+		62348E2B69D7214D19301BCE /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		62348E5292349802270DD60D /* ConfigurationDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationDataManager.h; sourceTree = "<group>"; };
+		62348E62137D90DA95975B0F /* ServerPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerPacket.m; sourceTree = "<group>"; };
+		62348F3880F80A91A664D073 /* BackendServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendServerManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +129,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23198E6C1C8615EF00A0CB4A /* CFNetwork.framework in Frameworks */,
+				23198E6A1C8615E800A0CB4A /* libicucore.A.tbd in Frameworks */,
+				23198E681C8615DC00A0CB4A /* Foundation.framework in Frameworks */,
+				23198E661C8615D300A0CB4A /* Security.framework in Frameworks */,
 				2335C7EF1C7D29A300BE6E80 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,6 +157,10 @@
 		2335C7A91C7D0D2400BE6E80 = {
 			isa = PBXGroup;
 			children = (
+				23198E6B1C8615EF00A0CB4A /* CFNetwork.framework */,
+				23198E691C8615E800A0CB4A /* libicucore.A.tbd */,
+				23198E671C8615DC00A0CB4A /* Foundation.framework */,
+				23198E651C8615D300A0CB4A /* Security.framework */,
 				2335C7EE1C7D29A300BE6E80 /* MapKit.framework */,
 				2335C7B41C7D0D2400BE6E80 /* BigDataDemo */,
 				2335C7D41C7D0D2400BE6E80 /* BigDataDemoTests */,
@@ -151,6 +206,27 @@
 				6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */,
 				62348E5292349802270DD60D /* ConfigurationDataManager.h */,
 				62348337AF8B5B9D3CFEC044 /* Util.h */,
+				623483ADBD9E9337582EACB3 /* StreamWrapper.m */,
+				6234875BFB35FD02EDFD59AA /* StreamWrapper.h */,
+				62348A28D36AD5D2095F9FAC /* BackendServerManager.m */,
+				62348F3880F80A91A664D073 /* BackendServerManager.h */,
+				6234874162D6ADD0C15AF271 /* Vehicle.m */,
+				62348A0F511A21B920BE73F4 /* Vehicle.h */,
+				623484143479B1A740B702F1 /* VehicleManager.m */,
+				623485DB8F12112BEC708F0E /* VehicleManager.h */,
+				62348E284E733680422B9F11 /* PacketParser.m */,
+				6234895333D54BB6BA8FF163 /* PacketParser.h */,
+				62348E62137D90DA95975B0F /* ServerPacket.m */,
+				62348E28DD8CF198088A8DA3 /* ServerPacket.h */,
+				62348743C22922C6AE7D84D0 /* SubscribePacket.m */,
+				62348D59C5B45893B50992EA /* SubscribePacket.h */,
+				6234834867D9014479C08414 /* UnsubscribePacket.m */,
+				623484C40B36882F3B97A460 /* UnsubscribePacket.h */,
+				623488743E7C1E6747242DEE /* EventPacket.m */,
+				623481839B33B6AA422CCF7C /* EventPacket.h */,
+				623483F7DDBBE91DD6380AED /* SignalsPacket.m */,
+				623482ED61640C3C66B12694 /* SignalsPacket.h */,
+				623489B313480A440E1716AD /* SocketRocket */,
 			);
 			path = BigDataDemo;
 			sourceTree = "<group>";
@@ -168,6 +244,7 @@
 			children = (
 				2335C7D51C7D0D2400BE6E80 /* BigDataDemoTests.m */,
 				2335C7D71C7D0D2400BE6E80 /* Info.plist */,
+				62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */,
 			);
 			path = BigDataDemoTests;
 			sourceTree = "<group>";
@@ -180,6 +257,18 @@
 			);
 			path = BigDataDemoUITests;
 			sourceTree = "<group>";
+		};
+		623489B313480A440E1716AD /* SocketRocket */ = {
+			isa = PBXGroup;
+			children = (
+				62348E2B69D7214D19301BCE /* Makefile */,
+				623483F9F78C24A5144968D3 /* SRWebSocket.h */,
+				6234839A127A1C0BBBEF6A2B /* SRWebSocket.m */,
+				62348C02BD08EBB3581175B7 /* SocketRocket.h */,
+				6234834745B017F23DF18402 /* SocketRocket-Prefix.pch */,
+			);
+			path = SocketRocket;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -321,6 +410,18 @@
 				62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */,
 				623483CB5F4ED59BB8CCF196 /* AllSignalsViewController.m in Sources */,
 				623480C9A8CF30C58360C5D3 /* ConfigurationDataManager.m in Sources */,
+				62348FE8B8C093617AF43F3C /* StreamWrapper.m in Sources */,
+				62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */,
+				62348A359AD6AA77CBCB6B29 /* Vehicle.m in Sources */,
+				6234847B7B90628E51EE7513 /* VehicleManager.m in Sources */,
+				62348017B0F0B03098D0B0A9 /* PacketParser.m in Sources */,
+				62348D7F8333FB80D8F7F2A2 /* ServerPacket.m in Sources */,
+				62348DBE2F73C4E26CD7FE87 /* SubscribePacket.m in Sources */,
+				623483D7CC665A24722B690B /* UnsubscribePacket.m in Sources */,
+				623484DED45BE6D15E9DBBE7 /* EventPacket.m in Sources */,
+				6234868834BC2F1FA7D8D3F2 /* SignalsPacket.m in Sources */,
+				623487A31634350C32E0DE06 /* Makefile in Sources */,
+				6234885BC52950FF883ADE77 /* SRWebSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23198E6D1C863F0E00A0CB4A /* ConfigurationDataManagerTest.m in Sources */,
 				2335C7D61C7D0D2400BE6E80 /* BigDataDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

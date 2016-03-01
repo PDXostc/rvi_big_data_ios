@@ -59,6 +59,7 @@
 @interface ConfigurationViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *vehicleIdTextField;
 @property (nonatomic, weak) IBOutlet UITextField *serverUrlTextField;
+@property (nonatomic, weak) IBOutlet UITextField *serverPortTextField;
 @end
 
 @implementation ConfigurationViewController
@@ -70,6 +71,31 @@
 {
     DLog(@"");
     [super viewDidLoad];
+
+    UIToolbar* numberToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+
+    numberToolbar.items = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                            [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)]];
+
+    [numberToolbar sizeToFit];
+
+    self.serverPortTextField.inputAccessoryView = numberToolbar;
+
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(handleSingleTap:)];
+    [self.view addGestureRecognizer:singleFingerTap];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    [self.vehicleIdTextField resignFirstResponder];
+    [self.serverUrlTextField resignFirstResponder];
+    [self.serverPortTextField resignFirstResponder];
+}
+
+- (void)doneWithNumberPad
+{
+    [self.serverPortTextField resignFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -87,6 +113,12 @@
         [self.serverUrlTextField setText:[ConfigurationDataManager getServerUrl]];
     else
         [self.serverUrlTextField setText:@""];
+
+    if ([ConfigurationDataManager getServerPort])
+        [self.serverPortTextField setText:[ConfigurationDataManager getServerPort]];
+    else
+        [self.serverUrlTextField setText:@""];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -130,6 +162,8 @@
         [ConfigurationDataManager setVehicleId:self.vehicleIdTextField.text];
     else if (textField == self.serverUrlTextField)
         [ConfigurationDataManager setServerUrl:self.serverUrlTextField.text];
+    else if (textField == self.serverPortTextField)
+        [ConfigurationDataManager setServerPort:self.serverPortTextField.text];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -151,7 +185,9 @@
     if (textField == self.vehicleIdTextField)
         [self.serverUrlTextField becomeFirstResponder];
     else if (textField == self.serverUrlTextField)
-        [self.serverUrlTextField resignFirstResponder];
+        [self.serverPortTextField becomeFirstResponder];
+    else if (textField == self.serverPortTextField)
+        [self.serverPortTextField resignFirstResponder];
 
     return YES;
 }
