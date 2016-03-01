@@ -28,7 +28,8 @@
 + (NSString *)getServerPort;
 + (void)setServerPort:(NSString *)serverPort;
 
-+(BOOL)hasValidConfigurationData;
++ (BOOL)hasValidConfigurationData;
++ (NSURL *)fullyQualifiedUrlWithScheme:(NSString *)scheme;
 
 + (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 + (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;

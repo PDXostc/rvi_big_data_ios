@@ -100,6 +100,35 @@
             ([[ConfigurationDataManager getServerPort] integerValue]);
 }
 
+/* Sanitize our saved url, removing incorrect scheme if user accidentally added one (e.g., 'http://'), and appending the port. */
++ (NSURL *)fullyQualifiedUrlWithScheme:(NSString *)scheme
+{
+    if ([scheme hasSuffix:@"://"]) scheme = [scheme substringToIndex:scheme.length - @"://".length];
+    if ([scheme hasSuffix:@":"])   scheme = [scheme substringToIndex:scheme.length - @":".length];
+
+    NSString        *serverUrl = [ConfigurationDataManager getServerUrl];
+    NSMutableString *newUrl    = [NSMutableString string];
+
+    NSURL *url = [NSURL URLWithString:serverUrl];
+
+    if (![url scheme])
+        [newUrl appendFormat:@"%@://%@", scheme, serverUrl];
+
+    else if (![[url scheme] isEqualToString:scheme])
+        [newUrl appendFormat:@"%@://%@", scheme, [serverUrl substringFromIndex:([url scheme].length + @"://".length)]];
+
+    else
+        [newUrl appendString:[url absoluteString]];
+
+    if (![url port])
+        [newUrl appendFormat:@":%@", [ConfigurationDataManager getServerPort]];
+
+
+    url = [NSURL URLWithString:newUrl];
+
+    return url;
+}
+
 + (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
 {
     [[ConfigurationDataManager sharedManager] addObserver:observer forKeyPath:keyPath options:options context:context];

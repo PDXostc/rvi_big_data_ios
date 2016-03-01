@@ -11,6 +11,7 @@
 		23198E681C8615DC00A0CB4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E671C8615DC00A0CB4A /* Foundation.framework */; };
 		23198E6A1C8615E800A0CB4A /* libicucore.A.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E691C8615E800A0CB4A /* libicucore.A.tbd */; };
 		23198E6C1C8615EF00A0CB4A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23198E6B1C8615EF00A0CB4A /* CFNetwork.framework */; };
+		23198E6D1C863F0E00A0CB4A /* ConfigurationDataManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */; };
 		2335C7B71C7D0D2400BE6E80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7B61C7D0D2400BE6E80 /* main.m */; };
 		2335C7BA1C7D0D2400BE6E80 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7B91C7D0D2400BE6E80 /* AppDelegate.m */; };
 		2335C7BD1C7D0D2400BE6E80 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335C7BC1C7D0D2400BE6E80 /* RootViewController.m */; };
@@ -114,6 +115,7 @@
 		62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSignalsViewController.h; sourceTree = "<group>"; };
 		62348C02BD08EBB3581175B7 /* SocketRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocket.h; sourceTree = "<group>"; };
 		62348D59C5B45893B50992EA /* SubscribePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribePacket.h; sourceTree = "<group>"; };
+		62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationDataManagerTest.m; sourceTree = "<group>"; };
 		62348E284E733680422B9F11 /* PacketParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketParser.m; sourceTree = "<group>"; };
 		62348E28DD8CF198088A8DA3 /* ServerPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerPacket.h; sourceTree = "<group>"; };
 		62348E2B69D7214D19301BCE /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			children = (
 				2335C7D51C7D0D2400BE6E80 /* BigDataDemoTests.m */,
 				2335C7D71C7D0D2400BE6E80 /* Info.plist */,
+				62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */,
 			);
 			path = BigDataDemoTests;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23198E6D1C863F0E00A0CB4A /* ConfigurationDataManagerTest.m in Sources */,
 				2335C7D61C7D0D2400BE6E80 /* BigDataDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
