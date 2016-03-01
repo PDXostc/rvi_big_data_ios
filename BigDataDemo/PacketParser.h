@@ -6,7 +6,7 @@
  * Mozilla Public License, version 2.0. The full text of the 
  * Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
  * 
- * File:    VehicleManager.h
+ * File:    PacketParser.h
  * Project: BigDataDemo
  * 
  * Created by Lilli Szafranski on 2/29/16.
@@ -14,14 +14,24 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
+#import "Util.h"
+
+@class ServerPacket;
 
 
-@interface VehicleManager : NSObject
+@protocol PacketParserDelegate <NSObject>
 
-+ (void)start;
-+ (void)subscribeToSignal:(NSString *)signal;
-+ (void)unsubscribeFromSignal:(NSString *)signal;
-+ (void)getAllSignals;
+- (void)onPacketParsed:(ServerPacket *)packet;
 
-+ (NSArray *)defaultSignals;
+@optional
+- (void)onJsonStringParsed:(NSString *)jsonString;
+- (void)onJsonObjectParsed:(NSObject *)jsonObject;
+@end
+
+@interface PacketParser : NSObject
+@property (nonatomic, weak) id <PacketParserDelegate> delegate;
+
++ (id)packetParser;
+- (void)parseData:(NSString *)data;
+- (void)clear;
 @end

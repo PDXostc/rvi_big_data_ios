@@ -69,23 +69,13 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
     [StreamWrapper sendData:data];
 }
 
-//+ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
-//{
-//
-//}
-//
-//+ (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
-//{
-//
-//}
++ (BOOL)isConnected
+{
+    return [[BackendServerManager sharedManager] isConnected];
+}
 
 - (void)registerObservers
 {
-//    [ConfigurationDataManager addObserver:self
-//                               forKeyPath:kConfigurationDataManagerVehicleIdKeyPath
-//                                  options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-//                                  context:NULL];
-
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerServerUrlKeyPath
                                   options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
@@ -99,9 +89,6 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
 
 - (void)unregisterObservers
 {
-//    [ConfigurationDataManager removeObserver:self
-//                                  forKeyPath:kConfigurationDataManagerVehicleIdKeyPath];
-
     [ConfigurationDataManager removeObserver:self
                                   forKeyPath:kConfigurationDataManagerServerUrlKeyPath];
 
@@ -115,9 +102,6 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
 
     if ([keyPath isEqualToString:kConfigurationDataManagerServerUrlKeyPath] || [keyPath isEqualToString:kConfigurationDataManagerServerPortKeyPath])
         [BackendServerManager reconnectToServer];
-//    else if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath])
-//        [BackendServerManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]],
-//        [BackendServerManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
 }
 
 - (void)onRemoteConnectionDidConnect

@@ -28,5 +28,6 @@ extern NSString *const kBackendServerNotificationErrorKey;
 @interface BackendServerManager : NSObject
 
 + (void)start;
++ (BOOL)isConnected;
 + (void)sendData:(NSString *)data;
 @end

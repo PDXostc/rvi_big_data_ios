@@ -18,9 +18,15 @@
 #import "Util.h"
 #import "BackendServerManager.h"
 #import "Vehicle.h"
+#import "PacketParser.h"
+#import "ServerPacket.h"
+#import "UnsubscribePacket.h"
+#import "SubscribePacket.h"
+#import "SignalsPacket.h"
 
-@interface VehicleManager ()
+@interface VehicleManager () <PacketParserDelegate>
 @property (nonatomic, strong) Vehicle *vehicle;
+@property (nonatomic, strong) PacketParser *packetParser;
 @end
 
 @implementation VehicleManager
@@ -28,46 +34,79 @@
 
 }
 
++ (NSArray *)defaultSignals
+{
+    return @[@"foo", @"bar", @"baz"];
+}
+
 + (id)sharedManager
 {
     static VehicleManager *_sharedManager = nil;
     static dispatch_once_t onceToken;
- 
+
     dispatch_once(&onceToken, ^{
-        _sharedManager = [[VehicleManager alloc] init];        
+        _sharedManager = [[VehicleManager alloc] init];
+
+        _sharedManager.vehicle = [[Vehicle alloc] init];
+
+        _sharedManager.packetParser = [PacketParser packetParser];
+        _sharedManager.packetParser.delegate = _sharedManager;
     });
-  
-    return _sharedManager;   
-} 
+
+    return _sharedManager;
+}
 
 + (void)start
 {
     [[VehicleManager sharedManager] registerObservers];
 }
 
-+ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
++ (NSString *)stringFromPacket:(ServerPacket *)packet
 {
-    [BackendServerManager sendData:@""];
+    NSError *jsonError;
+    NSData  *payload = [NSJSONSerialization dataWithJSONObject:[packet toDictionary]
+                                                       options:nil
+                                                         error:&jsonError];
+
+    if (jsonError)
+        return nil;
+
+    return  [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
 }
 
 + (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
-    [BackendServerManager sendData:@""];
+    NSString *data = [VehicleManager stringFromPacket:[SubscribePacket packetWithSignals:[VehicleManager defaultSignals]
+                                                                               vehicleId:vehicleId]];
+    if (data) [BackendServerManager sendData:data];
+}
+
++ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
+{
+    NSString *data = [VehicleManager stringFromPacket:[UnsubscribePacket packetWithSignals:[VehicleManager defaultSignals]
+                                                                                 vehicleId:vehicleId]];
+    if (data) [BackendServerManager sendData:data];
 }
 
 + (void)subscribeToSignal:(NSString *)signal
 {
-    [BackendServerManager sendData:@""];
+    NSString *data = [VehicleManager stringFromPacket:[SubscribePacket packetWithSignals:@[signal]
+                                                                                 vehicleId:[ConfigurationDataManager getVehicleId]]];
+    if (data) [BackendServerManager sendData:data];
 }
 
 + (void)unsubscribeFromSignal:(NSString *)signal
 {
-    [BackendServerManager sendData:@""];
+    NSString *data = [VehicleManager stringFromPacket:[UnsubscribePacket packetWithSignals:@[signal]
+                                                                                 vehicleId:[ConfigurationDataManager getVehicleId]]];
+    if (data) [BackendServerManager sendData:data];
 }
 
 + (void)getAllSignals
 {
-    [BackendServerManager sendData:@""];
+    NSString *data = [VehicleManager stringFromPacket:[SignalsPacket packetWithAction:@"GET"
+                                                                            vehicleId:[ConfigurationDataManager getVehicleId]]];
+    if (data) [BackendServerManager sendData:data];
 }
 
 + (Vehicle *)getVehicle
@@ -83,15 +122,19 @@
                                   context:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(backendServerDidConnect)
+                                             selector:@selector(backendServerDidConnect:)
                                                  name:kBackendServerDidConnectNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(backendServerDidReceiveData)
-                                                 name:kBackendServerDidReceiveDataNotification
+                                             selector:@selector(backendServerDidDisconnect:)
+                                                 name:kBackendServerDidDisconnectNotification
                                                object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerDidReceiveData:)
+                                                 name:kBackendServerDidReceiveDataNotification
+                                               object:nil];
 }
 
 - (void)unregisterObservers
@@ -111,15 +154,31 @@
         [VehicleManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
 }
 
-- (void)backendServerDidConnect
+- (void)backendServerDidConnect:(NSNotification *)notification
 {
     DLog(@"");
     [VehicleManager resubscribeDefaultsForVehicle:[ConfigurationDataManager getVehicleId]];
 }
 
-- (void)backendServerDidReceiveData
+- (void)backendServerDidDisconnect:(NSNotification *)notification
 {
     DLog(@"");
+
+    [self.packetParser clear];
 }
 
+- (void)backendServerDidReceiveData:(NSNotification *)notification
+{
+    DLog(@"");
+
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *data = userInfo[kBackendServerNotificationDataKey];
+
+    [self.packetParser parseData:data];
+}
+
+- (void)onPacketParsed:(ServerPacket *)packet
+{
+
+}
 @end
