@@ -6,23 +6,24 @@
  * Mozilla Public License, version 2.0. The full text of the 
  * Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
  * 
- * File:    SubscribePacket.h
+ * File:    RangeSignal.m
  * Project: BigDataDemo
  * 
- * Created by Lilli Szafranski on 2/29/16.
+ * Created by Lilli Szafranski on 3/1/16.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import <Foundation/Foundation.h>
-#import "ServerPacket.h"
+#import "RangeSignal.h"
 
 
-@interface SubscribePacket : ServerPacket
-- (id)initWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
-+ (id)packetWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
+@implementation RangeSignal
+{
 
-//- (id)initWithDictionary:(NSDictionary *)dict;
-//+ (id)packetWithDictionary:(NSDictionary *)dictionary;
+}
 
-- (NSDictionary *)toDictionary;
++ (id)rangeSignalWithSignalName:(NSString *)signalName
+{
+    return [[RangeSignal alloc] initWithSignalName:signalName];
+}
+
 @end

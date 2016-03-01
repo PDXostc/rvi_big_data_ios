@@ -6,40 +6,37 @@
  * Mozilla Public License, version 2.0. The full text of the 
  * Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
  * 
- * File:    SignalsPacket.m
+ * File:    SignalDescriptorPacket.m
  * Project: BigDataDemo
  * 
- * Created by Lilli Szafranski on 2/29/16.
+ * Created by Lilli Szafranski on 3/1/16.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import "SignalsPacket.h"
+#import "SignalDescriptorPacket.h"
 
-@interface SignalsPacket ()
-@property (nonatomic, strong) NSString *action;
-@property (nonatomic, strong) NSArray  *signals;
-@end
 
-@implementation SignalsPacket
+@implementation SignalDescriptorPacket
 {
 
 }
-- (id)initWithAction:(NSString *)action vehicleId:(NSString *)vehicleId
+
+- (id)initWithSignal:(NSString *)signal vehicleId:(NSString *)vehicleId
 {
-    if (action == nil || [action isEqualToString:@""])
+    if (signal == nil || [signal isEqualToString:@""])
         return nil;
 
-    if ((self = [super initWithCommand:SIGNALS vehicleId:vehicleId]))
+    if ((self = [super initWithCommand:SIGNAL_DESCRIPTOR vehicleId:vehicleId]))
     {
-        _action = [action copy];
+        _signal = [signal copy];
     }
 
     return self;
 }
 
-+ (id)packetWithAction:(NSString *)action vehicleId:(NSString *)vehicleId
++ (id)packetWithSignal:(NSString *)signal vehicleId:(NSString *)vehicleId
 {
-    return [[SignalsPacket alloc] initWithAction:action vehicleId:vehicleId];
+    return [[SignalDescriptorPacket alloc] initWithSignal:signal vehicleId:vehicleId];
 }
 
 - (id)initWithDictionary:(NSDictionary *)dict
@@ -49,8 +46,7 @@
 
     if ((self = [super initFromDictionary:dict]))
     {
-        _action = dict[@"action"];
-        _signals = dict[@"signals"];
+        _signal = dict[@"signal"];
     }
 
     return self;
@@ -58,15 +54,16 @@
 
 + (id)packetWithDictionary:(NSDictionary *)dictionary
 {
-    return [[SignalsPacket alloc] initWithDictionary:dictionary];
+    return [[SignalDescriptorPacket alloc] initWithDictionary:dictionary];
 }
 
 - (NSDictionary *)toDictionary
 {
     NSMutableDictionary *dict = (NSMutableDictionary *)[super toDictionary];
 
-    dict[@"action"] = self.action;
+    dict[@"signal"] = self.signal;
 
     return [NSDictionary dictionaryWithDictionary:dict];
 }
+
 @end

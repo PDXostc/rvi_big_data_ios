@@ -18,7 +18,8 @@
 #import "SubscribePacket.h"
 #import "UnsubscribePacket.h"
 #import "EventPacket.h"
-#import "SignalsPacket.h"
+#import "AllSignalsPacket.h"
+#import "SignalDescriptorPacket.h"
 
 @interface PacketParser ()
 @property (nonatomic, strong) NSString *buffer;
@@ -91,14 +92,12 @@
     if (command == NONE)
         return nil;
 
-    if (command == SUBSCRIBE) {
-        return [SubscribePacket packetWithDictionary:jsonDict];
-    } else if (command == UNSUBSCRIBE) {
-        return [UnsubscribePacket packetWithDictionary:jsonDict];
-    } else if (command == EVENT) {
+    if (command == EVENT) {
         return [EventPacket packetWithDictionary:jsonDict];
-    } else if (command == SIGNALS) {
-        return [SignalsPacket packetWithDictionary:jsonDict];
+    } else if (command == ALL_SIGNALS) {
+        return [AllSignalsPacket packetWithDictionary:jsonDict];
+    } else if (command == SIGNAL_DESCRIPTOR) {
+        return [SignalDescriptorPacket packetWithDictionary:jsonDict];
     } else {
         return nil;
     }

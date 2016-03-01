@@ -22,7 +22,7 @@
 #import "ServerPacket.h"
 #import "UnsubscribePacket.h"
 #import "SubscribePacket.h"
-#import "SignalsPacket.h"
+#import "AllSignalsPacket.h"
 
 @interface VehicleManager () <PacketParserDelegate>
 @property (nonatomic, strong) Vehicle *vehicle;
@@ -104,8 +104,7 @@
 
 + (void)getAllSignals
 {
-    NSString *data = [VehicleManager stringFromPacket:[SignalsPacket packetWithAction:@"GET"
-                                                                            vehicleId:[ConfigurationDataManager getVehicleId]]];
+    NSString *data = [VehicleManager stringFromPacket:[AllSignalsPacket packetWithVehicleId:[ConfigurationDataManager getVehicleId]]];
     if (data) [BackendServerManager sendData:data];
 }
 

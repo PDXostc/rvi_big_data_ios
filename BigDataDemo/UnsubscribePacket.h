@@ -21,8 +21,8 @@
 - (id)initWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
 + (id)packetWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
 
-- (id)initWithDictionary:(NSDictionary *)dict;
-+ (id)packetWithDictionary:(NSDictionary *)dictionary;
+//- (id)initWithDictionary:(NSDictionary *)dict;
+//+ (id)packetWithDictionary:(NSDictionary *)dictionary;
 
 - (NSDictionary *)toDictionary;
 @end

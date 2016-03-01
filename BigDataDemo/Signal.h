@@ -6,23 +6,19 @@
  * Mozilla Public License, version 2.0. The full text of the 
  * Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
  * 
- * File:    SubscribePacket.h
+ * File:    Signal.h
  * Project: BigDataDemo
  * 
- * Created by Lilli Szafranski on 2/29/16.
+ * Created by Lilli Szafranski on 3/1/16.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
-#import "ServerPacket.h"
 
 
-@interface SubscribePacket : ServerPacket
-- (id)initWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
-+ (id)packetWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
-
-//- (id)initWithDictionary:(NSDictionary *)dict;
-//+ (id)packetWithDictionary:(NSDictionary *)dictionary;
-
-- (NSDictionary *)toDictionary;
+@interface Signal : NSObject
+@property (nonatomic, strong, readonly) NSString *signalName;
+@property (nonatomic)                   NSInteger signalValue;
+- (id)initWithSignalName:(NSString *)signalName;
++ (id)signalWithSignalName:(NSString *)signalName;
 @end

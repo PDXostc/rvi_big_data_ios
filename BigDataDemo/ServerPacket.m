@@ -26,20 +26,22 @@ NSString * stringForCommand(Command command)
 {
     switch (command)
     {
-        case SUBSCRIBE:   return @"subscribe";
-        case UNSUBSCRIBE: return @"unsubscribe";
-        case EVENT:       return @"event";
-        case SIGNALS:     return @"signals";
-        default:          return @"";
+        case SUBSCRIBE:         return @"subscribe";
+        case UNSUBSCRIBE:       return @"unsubscribe";
+        case EVENT:             return @"event";
+        case ALL_SIGNALS:       return @"all_signals";
+        case SIGNAL_DESCRIPTOR: return @"signal_descriptor";
+        default:                return @"";
     }
 }
 
 Command commandForString(NSString * string)
 {
-    if ([string isEqualToString:@"subscribe"])   return SUBSCRIBE;
-    if ([string isEqualToString:@"unsubscribe"]) return UNSUBSCRIBE;
-    if ([string isEqualToString:@"event"])       return EVENT;
-    if ([string isEqualToString:@"signals"])     return SIGNALS;
+    if ([string isEqualToString:@"subscribe"])         return SUBSCRIBE;
+    if ([string isEqualToString:@"unsubscribe"])       return UNSUBSCRIBE;
+    if ([string isEqualToString:@"event"])             return EVENT;
+    if ([string isEqualToString:@"all_signals"])       return ALL_SIGNALS;
+    if ([string isEqualToString:@"signal_descriptor"]) return ALL_SIGNALS;
 
     return NONE;
 }

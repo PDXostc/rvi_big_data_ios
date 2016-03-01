@@ -6,23 +6,37 @@
  * Mozilla Public License, version 2.0. The full text of the 
  * Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
  * 
- * File:    SignalsPacket.h
+ * File:    Signal.m
  * Project: BigDataDemo
  * 
- * Created by Lilli Szafranski on 2/29/16.
+ * Created by Lilli Szafranski on 3/1/16.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#import <Foundation/Foundation.h>
-#import "ServerPacket.h"
+#import "Signal.h"
 
 
-@interface SignalsPacket : ServerPacket
-- (id)initWithAction:(NSString *)action vehicleId:(NSString *)vehicleId;
-+ (id)packetWithAction:(NSString *)action vehicleId:(NSString *)vehicleId;
+@implementation Signal
+{
 
-- (id)initWithDictionary:(NSDictionary *)dict;
-+ (id)packetWithDictionary:(NSDictionary *)dictionary;
+}
 
-- (NSDictionary *)toDictionary;
+- (id)initWithSignalName:(NSString *)signalName
+{
+    if (signalName == nil)
+        return nil;
+
+    if ((self = [super init]))
+    {
+        _signalName = [signalName copy];
+    }
+
+    return self;
+}
+
++ (id)signalWithSignalName:(NSString *)signalName
+{
+    return [[Signal alloc] initWithSignalName:signalName];
+}
+
 @end

@@ -22,7 +22,8 @@ typedef enum
     SUBSCRIBE,
     UNSUBSCRIBE,
     EVENT,
-    SIGNALS,
+    ALL_SIGNALS,
+    SIGNAL_DESCRIPTOR,
 } Command;
 
 @interface ServerPacket : NSObject
