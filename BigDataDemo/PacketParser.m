@@ -21,6 +21,7 @@
 #import "AllSignalsPacket.h"
 #import "SignalDescriptorPacket.h"
 #import "ErrorPacket.h"
+#import "StatusPacket.h"
 
 @interface PacketParser ()
 @property (nonatomic, strong) NSString *buffer;
@@ -62,7 +63,8 @@
 //    unichar open  = [buffer characterAtIndex:0] == '{' ? '{' : '[';
 //    unichar close = [buffer characterAtIndex:0] == '{' ? '}' : ']';
 //
-//    for (NSUInteger i = 0; i < [buffer length]; i++) {
+//    for (NSUInteger i = 0; i < [buffer length]; i++)
+//    {
 //        if ([buffer characterAtIndex:i] == open) numberOfOpens++;
 //        else if ([buffer characterAtIndex:i] == close) numberOfCloses++;
 //
@@ -71,41 +73,7 @@
 //
 //    return 0;
 //}
-
-- (ServerPacket *)stringToPacket:(NSString *)string
-{
-    DLog(@"Received packet: %@", string);
-
-//    if ([self.delegate respondsToSelector:@selector(onJsonStringParsed:)])
-//        [self.delegate onJsonStringParsed:string];
-
-    NSError *error = nil;
-    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding]
-                                                             options:NSJSONReadingMutableContainers
-                                                               error:&error];
-    ServerPacket *packet = [ServerPacket packetFromDictionary:jsonDict];
-
-//    if ([self.delegate respondsToSelector:@selector(onJsonObjectParsed:)])
-//        [self.delegate onJsonObjectParsed:jsonDict];
-
-    Command command = packet.command;
-
-    if (command == NONE)
-        return nil;
-
-    if (command == EVENT) {
-        return [EventPacket packetWithDictionary:jsonDict];
-    } else if (command == ALL_SIGNALS) {
-        return [AllSignalsPacket packetWithDictionary:jsonDict];
-    } else if (command == SIGNAL_DESCRIPTOR) {
-        return [SignalDescriptorPacket packetWithDictionary:jsonDict];
-    } else if (command == ERROR) {
-        return [ErrorPacket packetWithDictionary:jsonDict];
-    } else {
-        return nil;
-    }
-}
-
+//
 //- (NSString *)recurse:(NSString *)buffer
 //{
 //    DLog(@"");
@@ -136,6 +104,55 @@
 //    }
 //}
 
++ (ServerPacket *)packetFromString:(NSString *)string
+{
+    DLog(@"Received packet: %@", string);
+
+//    if ([self.delegate respondsToSelector:@selector(onJsonStringParsed:)])
+//        [self.delegate onJsonStringParsed:string];
+
+    NSError *error = nil;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding]
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&error];
+    ServerPacket *packet = [ServerPacket packetFromDictionary:jsonDict];
+
+//    if ([self.delegate respondsToSelector:@selector(onJsonObjectParsed:)])
+//        [self.delegate onJsonObjectParsed:jsonDict];
+
+    Command command = packet.command;
+
+    if (command == NONE)
+        return nil;
+
+    if (command == EVENT) {
+        return [EventPacket packetWithDictionary:jsonDict];
+    } else if (command == ALL_SIGNALS) {
+        return [AllSignalsPacket packetWithDictionary:jsonDict];
+    } else if (command == SIGNAL_DESCRIPTOR) {
+        return [SignalDescriptorPacket packetWithDictionary:jsonDict];
+    } else if (command == ERROR) {
+        return [ErrorPacket packetWithDictionary:jsonDict];
+    } else if (command == STATUS) {
+        return [StatusPacket packetWithDictionary:jsonDict];
+    } else {
+        return nil;
+    }
+}
+
++ (NSString *)stringFromPacket:(ServerPacket *)packet
+{
+    NSError *jsonError;
+    NSData  *payload = [NSJSONSerialization dataWithJSONObject:[packet toDictionary]
+                                                       options:nil
+                                                         error:&jsonError];
+
+    if (jsonError)
+        return nil;
+
+    return  [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
+}
+
 ///**
 // * Parse the data (consisting of 0-n partial or complete json objects) that was received over the network
 // * from an rvi node. Method parses the string, recursively chomping off json objects as they come in,
@@ -144,17 +161,17 @@
 // *
 // * @param data a json string, consisting of 0-n partial or complete json objects.
 // */
-- (void)parseData:(NSString *)data
-{
-    DLog(@"");
-
-    [self.delegate onPacketParsed:[self stringToPacket:data]];
-
-//    if (self.buffer == nil) self.buffer = [NSMutableString string];
+//- (void)parseData:(NSString *)data
+//{
+//    DLog(@"");
 //
-//    self.buffer = [self recurse:[NSString stringWithFormat:@"%@%@", self.buffer, data]];
-}
-
+//    [self.delegate onPacketParsed:[self stringToPacket:data]];
+//
+////    if (self.buffer == nil) self.buffer = [NSMutableString string];
+////
+////    self.buffer = [self recurse:[NSString stringWithFormat:@"%@%@", self.buffer, data]];
+//}
+//
 ///**
 // * Clears the saved (unparsed) buffer of data.
 // */

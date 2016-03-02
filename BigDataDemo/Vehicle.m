@@ -55,31 +55,32 @@
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }
 
-- (id)initWithVehicleId:(NSString *)vehicleId
+- (id)init//WithVehicleId:(NSString *)vehicleId
 {
-    if (vehicleId == nil)
-        return nil;
+//    if (vehicleId == nil)
+//        return nil;
 
     if ((self = [super init]))
     {
         _defaultSignalsMap = [Vehicle signalsMap];
 
-        [self setVehicleId:vehicleId];
+        //[self setVehicleId:vehicleId];
     }
 
     return self;
 }
 
-+ (id)vehicleWithVehicleId:(NSString *)vehicleId
++ (id)vehicle//WithVehicleId:(NSString *)vehicleId
 {
-    return [[Vehicle alloc] initWithVehicleId:vehicleId];
+    return [[Vehicle alloc] init];//WithVehicleId:vehicleId];
 }
 
 - (void)setVehicleId:(NSString *)vehicleId
 {
     _vehicleId = [vehicleId copy];
 
-    [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys] vehicleId:vehicleId];
+    if (vehicleId)
+        [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys] vehicleId:vehicleId];
 }
 
 - (NSArray *)defaultSignals

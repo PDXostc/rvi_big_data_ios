@@ -19,11 +19,12 @@
 typedef enum
 {
     NONE,
+    STATUS,
+    ALL_SIGNALS,
+    SIGNAL_DESCRIPTOR,
     SUBSCRIBE,
     UNSUBSCRIBE,
     EVENT,
-    ALL_SIGNALS,
-    SIGNAL_DESCRIPTOR,
     ERROR,
 } Command;
 

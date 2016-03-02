@@ -20,7 +20,7 @@ extern NSString *const kBackendServerDidConnectNotification;
 extern NSString *const kBackendServerDidFailToConnectNotification;
 extern NSString *const kBackendServerDidDisconnectNotification;
 extern NSString *const kBackendServerDidSendDataNotification;
-extern NSString *const kBackendServerDidFailToSendDataNotification;
+extern NSString *const kBackendServerCommunicationDidFailNotification;
 extern NSString *const kBackendServerDidReceivePacketNotification;
 extern NSString *const kBackendServerNotificationPacketKey;
 extern NSString *const kBackendServerNotificationErrorKey;

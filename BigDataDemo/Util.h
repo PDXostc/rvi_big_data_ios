@@ -28,3 +28,8 @@
 #else
 #   define ULog(...)
 #endif
+
+#define ERROR_DOMAIN @"com.jaguardlandrover.bigdata"
+
+
+#define NULL_PACKET_ERROR_DOMAIN 1000

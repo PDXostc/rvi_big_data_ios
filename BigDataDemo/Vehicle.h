@@ -47,8 +47,8 @@
 - (BOOL)isSignalDefault:(NSString *)signalName;
 - (void)eventForSignalName:(NSString *)signalName attributes:(NSObject *)attributes;
 
-- (id)initWithVehicleId:(NSString *)vehicleId;
-+ (id)vehicleWithVehicleId:(NSString *)vehicleId;
+- (id)init;//WithVehicleId:(NSString *)vehicleId;
++ (id)vehicle;//WithVehicleId:(NSString *)vehicleId;
 
 
 @end

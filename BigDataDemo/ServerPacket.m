@@ -26,24 +26,26 @@ NSString * stringForCommand(Command command)
 {
     switch (command)
     {
-        case SUBSCRIBE:         return @"subscribe";
-        case UNSUBSCRIBE:       return @"unsubscribe";
-        case EVENT:             return @"event";
-        case ALL_SIGNALS:       return @"all_signals";
-        case SIGNAL_DESCRIPTOR: return @"signal_descriptor";
-        case ERROR:             return @"error";
+        case STATUS:            return @"STATUS";
+        case ALL_SIGNALS:       return @"ALL_SIGNALS";
+        case SIGNAL_DESCRIPTOR: return @"SIGNAL_DESCRIPTOR";
+        case SUBSCRIBE:         return @"SUBSCRIBE";
+        case UNSUBSCRIBE:       return @"UNSUBSCRIBE";
+        case EVENT:             return @"EVENT";
+        case ERROR:             return @"ERROR";
         default:                return @"";
     }
 }
 
 Command commandForString(NSString * string)
 {
-    if ([string isEqualToString:@"subscribe"])         return SUBSCRIBE;
-    if ([string isEqualToString:@"unsubscribe"])       return UNSUBSCRIBE;
-    if ([string isEqualToString:@"event"])             return EVENT;
-    if ([string isEqualToString:@"all_signals"])       return ALL_SIGNALS;
-    if ([string isEqualToString:@"signal_descriptor"]) return SIGNAL_DESCRIPTOR;
-    if ([string isEqualToString:@"error"])             return ERROR;
+    if ([string isEqualToString:@"STATUS"])            return STATUS;
+    if ([string isEqualToString:@"ALL_SIGNALS"])       return ALL_SIGNALS;
+    if ([string isEqualToString:@"SIGNAL_DESCRIPTOR"]) return SIGNAL_DESCRIPTOR;
+    if ([string isEqualToString:@"SUBSCRIBE"])         return SUBSCRIBE;
+    if ([string isEqualToString:@"UNSUBSCRIBE"])       return UNSUBSCRIBE;
+    if ([string isEqualToString:@"EVENT"])             return EVENT;
+    if ([string isEqualToString:@"ERROR"])             return ERROR;
 
     return NONE;
 }

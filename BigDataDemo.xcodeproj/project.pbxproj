@@ -44,6 +44,7 @@
 		62348D7F8333FB80D8F7F2A2 /* ServerPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E62137D90DA95975B0F /* ServerPacket.m */; };
 		62348DBE2F73C4E26CD7FE87 /* SubscribePacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348743C22922C6AE7D84D0 /* SubscribePacket.m */; };
 		62348E0DFDF57F1E46FD6679 /* Signal.m in Sources */ = {isa = PBXBuildFile; fileRef = 623486F662728990A07AA4E9 /* Signal.m */; };
+		62348E0E7F9800EDA95E217D /* StatusPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 623485155E14B0E2CA44FE76 /* StatusPacket.m */; };
 		62348E59C31F0273D9F42396 /* RangeSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234813C2CB3228B8D481E68 /* RangeSignal.m */; };
 		62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348A28D36AD5D2095F9FAC /* BackendServerManager.m */; };
 /* End PBXBuildFile section */
@@ -97,6 +98,7 @@
 		6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationDataManager.m; sourceTree = "<group>"; };
 		623482ED61640C3C66B12694 /* AllSignalsPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSignalsPacket.h; sourceTree = "<group>"; };
 		6234830517C28E235471F75B /* DefaultSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSignalsViewController.m; sourceTree = "<group>"; };
+		6234832DFD5DCA754195CABE /* StatusPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusPacket.h; sourceTree = "<group>"; };
 		62348337AF8B5B9D3CFEC044 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		6234834745B017F23DF18402 /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
 		6234834867D9014479C08414 /* UnsubscribePacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnsubscribePacket.m; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		623484143479B1A740B702F1 /* VehicleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VehicleManager.m; sourceTree = "<group>"; };
 		62348491B43F5FB9BA610D52 /* ErrorPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorPacket.m; sourceTree = "<group>"; };
 		623484C40B36882F3B97A460 /* UnsubscribePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnsubscribePacket.h; sourceTree = "<group>"; };
+		623485155E14B0E2CA44FE76 /* StatusPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusPacket.m; sourceTree = "<group>"; };
 		6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDisplayViewController.m; sourceTree = "<group>"; };
 		623485DB8F12112BEC708F0E /* VehicleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VehicleManager.h; sourceTree = "<group>"; };
 		62348637F3184AE14EE1D1AC /* LocationSignal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSignal.h; sourceTree = "<group>"; };
@@ -227,6 +230,8 @@
 				62348F488FE2445B034A86B9 /* SignalDescriptorPacket.h */,
 				62348491B43F5FB9BA610D52 /* ErrorPacket.m */,
 				62348CDB534A399668E8B6A3 /* ErrorPacket.h */,
+				623485155E14B0E2CA44FE76 /* StatusPacket.m */,
+				6234832DFD5DCA754195CABE /* StatusPacket.h */,
 			);
 			name = Packets;
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 				62348AF13A7B2ABD1B4AE7A3 /* SignalDescriptorPacket.m in Sources */,
 				6234820878088AD382B85C12 /* LocationSignal.m in Sources */,
 				6234811D720144CB4C95B168 /* ErrorPacket.m in Sources */,
+				62348E0E7F9800EDA95E217D /* StatusPacket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

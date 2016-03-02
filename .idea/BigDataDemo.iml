@@ -46,10 +46,12 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ModelController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EventPacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Vehicle.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/StatusPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Base.lproj/LaunchScreen.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Base.lproj/Main.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ErrorPacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/SignalDescriptorPacket.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/StatusPacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EventPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RangeSignal.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/UnsubscribePacket.m" isTestSource="false" />

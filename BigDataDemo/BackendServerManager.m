@@ -20,17 +20,17 @@
 #import "ServerPacket.h"
 #import "PacketParser.h"
 
-NSString *const kBackendServerDidConnectNotification        = @"backend_server_did_connect_notification";
-NSString *const kBackendServerDidFailToConnectNotification  = @"backend_server_did_fail_to_connect_notification";
-NSString *const kBackendServerDidDisconnectNotification     = @"backend_server_did_disconnect_notification";
-NSString *const kBackendServerDidFailToSendDataNotification = @"backend_server_did_fail_to_send_data_notification";
-NSString *const kBackendServerDidReceivePacketNotification  = @"backend_server_did_receive_packet_notification";
-NSString *const kBackendServerNotificationPacketKey         = @"backend_server_notification_packet_key";
-NSString *const kBackendServerNotificationErrorKey          = @"backend_server_notification_error_key";
+NSString *const kBackendServerDidConnectNotification           = @"backend_server_did_connect_notification";
+NSString *const kBackendServerDidFailToConnectNotification     = @"backend_server_did_fail_to_connect_notification";
+NSString *const kBackendServerDidDisconnectNotification        = @"backend_server_did_disconnect_notification";
+NSString *const kBackendServerCommunicationDidFailNotification = @"backend_server_communication_did_fail_notification";
+NSString *const kBackendServerDidReceivePacketNotification     = @"backend_server_did_receive_packet_notification";
+NSString *const kBackendServerNotificationPacketKey            = @"backend_server_notification_packet_key";
+NSString *const kBackendServerNotificationErrorKey             = @"backend_server_notification_error_key";
 
 
-@interface BackendServerManager () <SRWebSocketDelegate, PacketParserDelegate>
-@property (nonatomic, strong) PacketParser *packetParser;
+@interface BackendServerManager () <SRWebSocketDelegate>//, PacketParserDelegate>
+//@property (nonatomic, strong) PacketParser *packetParser;
 @property (nonatomic, strong) SRWebSocket *webSocket;
 @property (nonatomic) BOOL isConnected;
 @end
@@ -48,8 +48,8 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
     dispatch_once(&onceToken, ^{
         _sharedBackendServerManager = [[BackendServerManager alloc] init];
 
-        _sharedBackendServerManager.packetParser = [PacketParser packetParser];
-        _sharedBackendServerManager.packetParser.delegate = _sharedBackendServerManager;
+//        _sharedBackendServerManager.packetParser = [PacketParser packetParser];
+//        _sharedBackendServerManager.packetParser.delegate = _sharedBackendServerManager;
 
     });
 
@@ -76,23 +76,9 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
     }
 }
 
-
-+ (NSString *)stringFromPacket:(ServerPacket *)packet
-{
-    NSError *jsonError;
-    NSData  *payload = [NSJSONSerialization dataWithJSONObject:[packet toDictionary]
-                                                       options:nil
-                                                         error:&jsonError];
-
-    if (jsonError)
-        return nil;
-
-    return  [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
-}
-
 + (void)sendPacket:(ServerPacket *)packet
 {
-    NSString *data = [BackendServerManager stringFromPacket:packet];
+    NSString *data = [PacketParser stringFromPacket:packet];
 
     if (!data)
         return;
@@ -154,7 +140,7 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
 
     self.isConnected = NO;
 
-    [self.packetParser clear];
+    //[self.packetParser clear];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
                                                         object:[BackendServerManager class]
@@ -165,14 +151,25 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
 {
     DLog(@"Socket receive: %@", message);
 
-    [self.packetParser parseData:message];
+    ServerPacket *packet = [PacketParser packetFromString:message];
+
+    if (packet)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidReceivePacketNotification
+                                                            object:[BackendServerManager class]
+                                                          userInfo:@{kBackendServerNotificationPacketKey : packet}];
+    else
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerCommunicationDidFailNotification
+                                                            object:[BackendServerManager class]
+                                                          userInfo:@{kBackendServerNotificationErrorKey : [NSError errorWithDomain:ERROR_DOMAIN
+                                                                                                                              code:NULL_PACKET_ERROR_DOMAIN
+                                                                                                                          userInfo:@{NSLocalizedDescriptionKey : @"Parsed packet is null"}]}];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
     DLog(@"Socket error: %@", error.localizedDescription);
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToSendDataNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerCommunicationDidFailNotification
                                                         object:[BackendServerManager class]
                                                       userInfo:@{kBackendServerNotificationErrorKey : error}];
 }
@@ -182,14 +179,11 @@ NSString *const kBackendServerNotificationErrorKey          = @"backend_server_n
     DLog(@"Socket pong");
 }
 
-- (void)onPacketParsed:(ServerPacket *)packet
-{
-    DLog(@"");
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidReceivePacketNotification
-                                                        object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationPacketKey : packet}];
-}
-
+//- (void)onPacketParsed:(ServerPacket *)packet
+//{
+//    DLog(@"");
+//
+//
+//}
 
 @end
