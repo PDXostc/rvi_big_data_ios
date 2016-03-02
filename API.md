@@ -1,0 +1,164 @@
+To the Server
+================
+
+Request the status of a vehicle with the given vehicle_id:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "STATUS"
+}
+```
+
+Request the list of all signals from the vehicle:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "SIGNALS"
+}
+```
+
+Request for the signal_decsriptor information for a signal:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "SIGNAL_DESCRIPTOR",
+    "signal": "some_signal"
+}
+```
+
+Request to subscribe to signals:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "SUBSCRIBE",
+    "signals": [...]
+}
+```
+
+Request to unsubscribe to signals:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "UNSUBSCRIBE",
+    "signals": [...]
+}
+```
+
+Request for historical data for signal:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "HISTORY",
+    "signal": "some_signal",
+    "start": 1456768000000,
+    "stop": 1456768999999
+}
+```
+
+
+From the Server
+==================
+
+Response to a vehicle status request:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "STATUS",
+    "status": ["CONNECTED"|"NOT_CONNECTED"|"INVALID_VEHICLE_ID"]
+}
+```
+
+Response to an all signals request:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "ALL_SIGNALS",
+    "signals": [...]
+}
+```
+
+Response to a signal_decsriptor request with the information for a signal:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "SIGNAL_DESCRIPTOR",
+    "signal": "some_signal",
+    "descriptor": {...}
+}
+```
+
+Response to a request for historical data for signal:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "HISTORY",
+    "signal": "some_signal",
+    "start": 1456768000000,
+    "stop": 1456768999999,
+    "events": [(see event data description below)]
+}
+
+
+A signal change/event occurred:
+------------------------------------------------
+```
+{
+    "attributes": {
+        "value": "??? what should be here ???"
+    },
+    "vehicle_id": "vehicle_55",
+    "signal": "IVI_TONE_CHANGE",
+    "location": {
+        "coordinates": [9.454, 61.163],
+        "type": "Point"
+    },
+    "source": "DTM-DA-TEST",
+    "timestamp": 1456768736936,
+    "command": "EVENT"
+}
+```
+
+An error to a request occurred:
+------------------------------------------------
+```
+{
+    "vehicle_id": "vehicle_55",
+    "timestamp": 1456768736936,
+    "command": "ERROR",
+    "error": "error_message",
+    "orig_command": "<SIGNALS|SIGNAL_DESCRIPTOR|HISTORY>"
+    "signal": <signal_if_available>
+}
+```
+
+Possible errors:
+- A vehicle_id doesn't exist for any command, except for the status request, which entire purpose is to find out if the vehicle_id exits. This error probably shouldn't happen, because I'll always be making a vehicle status request with any vehicle_id to confirm this, but it's still a possibility.
+
+- A signal_descriptor request is made for a signal that doesn't exist or the request is made for a signal that doesn't have description information.
+
+- A history request is made for a signal that doesn't exist.
+
+- A subscribe/unsubscribe is made for a signal that doesn't exist. I don't think we need to send an error in this case, though, do we? If you want to, I'll just log it then ignore it most likely.
+
+
+
