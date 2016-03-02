@@ -61,6 +61,7 @@
 
 - (void)getStatusForVehicle:(NSString *)vehicleId
 {
+    [self.vehicle setVehicleStatus:UNKNOWN];
     [BackendServerManager sendPacket:[StatusPacket packetWithVehicleId:vehicleId]];
 }
 
@@ -172,10 +173,28 @@
 
     if ([packet isKindOfClass:[StatusPacket class]])
     {
+        StatusPacket *statusPacket = (StatusPacket *)packet;
+
+        // TODO: Add a variable to report vehicle status to UI through KVO
+
         /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
-        if (![[((StatusPacket *)packet) status] isEqualToString:@"INVALID"])
+        if ([[statusPacket status] isEqualToString:@"INVALID"])
         {
-            [self resubscribeDefaultsForVehicle:packet.vehicleId];
+            self.vehicle.vehicleStatus = INVALID_ID;
+        }
+        else
+        {
+            [self resubscribeDefaultsForVehicle:statusPacket.vehicleId];
+
+            if ([[statusPacket status] isEqualToString:@"CONNECTED"])
+                self.vehicle.vehicleStatus = CONNECTED;
+            else if ([[statusPacket status] isEqualToString:@"NOT_CONNECTED"])
+                self.vehicle.vehicleStatus = NOT_CONNECTED;
+
+            self.vehicle.numberDoors   = statusPacket.numberDoors;
+            self.vehicle.numberWindows = statusPacket.numberWindows;
+            self.vehicle.numberSeats   = statusPacket.numberSeats;
+            self.vehicle.driversSide   = statusPacket.driversSide;
         }
     }
     else if ([packet isKindOfClass:[EventPacket class]])

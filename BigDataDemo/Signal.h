@@ -15,6 +15,7 @@
 
 #import <Foundation/Foundation.h>
 
+#define kVehicleSignalEventAttributeKeyPath @"eventAttributes"
 
 @interface Signal : NSObject
 @property (nonatomic, strong, readonly) NSString *signalName;

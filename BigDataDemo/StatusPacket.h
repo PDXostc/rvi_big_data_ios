@@ -19,6 +19,10 @@
 
 @interface StatusPacket : ServerPacket
 @property (nonatomic, strong) NSString *status;
+@property (nonatomic)         NSInteger numberDoors;
+@property (nonatomic)         NSInteger numberWindows;
+@property (nonatomic)         NSInteger numberSeats;
+@property (nonatomic)         NSString *driversSide;
 
 - (id)initWithVehicleId:(NSString *)vehicleId;
 + (id)packetWithVehicleId:(NSString *)vehicleId;
