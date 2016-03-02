@@ -17,5 +17,5 @@
 
 
 @interface SignalManager : NSObject
-//+ (void)getDescriptorForSignal:(NSString *)signalName block:();
++ (void)getDescriptorsForSignals:(NSArray *)signals;
 @end

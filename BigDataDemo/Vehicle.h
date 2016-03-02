@@ -14,39 +14,25 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
-
-@interface RVIRangeSignal : NSObject
-@property (nonatomic, strong) NSNumber *low;
-@property (nonatomic, strong) NSNumber *high;
-@property (nonatomic, strong) NSNumber *step;
-@property (nonatomic, strong) NSNumber *value;
-@end
-
-@interface RVIGPSSignal : NSObject
-@property (nonatomic) double lat;
-@property (nonatomic) double lon;
-@end
-
-
-@interface RVISeatSignal : NSObject
-@property (nonatomic, strong) RVIRangeSignal *position;
-@property (nonatomic)         BOOL           *isDriver;
-@property (nonatomic)         BOOL           *isOccupied;
-@end
+#import "Signal.h"
 
 
 @interface Vehicle : NSObject
-@property (nonatomic, strong) RVIRangeSignal *throttlePressure;
-@property (nonatomic, strong) RVIRangeSignal *breakPressure;
-@property (nonatomic, strong) RVIRangeSignal *speed;
-@property (nonatomic, strong) RVIRangeSignal *engineRPMs;
-@property (nonatomic, strong) RVIRangeSignal *bearing;
-@property (nonatomic, strong) RVIGPSSignal   *location;
-@property (nonatomic, strong) RVISeatSignal  *leftFront;
-@property (nonatomic, strong) RVISeatSignal  *rightFront;
-@property (nonatomic, strong) RVISeatSignal  *leftRear;
-@property (nonatomic, strong) RVISeatSignal  *rightRear;
-@property (nonatomic, strong) RVISeatSignal  *bitch;
+@property (nonatomic, strong) NSString *vehicleId;
+@property (nonatomic, strong) Signal   *throttlePressure;
+@property (nonatomic, strong) Signal   *breakPressure;
+@property (nonatomic, strong) Signal   *speed;
+@property (nonatomic, strong) Signal   *engineRPMs;
+@property (nonatomic, strong) Signal   *bearing;
+@property (nonatomic, strong) Signal   *location;
+@property (nonatomic, strong) Signal   *leftFront;
+@property (nonatomic, strong) Signal   *rightFront;
+@property (nonatomic, strong) Signal   *leftRear;
+@property (nonatomic, strong) Signal   *rightRear;
+@property (nonatomic, strong) Signal   *bitch;
 
+- (NSArray *)defaultSignals;
+- (BOOL)isSignalDefault:(NSString *)signalName;
+- (void)updatePropertyForSignalName:(NSString *)signalName value:(NSInteger)value;
 
 @end

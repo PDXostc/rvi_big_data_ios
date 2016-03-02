@@ -20,4 +20,9 @@
 {
 
 }
++ (void)getDescriptorsForSignals:(NSArray *)signals
+{
+
+}
+
 @end
