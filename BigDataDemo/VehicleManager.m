@@ -22,6 +22,7 @@
 #import "UnsubscribePacket.h"
 #import "SubscribePacket.h"
 #import "AllSignalsPacket.h"
+#import "EventPacket.h"
 
 @interface VehicleManager ()
 @property (nonatomic, strong) Vehicle *vehicle;
@@ -45,7 +46,7 @@
     dispatch_once(&onceToken, ^{
         _sharedManager = [[VehicleManager alloc] init];
 
-        _sharedManager.vehicle = [[Vehicle alloc] init];
+        _sharedManager.vehicle = [[Vehicle alloc] initWithVehicleId:[ConfigurationDataManager getVehicleId]];
     });
 
     return _sharedManager;
@@ -125,9 +126,11 @@
 {
     DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 
-    if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath])
-        [VehicleManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]],
+    if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath]) {
+        [self.vehicle setVehicleId:change[NSKeyValueChangeNewKey]];
+        [VehicleManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]];
         [VehicleManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
+    }
 }
 
 - (void)backendServerDidConnect:(NSNotification *)notification
@@ -147,5 +150,15 @@
 
     NSDictionary *userInfo = notification.userInfo;
     ServerPacket *packet = userInfo[kBackendServerNotificationPacketKey];
+
+    if ([packet isKindOfClass:[EventPacket class]])
+    {
+        EventPacket *eventPacket = (EventPacket *)packet;
+
+        if ([self.vehicle isSignalDefault:eventPacket.event])
+            [self.vehicle eventForSignalName:eventPacket.event attributes:eventPacket.attributes];
+        else ; /* We have an event for a signal that isn't default... pass it along to the UI class that's looking for it??? */
+
+    }
 }
 @end

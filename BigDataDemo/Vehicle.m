@@ -18,17 +18,17 @@
 
 @interface Vehicle ()
 @property (nonatomic, strong) NSDictionary *defaultSignalsMap;
-@property (nonatomic)         NSNumber     *throttlePressureCachedValue;
-@property (nonatomic)         NSNumber     *breakPressureCachedValue;
-@property (nonatomic)         NSNumber     *speedCachedValue;
-@property (nonatomic)         NSNumber     *engineRPMsCachedValue;
-@property (nonatomic)         NSNumber     *bearingCachedValue;
-@property (nonatomic)         NSNumber     *locationCachedValue;
-@property (nonatomic)         NSNumber     *leftFrontCachedValue;
-@property (nonatomic)         NSNumber     *rightFrontCachedValue;
-@property (nonatomic)         NSNumber     *leftRearCachedValue;
-@property (nonatomic)         NSNumber     *rightRearCachedValue;
-@property (nonatomic)         NSNumber     *bitchCachedValue;
+@property (nonatomic)         NSObject     *throttlePressureCachedAttributes;
+@property (nonatomic)         NSObject     *breakPressureCachedAttributes;
+@property (nonatomic)         NSObject     *speedCachedAttributes;
+@property (nonatomic)         NSObject     *engineRPMsCachedAttributes;
+@property (nonatomic)         NSObject     *bearingCachedAttributes;
+@property (nonatomic)         NSObject     *locationCachedAttributes;
+@property (nonatomic)         NSObject     *leftFrontCachedAttributes;
+@property (nonatomic)         NSObject     *rightFrontCachedAttributes;
+@property (nonatomic)         NSObject     *leftRearCachedAttributes;
+@property (nonatomic)         NSObject     *rightRearCachedAttributes;
+@property (nonatomic)         NSObject     *bitchCachedAttributes;
 @end
 
 @implementation Vehicle
@@ -62,12 +62,9 @@
 
     if ((self = [super init]))
     {
-        _vehicleId = [vehicleId copy];
-
         _defaultSignalsMap = [Vehicle signalsMap];
 
-
-        [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys]];
+        [self setVehicleId:vehicleId];
     }
 
     return self;
@@ -76,6 +73,13 @@
 + (id)vehicleWithVehicleId:(NSString *)vehicleId
 {
     return [[Vehicle alloc] initWithVehicleId:vehicleId];
+}
+
+- (void)setVehicleId:(NSString *)vehicleId
+{
+    _vehicleId = [vehicleId copy];
+
+    [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys]];
 }
 
 - (NSArray *)defaultSignals
@@ -88,7 +92,7 @@
     return [self.defaultSignalsMap valueForKey:signalName] != NULL;
 }
 
-- (void)updatePropertyForSignalName:(NSString *)signalName value:(NSInteger)value
+- (void)eventForSignalName:(NSString *)signalName attributes:(NSObject *)attributes
 {
     /* Get our Vehicle class's property string from the car's signal name. */
     NSString *propertyName = self.defaultSignalsMap[signalName];
@@ -99,11 +103,11 @@
     /* Get the signal object from the Vehicle instance via the name of the property using KVC. */
     Signal *signal = [self valueForKey:propertyName];
 
-    /* If it's not null, the SignalManager has returned its descriptor data, so set its value. */
+    /* If it's not null, the SignalManager has returned its descriptor data, so set its attributes. */
     if (signal)
-        signal.signalValue = value;
-    /* Otherwise, SignalManager hasn't returned its descriptor data, so just cache the value, again, using KVC. */
+        signal.eventAttributes = attributes;
+    /* Otherwise, SignalManager hasn't returned its descriptor data, so just cache the attributes, again, using KVC. */
     else
-        [self setValue:@(value) forKey:[NSString stringWithFormat:@"%@CachedValue", propertyName]];
+        [self setValue:attributes forKey:[NSString stringWithFormat:@"%@CachedAttributes", propertyName]];
 }
 @end

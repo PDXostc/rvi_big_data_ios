@@ -33,6 +33,10 @@
 
 - (NSArray *)defaultSignals;
 - (BOOL)isSignalDefault:(NSString *)signalName;
-- (void)updatePropertyForSignalName:(NSString *)signalName value:(NSInteger)value;
+- (void)eventForSignalName:(NSString *)signalName attributes:(NSObject *)attributes;
+
+- (id)initWithVehicleId:(NSString *)vehicleId;
++ (id)vehicleWithVehicleId:(NSString *)vehicleId;
+
 
 @end

@@ -18,7 +18,7 @@
 
 @interface Signal : NSObject
 @property (nonatomic, strong, readonly) NSString *signalName;
-@property (nonatomic)                   NSInteger signalValue;
+@property (nonatomic)                   NSObject *eventAttributes;
 - (id)initWithSignalName:(NSString *)signalName;
 + (id)signalWithSignalName:(NSString *)signalName;
 @end
