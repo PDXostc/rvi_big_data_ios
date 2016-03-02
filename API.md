@@ -1,7 +1,7 @@
 To the Server
 --------------
 
-### (STATUS) Request the status of a vehicle with the given vehicle_id:
+#### (STATUS) Request the status of a vehicle with the given vehicle_id:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -10,7 +10,7 @@ To the Server
 }
 ```
 
-### (ALL_SIGNALS) Request the list of all signals from the vehicle:
+#### (ALL_SIGNALS) Request the list of all signals from the vehicle:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -19,7 +19,7 @@ To the Server
 }
 ```
 
-### (SIGNAL_DESCRIPTOR) Request for the signal_decsriptor information for a signal:
+#### (SIGNAL_DESCRIPTOR) Request for the signal_decsriptor information for a signal:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -29,7 +29,7 @@ To the Server
 }
 ```
 
-### (SUBSCRIBE) Request to subscribe to signals:
+#### (SUBSCRIBE) Request to subscribe to signals:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -39,7 +39,7 @@ To the Server
 }
 ```
 
-### (UNSUBSCRIBE) Request to unsubscribe to signals:
+#### (UNSUBSCRIBE) Request to unsubscribe to signals:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -49,7 +49,7 @@ To the Server
 }
 ```
 
-### (HISTORY) Request for historical data for signal:
+#### (HISTORY) Request for historical data for signal:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -65,7 +65,7 @@ To the Server
 From the Server
 ---------------
 
-### (STATUS) Response to a vehicle status request:
+#### (STATUS) Response to a vehicle status request:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -75,7 +75,7 @@ From the Server
 }
 ```
 
-### (ALL_SIGNALS) Response to an all signals request:
+#### (ALL_SIGNALS) Response to an all signals request:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -85,7 +85,7 @@ From the Server
 }
 ```
 
-### (SIGNAL_DESCRIPTOR) Response to a signal_decsriptor request with the information for a signal:
+#### (SIGNAL_DESCRIPTOR) Response to a signal_decsriptor request with the information for a signal:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -96,7 +96,7 @@ From the Server
 }
 ```
 
-### (HISTORY) Response to a request for historical data for signal:
+#### (HISTORY) Response to a request for historical data for signal:
 ```
 {
     "vehicle_id": "vehicle_55",
@@ -109,7 +109,7 @@ From the Server
 }
 ```
 
-### (EVENT) A signal change/event occurred:
+#### (EVENT) A signal change/event occurred:
 ```
 {
     "attributes": {
@@ -127,7 +127,7 @@ From the Server
 }
 ```
 
-### (ERROR) An error to a request occurred:
+#### (ERROR) An error to a request occurred:
 ```
 {
     "vehicle_id": "vehicle_55",
