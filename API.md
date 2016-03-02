@@ -19,13 +19,13 @@ To the Server
 }
 ```
 
-#### (SIGNAL_DESCRIPTOR) Request for the signal_decsriptor information for a signal:
+#### (SIGNAL_DESCRIPTOR) Request for the signal_decsriptor information for a signalName:
 ```
 {
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "SIGNAL_DESCRIPTOR",
-    "signal": "some_signal"
+    "signalName": "some_signal"
 }
 ```
 
@@ -49,13 +49,13 @@ To the Server
 }
 ```
 
-#### (HISTORY) Request for historical data for signal:
+#### (HISTORY) Request for historical data for signalName:
 ```
 {
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "HISTORY",
-    "signal": "some_signal",
+    "signalName": "some_signal",
     "start": 1456768000000,
     "stop": 1456768999999
 }
@@ -72,6 +72,10 @@ From the Server
     "timestamp": 1456768736936,
     "command": "STATUS",
     "status": ["CONNECTED"|"NOT_CONNECTED"|"INVALID_VEHICLE_ID"]
+    "number_doors": <num_doors>,
+    "number_windows": <num_windows>,
+    "number_seats": <num_seats>,
+    "driver_side": ["LEFT"|"RIGHT"]
 }
 ```
 
@@ -85,38 +89,38 @@ From the Server
 }
 ```
 
-#### (SIGNAL_DESCRIPTOR) Response to a signal_decsriptor request with the information for a signal:
+#### (SIGNAL_DESCRIPTOR) Response to a signal_decsriptor request with the information for a signalName:
 ```
 {
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "SIGNAL_DESCRIPTOR",
-    "signal": "some_signal",
+    "signalName": "some_signal",
     "descriptor": {...}
 }
 ```
 
-#### (HISTORY) Response to a request for historical data for signal:
+#### (HISTORY) Response to a request for historical data for signalName:
 ```
 {
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "HISTORY",
-    "signal": "some_signal",
+    "signalName": "some_signal",
     "start": 1456768000000,
     "stop": 1456768999999,
     "events": [(see event data description below)]
 }
 ```
 
-#### (EVENT) A signal change/event occurred:
+#### (EVENT) A signalName change/event occurred:
 ```
 {
     "attributes": {
         "value": "??? what should be here ???"
     },
     "vehicle_id": "vehicle_55",
-    "signal": "IVI_TONE_CHANGE",
+    "signalName": "IVI_TONE_CHANGE",
     "location": {
         "coordinates": [9.454, 61.163],
         "type": "Point"
@@ -135,18 +139,18 @@ From the Server
     "command": "ERROR",
     "error": "error_message",
     "orig_command": "<SIGNALS|SIGNAL_DESCRIPTOR|HISTORY>"
-    "signal": <signal_if_available>
+    "signalName": <signal_if_available>
 }
 ```
 
 Possible errors:
 - A vehicle_id doesn't exist for any command, except for the status request, which entire purpose is to find out if the vehicle_id exits. This error probably shouldn't happen, because I'll always be making a vehicle status request with any vehicle_id to confirm this, but it's still a possibility.
 
-- A signal_descriptor request is made for a signal that doesn't exist or the request is made for a signal that doesn't have description information.
+- A signal_descriptor request is made for a signalName that doesn't exist or the request is made for a signalName that doesn't have description information.
 
-- A history request is made for a signal that doesn't exist.
+- A history request is made for a signalName that doesn't exist.
 
-- A subscribe/unsubscribe is made for a signal that doesn't exist. I don't think we need to send an error in this case, though, do we? If you want to, I'll just log it then ignore it most likely.
+- A subscribe/unsubscribe is made for a signalName that doesn't exist. I don't think we need to send an error in this case, though, do we? If you want to, I'll just log it then ignore it most likely.
 
 
 
