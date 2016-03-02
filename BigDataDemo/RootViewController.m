@@ -12,6 +12,7 @@
 #import "ConfigurationDataManager.h"
 #import "BackendServerManager.h"
 #import "VehicleManager.h"
+#import "SignalManager.h"
 
 @interface RootViewController ()
 
@@ -25,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [SignalManager start];
     [VehicleManager start];
     [BackendServerManager start];
 

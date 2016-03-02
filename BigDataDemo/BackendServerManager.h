@@ -20,14 +20,14 @@ extern NSString *const kBackendServerDidConnectNotification;
 extern NSString *const kBackendServerDidFailToConnectNotification;
 extern NSString *const kBackendServerDidDisconnectNotification;
 extern NSString *const kBackendServerDidSendDataNotification;
-extern NSString *const kBackendServerDidFailToSendDataNotification;
-extern NSString *const kBackendServerDidReceiveDataNotification;
-extern NSString *const kBackendServerNotificationDataKey;
+extern NSString *const kBackendServerCommunicationDidFailNotification;
+extern NSString *const kBackendServerDidReceivePacketNotification;
+extern NSString *const kBackendServerNotificationPacketKey;
 extern NSString *const kBackendServerNotificationErrorKey;
 
+@class ServerPacket;
 @interface BackendServerManager : NSObject
-
 + (void)start;
 + (BOOL)isConnected;
-+ (void)sendData:(NSString *)data;
++ (void)sendPacket:(ServerPacket *)packet;
 @end

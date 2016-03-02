@@ -18,20 +18,21 @@
 
 @class ServerPacket;
 
-
-@protocol PacketParserDelegate <NSObject>
-
-- (void)onPacketParsed:(ServerPacket *)packet;
-
-@optional
-- (void)onJsonStringParsed:(NSString *)jsonString;
-- (void)onJsonObjectParsed:(NSObject *)jsonObject;
-@end
+//@protocol PacketParserDelegate <NSObject>
+//- (void)onPacketParsed:(ServerPacket *)packet;
+//
+////@optional
+////- (void)onJsonStringParsed:(NSString *)jsonString;
+////- (void)onJsonObjectParsed:(NSObject *)jsonObject;
+//@end
 
 @interface PacketParser : NSObject
-@property (nonatomic, weak) id <PacketParserDelegate> delegate;
+//@property (nonatomic, weak) id <PacketParserDelegate> delegate;
+//+ (id)packetParser;
+//- (void)parseData:(NSString *)data;
+//- (void)clear;
 
-+ (id)packetParser;
-- (void)parseData:(NSString *)data;
-- (void)clear;
++ (NSString *)stringFromPacket:(ServerPacket *)packet;
++ (ServerPacket *)packetFromString:(NSString *)string;
+
 @end

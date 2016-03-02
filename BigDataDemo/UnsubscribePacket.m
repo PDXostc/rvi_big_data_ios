@@ -41,23 +41,23 @@
     return [[UnsubscribePacket alloc] initWithSignals:signals vehicleId:vehicleId];
 }
 
-- (id)initWithDictionary:(NSDictionary *)dict
-{
-    if (dict == nil)
-        return nil;
-
-    if ((self = [super initFromDictionary:dict]))
-    {
-        _signals = dict[@"signals"];
-    }
-
-    return self;
-}
-
-+ (id)packetWithDictionary:(NSDictionary *)dictionary
-{
-    return [[UnsubscribePacket alloc] initWithDictionary:dictionary];
-}
+//- (id)initWithDictionary:(NSDictionary *)dict
+//{
+//    if (dict == nil)
+//        return nil;
+//
+//    if ((self = [super initFromDictionary:dict]))
+//    {
+//        _signals = dict[@"signals"];
+//    }
+//
+//    return self;
+//}
+//
+//+ (id)packetWithDictionary:(NSDictionary *)dictionary
+//{
+//    return [[UnsubscribePacket alloc] initWithDictionary:dictionary];
+//}
 
 - (NSDictionary *)toDictionary
 {

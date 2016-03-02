@@ -16,6 +16,8 @@
 #import "ConfigurationViewController.h"
 #import "Util.h"
 #import "ConfigurationDataManager.h"
+#import "Vehicle.h"
+#import "VehicleManager.h"
 
 @interface UITextField (BorderStuff)
 - (void)addRedBorder;
@@ -60,11 +62,17 @@
 @property (nonatomic, weak) IBOutlet UITextField *vehicleIdTextField;
 @property (nonatomic, weak) IBOutlet UITextField *serverUrlTextField;
 @property (nonatomic, weak) IBOutlet UITextField *serverPortTextField;
+@property (nonatomic, weak) Vehicle *vehicle;
 @end
 
 @implementation ConfigurationViewController
 {
 
+}
+/* Just in case I change the app later and the instance isn't constant throughout the app's execution. */
+- (Vehicle *)vehicle
+{
+    return [VehicleManager vehicle];
 }
 
 - (void)viewDidLoad
@@ -103,6 +111,7 @@
     DLog(@"");
     [super viewWillAppear:animated];
 
+    [self registerObservers];
 
     if ([ConfigurationDataManager getVehicleId])
         [self.vehicleIdTextField setText:[ConfigurationDataManager getVehicleId]];
@@ -137,6 +146,8 @@
 {
     DLog(@"");
     [super viewDidDisappear:animated];
+
+    [self unregisterObservers];
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -191,5 +202,30 @@
 
     return YES;
 }
+
+- (void)registerObservers
+{
+    [self.vehicle addObserver:self
+                   forKeyPath:kVehicleVehicleStatusKeyPath
+                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                      context:NULL];
+}
+
+- (void)unregisterObservers
+{
+    [self.vehicle removeObserver:self
+                      forKeyPath:kVehicleVehicleStatusKeyPath];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
+
+    if ([keyPath isEqualToString:kVehicleSignalEventAttributeKeyPath])
+    {
+
+    }
+}
+
 
 @end

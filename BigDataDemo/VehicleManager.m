@@ -18,15 +18,16 @@
 #import "Util.h"
 #import "BackendServerManager.h"
 #import "Vehicle.h"
-#import "PacketParser.h"
 #import "ServerPacket.h"
 #import "UnsubscribePacket.h"
 #import "SubscribePacket.h"
-#import "SignalsPacket.h"
+#import "AllSignalsPacket.h"
+#import "EventPacket.h"
+#import "StatusPacket.h"
+#import "ErrorPacket.h"
 
-@interface VehicleManager () <PacketParserDelegate>
+@interface VehicleManager ()
 @property (nonatomic, strong) Vehicle *vehicle;
-@property (nonatomic, strong) PacketParser *packetParser;
 @end
 
 @implementation VehicleManager
@@ -34,10 +35,10 @@
 
 }
 
-+ (NSArray *)defaultSignals
-{
-    return @[@"foo", @"bar", @"baz"];
-}
+//+ (NSArray *)defaultSignals
+//{
+//    return @[@"foo", @"bar", @"baz"];
+//}
 
 + (id)sharedManager
 {
@@ -47,10 +48,7 @@
     dispatch_once(&onceToken, ^{
         _sharedManager = [[VehicleManager alloc] init];
 
-        _sharedManager.vehicle = [[Vehicle alloc] init];
-
-        _sharedManager.packetParser = [PacketParser packetParser];
-        _sharedManager.packetParser.delegate = _sharedManager;
+        _sharedManager.vehicle = [[Vehicle alloc] init];//WithVehicleId:[ConfigurationDataManager getVehicleId]];
     });
 
     return _sharedManager;
@@ -61,55 +59,44 @@
     [[VehicleManager sharedManager] registerObservers];
 }
 
-+ (NSString *)stringFromPacket:(ServerPacket *)packet
+- (void)getStatusForVehicle:(NSString *)vehicleId
 {
-    NSError *jsonError;
-    NSData  *payload = [NSJSONSerialization dataWithJSONObject:[packet toDictionary]
-                                                       options:nil
-                                                         error:&jsonError];
-
-    if (jsonError)
-        return nil;
-
-    return  [[NSString alloc] initWithData:payload encoding:NSUTF8StringEncoding];
+    [self.vehicle setVehicleStatus:UNKNOWN];
+    [BackendServerManager sendPacket:[StatusPacket packetWithVehicleId:vehicleId]];
 }
 
-+ (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
+- (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
-    NSString *data = [VehicleManager stringFromPacket:[SubscribePacket packetWithSignals:[VehicleManager defaultSignals]
-                                                                               vehicleId:vehicleId]];
-    if (data) [BackendServerManager sendData:data];
+    [self.vehicle setVehicleId:vehicleId];
+    [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:[self.vehicle defaultSignals]
+                                                              vehicleId:vehicleId]];
 }
 
-+ (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
+- (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
-    NSString *data = [VehicleManager stringFromPacket:[UnsubscribePacket packetWithSignals:[VehicleManager defaultSignals]
-                                                                                 vehicleId:vehicleId]];
-    if (data) [BackendServerManager sendData:data];
+    [self.vehicle setVehicleId:NULL];
+    [BackendServerManager sendPacket:[UnsubscribePacket packetWithSignals:[self.vehicle defaultSignals]
+                                                                vehicleId:vehicleId]];
 }
 
 + (void)subscribeToSignal:(NSString *)signal
 {
-    NSString *data = [VehicleManager stringFromPacket:[SubscribePacket packetWithSignals:@[signal]
-                                                                                 vehicleId:[ConfigurationDataManager getVehicleId]]];
-    if (data) [BackendServerManager sendData:data];
+    [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:@[signal]
+                                                              vehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
 + (void)unsubscribeFromSignal:(NSString *)signal
 {
-    NSString *data = [VehicleManager stringFromPacket:[UnsubscribePacket packetWithSignals:@[signal]
-                                                                                 vehicleId:[ConfigurationDataManager getVehicleId]]];
-    if (data) [BackendServerManager sendData:data];
+    [BackendServerManager sendPacket:[UnsubscribePacket packetWithSignals:@[signal]
+                                                                vehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
 + (void)getAllSignals
 {
-    NSString *data = [VehicleManager stringFromPacket:[SignalsPacket packetWithAction:@"GET"
-                                                                            vehicleId:[ConfigurationDataManager getVehicleId]]];
-    if (data) [BackendServerManager sendData:data];
+    [BackendServerManager sendPacket:[AllSignalsPacket packetWithVehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
-+ (Vehicle *)getVehicle
++ (Vehicle *)vehicle
 {
     return [[VehicleManager sharedManager] vehicle];
 }
@@ -133,7 +120,12 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backendServerDidReceiveData:)
-                                                 name:kBackendServerDidReceiveDataNotification
+                                                 name:kBackendServerDidReceivePacketNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerCommunicationDidFail:)
+                                                 name:kBackendServerCommunicationDidFailNotification
                                                object:nil];
 }
 
@@ -149,22 +141,22 @@
 {
     DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 
-    if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath])
-        [VehicleManager unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]],
-        [VehicleManager resubscribeDefaultsForVehicle:change[NSKeyValueChangeNewKey]];
+    if ([keyPath isEqualToString:kConfigurationDataManagerVehicleIdKeyPath]) {
+        [self unsubscribeDefaultsForVehicle:change[NSKeyValueChangeOldKey]];
+        [self getStatusForVehicle:change[NSKeyValueChangeNewKey]];
+    }
 }
 
 - (void)backendServerDidConnect:(NSNotification *)notification
 {
     DLog(@"");
-    [VehicleManager resubscribeDefaultsForVehicle:[ConfigurationDataManager getVehicleId]];
+
+    [self getStatusForVehicle:[ConfigurationDataManager getVehicleId]];
 }
 
 - (void)backendServerDidDisconnect:(NSNotification *)notification
 {
     DLog(@"");
-
-    [self.packetParser clear];
 }
 
 - (void)backendServerDidReceiveData:(NSNotification *)notification
@@ -172,13 +164,56 @@
     DLog(@"");
 
     NSDictionary *userInfo = notification.userInfo;
-    NSString *data = userInfo[kBackendServerNotificationDataKey];
+    ServerPacket *packet = userInfo[kBackendServerNotificationPacketKey];
 
-    [self.packetParser parseData:data];
+    /* If for any reason, the currently saved vehicle id doesn't match the one in the packet,
+     * just ignore the packet. */
+    if (![packet.vehicleId isEqualToString:[ConfigurationDataManager getVehicleId]])
+        return;
+
+    if ([packet isKindOfClass:[StatusPacket class]])
+    {
+        StatusPacket *statusPacket = (StatusPacket *)packet;
+
+        // TODO: Add a variable to report vehicle status to UI through KVO
+
+        /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
+        if ([[statusPacket status] isEqualToString:@"INVALID"])
+        {
+            self.vehicle.vehicleStatus = INVALID_ID;
+        }
+        else
+        {
+            [self resubscribeDefaultsForVehicle:statusPacket.vehicleId];
+
+            if ([[statusPacket status] isEqualToString:@"CONNECTED"])
+                self.vehicle.vehicleStatus = CONNECTED;
+            else if ([[statusPacket status] isEqualToString:@"NOT_CONNECTED"])
+                self.vehicle.vehicleStatus = NOT_CONNECTED;
+
+            self.vehicle.numberDoors   = statusPacket.numberDoors;
+            self.vehicle.numberWindows = statusPacket.numberWindows;
+            self.vehicle.numberSeats   = statusPacket.numberSeats;
+            self.vehicle.driversSide   = statusPacket.driversSide;
+        }
+    }
+    else if ([packet isKindOfClass:[EventPacket class]])
+    {
+        EventPacket *eventPacket = (EventPacket *)packet;
+
+        if ([self.vehicle isSignalDefault:eventPacket.event])
+            [self.vehicle eventForSignalName:eventPacket.event attributes:eventPacket.attributes];
+        else ; /* We have an event for a signalName that isn't default... pass it along to the UI class that's looking for it??? */
+
+    }
+    else if ([packet isKindOfClass:[ErrorPacket class]])
+    {
+        ; /* No-op for now */
+    }
 }
 
-- (void)onPacketParsed:(ServerPacket *)packet
+- (void)backendServerCommunicationDidFail:(NSNotification *)notification
 {
-
+    DLog(@"");
 }
 @end

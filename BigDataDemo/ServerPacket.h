@@ -19,10 +19,13 @@
 typedef enum
 {
     NONE,
+    STATUS,
+    ALL_SIGNALS,
+    SIGNAL_DESCRIPTOR,
     SUBSCRIBE,
     UNSUBSCRIBE,
     EVENT,
-    SIGNALS,
+    ERROR,
 } Command;
 
 @interface ServerPacket : NSObject

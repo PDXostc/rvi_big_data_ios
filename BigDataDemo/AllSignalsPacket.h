@@ -6,7 +6,7 @@
  * Mozilla Public License, version 2.0. The full text of the 
  * Mozilla Public License is at https://www.mozilla.org/MPL/2.0/
  * 
- * File:    SubscribePacket.h
+ * File:    AllSignalsPacket.h
  * Project: BigDataDemo
  * 
  * Created by Lilli Szafranski on 2/29/16.
@@ -17,12 +17,12 @@
 #import "ServerPacket.h"
 
 
-@interface SubscribePacket : ServerPacket
-- (id)initWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
-+ (id)packetWithSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
+@interface AllSignalsPacket : ServerPacket
+- (id)initWithVehicleId:(NSString *)vehicleId;
++ (id)packetWithVehicleId:(NSString *)vehicleId;
 
-//- (id)initWithDictionary:(NSDictionary *)dict;
-//+ (id)packetWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithDictionary:(NSDictionary *)dict;
++ (id)packetWithDictionary:(NSDictionary *)dictionary;
 
 - (NSDictionary *)toDictionary;
 @end
