@@ -31,6 +31,7 @@ NSString * stringForCommand(Command command)
         case EVENT:             return @"event";
         case ALL_SIGNALS:       return @"all_signals";
         case SIGNAL_DESCRIPTOR: return @"signal_descriptor";
+        case ERROR:             return @"error";
         default:                return @"";
     }
 }
@@ -41,7 +42,8 @@ Command commandForString(NSString * string)
     if ([string isEqualToString:@"unsubscribe"])       return UNSUBSCRIBE;
     if ([string isEqualToString:@"event"])             return EVENT;
     if ([string isEqualToString:@"all_signals"])       return ALL_SIGNALS;
-    if ([string isEqualToString:@"signal_descriptor"]) return ALL_SIGNALS;
+    if ([string isEqualToString:@"signal_descriptor"]) return SIGNAL_DESCRIPTOR;
+    if ([string isEqualToString:@"error"])             return ERROR;
 
     return NONE;
 }

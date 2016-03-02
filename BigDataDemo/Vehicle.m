@@ -79,7 +79,7 @@
 {
     _vehicleId = [vehicleId copy];
 
-    [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys]];
+    [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys] vehicleId:vehicleId];
 }
 
 - (NSArray *)defaultSignals

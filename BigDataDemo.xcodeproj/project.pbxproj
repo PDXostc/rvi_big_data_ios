@@ -25,6 +25,7 @@
 		2335C7EF1C7D29A300BE6E80 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2335C7EE1C7D29A300BE6E80 /* MapKit.framework */; };
 		62348017B0F0B03098D0B0A9 /* PacketParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348E284E733680422B9F11 /* PacketParser.m */; };
 		623480C9A8CF30C58360C5D3 /* ConfigurationDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */; };
+		6234811D720144CB4C95B168 /* ErrorPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348491B43F5FB9BA610D52 /* ErrorPacket.m */; };
 		6234820878088AD382B85C12 /* LocationSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234894ED08277BE91DD8245 /* LocationSignal.m */; };
 		623482C6B41F3844F271CBE5 /* EnumSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348B8D14F116F5EE552991 /* EnumSignal.m */; };
 		62348386539623FE0CF56E00 /* DefaultSignalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234830517C28E235471F75B /* DefaultSignalsViewController.m */; };
@@ -104,6 +105,7 @@
 		623483F7DDBBE91DD6380AED /* AllSignalsPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSignalsPacket.m; sourceTree = "<group>"; };
 		623483F9F78C24A5144968D3 /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
 		623484143479B1A740B702F1 /* VehicleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VehicleManager.m; sourceTree = "<group>"; };
+		62348491B43F5FB9BA610D52 /* ErrorPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorPacket.m; sourceTree = "<group>"; };
 		623484C40B36882F3B97A460 /* UnsubscribePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnsubscribePacket.h; sourceTree = "<group>"; };
 		6234854B9DB1B1949285FDCC /* MapDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDisplayViewController.m; sourceTree = "<group>"; };
 		623485DB8F12112BEC708F0E /* VehicleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VehicleManager.h; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		62348B8D14F116F5EE552991 /* EnumSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnumSignal.m; sourceTree = "<group>"; };
 		62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSignalsViewController.h; sourceTree = "<group>"; };
 		62348C02BD08EBB3581175B7 /* SocketRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocket.h; sourceTree = "<group>"; };
+		62348CDB534A399668E8B6A3 /* ErrorPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorPacket.h; sourceTree = "<group>"; };
 		62348D59C5B45893B50992EA /* SubscribePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribePacket.h; sourceTree = "<group>"; };
 		62348E0296B33F1DFAE1413D /* ConfigurationDataManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationDataManagerTest.m; sourceTree = "<group>"; };
 		62348E2845E601F7D10A5BCD /* Signal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signal.h; sourceTree = "<group>"; };
@@ -222,6 +225,8 @@
 				623482ED61640C3C66B12694 /* AllSignalsPacket.h */,
 				62348B561B8FF27953C7C3B7 /* SignalDescriptorPacket.m */,
 				62348F488FE2445B034A86B9 /* SignalDescriptorPacket.h */,
+				62348491B43F5FB9BA610D52 /* ErrorPacket.m */,
+				62348CDB534A399668E8B6A3 /* ErrorPacket.h */,
 			);
 			name = Packets;
 			sourceTree = "<group>";
@@ -484,6 +489,7 @@
 				62348BB30FB157769AE9944D /* SignalManager.m in Sources */,
 				62348AF13A7B2ABD1B4AE7A3 /* SignalDescriptorPacket.m in Sources */,
 				6234820878088AD382B85C12 /* LocationSignal.m in Sources */,
+				6234811D720144CB4C95B168 /* ErrorPacket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

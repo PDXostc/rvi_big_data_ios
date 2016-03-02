@@ -25,6 +25,7 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/LocationSignal.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/SignalManager.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ErrorPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ConfigurationDataManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AppDelegate.h" isTestSource="false" />
@@ -37,19 +38,19 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Util.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/MapDisplayViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DataViewController.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ModelController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/MapDisplayViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DataViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ModelController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/SignalDescriptorPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RootViewController.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/PacketParser.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ModelController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EventPacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Vehicle.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Base.lproj/LaunchScreen.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Base.lproj/Main.storyboard" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EventPacket.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ErrorPacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/SignalDescriptorPacket.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EventPacket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RangeSignal.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/UnsubscribePacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/PacketParser.m" isTestSource="false" />
@@ -57,12 +58,13 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/RangeSignal.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/BackendServerManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/UnsubscribePacket.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsViewController.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/PacketParser.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EnumSignal.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/BackendServerManager.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Assets.xcassets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsViewController.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/EnumSignal.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Assets.xcassets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsViewController.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/AllSignalsPacket.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/SocketRocket/SocketRocket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/SocketRocket/SRWebSocket.h" isTestSource="false" />

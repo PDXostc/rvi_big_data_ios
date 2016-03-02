@@ -24,6 +24,7 @@ typedef enum
     EVENT,
     ALL_SIGNALS,
     SIGNAL_DESCRIPTOR,
+    ERROR,
 } Command;
 
 @interface ServerPacket : NSObject
