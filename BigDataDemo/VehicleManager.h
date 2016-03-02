@@ -24,6 +24,6 @@
 + (void)unsubscribeFromSignal:(NSString *)signal;
 + (void)getAllSignals;
 
-+ (NSArray *)defaultSignals;
+//+ (NSArray *)defaultSignals;
 + (Vehicle *)vehicle;
 @end

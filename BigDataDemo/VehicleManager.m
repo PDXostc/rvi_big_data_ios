@@ -35,10 +35,10 @@
 
 }
 
-+ (NSArray *)defaultSignals
-{
-    return @[@"foo", @"bar", @"baz"];
-}
+//+ (NSArray *)defaultSignals
+//{
+//    return @[@"foo", @"bar", @"baz"];
+//}
 
 + (id)sharedManager
 {
@@ -172,7 +172,7 @@
 
     if ([packet isKindOfClass:[StatusPacket class]])
     {
-        /* If our vehicle id is good, set the vehicle's property (so it fetches the signal descriptor stuff) and subscribe. */
+        /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
         if (![[((StatusPacket *)packet) status] isEqualToString:@"INVALID"])
         {
             [self resubscribeDefaultsForVehicle:packet.vehicleId];
@@ -184,7 +184,7 @@
 
         if ([self.vehicle isSignalDefault:eventPacket.event])
             [self.vehicle eventForSignalName:eventPacket.event attributes:eventPacket.attributes];
-        else ; /* We have an event for a signal that isn't default... pass it along to the UI class that's looking for it??? */
+        else ; /* We have an event for a signalName that isn't default... pass it along to the UI class that's looking for it??? */
 
     }
     else if ([packet isKindOfClass:[ErrorPacket class]])

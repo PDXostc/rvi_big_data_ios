@@ -75,12 +75,40 @@
     return [[Vehicle alloc] init];//WithVehicleId:vehicleId];
 }
 
-- (void)setVehicleId:(NSString *)vehicleId
+- (NSString *)cachedPropertyForProperty:(NSString *)propertyName
 {
-    _vehicleId = [vehicleId copy];
+    return [NSString stringWithFormat:@"%@CachedAttributes", propertyName];
+}
 
-    if (vehicleId)
-        [SignalManager getDescriptorsForSignals:[_defaultSignalsMap allKeys] vehicleId:vehicleId];
+- (void)setVehicleId:(NSString *)newVehicleId
+{
+    _vehicleId = [newVehicleId copy];
+
+    if (newVehicleId)
+        [SignalManager getDescriptorsForSignalNames:[_defaultSignalsMap allKeys]
+                                          vehicleId:newVehicleId
+                                              block:^(NSString *signalName, NSString *vehicleId, Signal *signal) {
+                                                  if (![newVehicleId isEqualToString:vehicleId])
+                                                  {
+                                                      return; // Error I suppose
+                                                  }
+
+                                                  /* Get our Vehicle class's property string from the car's signalName name. */
+                                                  NSString *propertyName = self.defaultSignalsMap[signalName];
+
+                                                  /* Maybe it isn't in the dictionary; return. */
+                                                  if (!propertyName) return;
+
+                                                  /* Set the vehicle's objects property to the signal object. */
+                                                  [self setValue:signal forKey:propertyName];
+
+                                                  /* Get the cached value, if any. */
+                                                  NSObject *attributes = [self valueForKey:[self cachedPropertyForProperty:propertyName]];
+
+                                                  /* Set our signal object's attributes to our cached value. */
+                                                  signal.eventAttributes = attributes;
+
+                                              }];
 }
 
 - (NSArray *)defaultSignals
@@ -95,7 +123,7 @@
 
 - (void)eventForSignalName:(NSString *)signalName attributes:(NSObject *)attributes
 {
-    /* Get our Vehicle class's property string from the car's signal name. */
+    /* Get our Vehicle class's property string from the car's signalName name. */
     NSString *propertyName = self.defaultSignalsMap[signalName];
 
     /* Maybe it isn't in the dictionary; return. */
@@ -109,6 +137,6 @@
         signal.eventAttributes = attributes;
     /* Otherwise, SignalManager hasn't returned its descriptor data, so just cache the attributes, again, using KVC. */
     else
-        [self setValue:attributes forKey:[NSString stringWithFormat:@"%@CachedAttributes", propertyName]];
+        [self setValue:attributes forKey:[self cachedPropertyForProperty:propertyName]];
 }
 @end

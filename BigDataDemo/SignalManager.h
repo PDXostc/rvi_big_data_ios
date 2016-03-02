@@ -15,8 +15,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class Signal;
+typedef void (^CallbackBlock)(NSString * signalName, NSString *vehicleId, Signal *signal);
 
 @interface SignalManager : NSObject
 + (void)start;
-+ (void)getDescriptorsForSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId;
++ (void)getDescriptorsForSignalNames:(NSArray *)signalNames vehicleId:(NSString *)vehicleId block:(CallbackBlock)callbackBlock;
 @end

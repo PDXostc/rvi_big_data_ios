@@ -28,7 +28,7 @@
 
     if ((self = [super initFromDictionary:dict]))
     {
-        _signal           = dict[@"signal"];
+        _signal           = dict[@"signalName"];
         _errorMessage     = dict[@"error_message"];
         _originalCommand  = dict[@"original_command"];
     }

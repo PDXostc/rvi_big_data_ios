@@ -18,9 +18,40 @@
 #import "SignalDescriptorPacket.h"
 #import "Util.h"
 #import "ErrorPacket.h"
+#import "Signal.h"
+
+@interface CallbackData : NSObject
+@property (nonatomic, strong) NSString      *signalName;
+@property (nonatomic, strong) NSString      *vehicleId;
+@property (nonatomic, copy)   CallbackBlock  callback;
+@end
+
+@implementation CallbackData
+- (id)initWithSignalName:(NSString *)signalName vehicleId:(id)vehicleId callbackBlock:(CallbackBlock)callbackBlock
+{
+    if ((signalName == nil) || (vehicleId == nil) || (callbackBlock == nil))
+        return nil;
+
+    if ((self = [super init]))
+    {
+        _signalName = [signalName copy];
+        _vehicleId  = [vehicleId copy];
+        _callback   = [callbackBlock copy];
+
+    }
+
+    return self;
+}
+
++ (id)callbackDataWithSignalName:(NSString *)signalName vehicleId:(id)vehicleId callbackBlock:(CallbackBlock)callbackBlock
+{
+    return [[CallbackData alloc] initWithSignalName:signalName vehicleId:vehicleId callbackBlock:callbackBlock];
+}
+@end
+
 
 @interface SignalManager ()
-@property (nonatomic, strong) NSMutableDictionary *pendingSignalDescriptorRequests;
+//@property (nonatomic, strong) NSMutableDictionary *pendingSignalDescriptorRequests;
 @property (nonatomic, strong) NSMutableDictionary *ongoingSignalDescriptorRequests;
 @end
 
@@ -37,7 +68,7 @@
     dispatch_once(&onceToken, ^{
         _sharedManager = [[SignalManager alloc] init];
 
-        _sharedManager.pendingSignalDescriptorRequests = [NSMutableDictionary dictionary];
+//        _sharedManager.pendingSignalDescriptorRequests = [NSMutableDictionary dictionary];
         _sharedManager.ongoingSignalDescriptorRequests = [NSMutableDictionary dictionary];
     });
 
@@ -49,13 +80,21 @@
     [[SignalManager sharedManager] registerObservers];
 }
 
-+ (void)getDescriptorsForSignals:(NSArray *)signals vehicleId:(NSString *)vehicleId
++ (void)getDescriptorsForSignalNames:(NSArray *)signalNames vehicleId:(NSString *)vehicleId block:(CallbackBlock)callbackBlock
 {
-//    for (NSString *signal in signals)
-//    {
-//        SignalDescriptorPacket *packet = [SignalDescriptorPacket packetWithSignal:signal vehicleId:vehicleId];
-//        [[SignalManager sharedManager] pendingSignalDescriptorRequests][signal] = packet;
-//    }
+    for (NSString *signalName in signalNames)
+    {
+        // TODO: Check if data is cached
+        if (false) { }
+        else
+        {
+            SignalDescriptorPacket *packet = [SignalDescriptorPacket packetWithSignal:signalName vehicleId:vehicleId];
+            CallbackData *data = [CallbackData callbackDataWithSignalName:signalName vehicleId:vehicleId callbackBlock:callbackBlock];
+
+            [[SignalManager sharedManager] ongoingSignalDescriptorRequests][signalName] = data;
+            [BackendServerManager sendPacket:packet];
+        }
+    }
 //
 //
 //    if ([BackendServerManager isConnected])
@@ -66,10 +105,10 @@
 //{
 //    NSArray *signals = [self.pendingSignalDescriptorRequests allKeys];
 //
-//    for (NSString *signal in signals)
+//    for (NSString *signalName in signals)
 //    {
 //        [self.pendingSignalDescriptorRequests o
-//        self.ongoingSignalDescriptorRequests[signal]
+//        self.ongoingSignalDescriptorRequests[signalName]
 //    }
 //}
 
@@ -101,6 +140,11 @@
 //    DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 //}
 
+- (Signal *)parseSignalFromDescriptor:(NSObject *)descriptor signalName:(NSString *)signalName
+{
+    return  [Signal signalWithSignalName:signalName];
+}
+
 - (void)backendServerDidConnect:(NSNotification *)notification
 {
     DLog(@"");
@@ -119,16 +163,26 @@
 {
     DLog(@"");
 
-    NSDictionary *userInfo = notification.userInfo;
-    ServerPacket *packet = userInfo[kBackendServerNotificationPacketKey];
+    NSDictionary *userInfo     = notification.userInfo;
+    ServerPacket *packet       = userInfo[kBackendServerNotificationPacketKey];
+
+    NSString     *signalName   = ((SignalDescriptorPacket *)packet).signal;
+    NSString     *vehicleId    = packet.vehicleId;
+
+    CallbackData *callbackData = self.ongoingSignalDescriptorRequests[signalName];
 
     if ([packet isKindOfClass:[SignalDescriptorPacket class]])
     {
+        Signal *signal = [self parseSignalFromDescriptor:((SignalDescriptorPacket *)packet) signalName:signalName];
+        CallbackBlock callbackBlock = callbackData.callback;
 
+        callbackBlock(signalName, vehicleId, signal);
     }
     else if ([packet isKindOfClass:[ErrorPacket class]])
     {
 
     }
+
+    [self.ongoingSignalDescriptorRequests removeObjectForKey:signalName];
 }
 @end
