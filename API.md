@@ -117,7 +117,7 @@ Response to a request for historical data for signal:
     "stop": 1456768999999,
     "events": [(see event data description below)]
 }
-
+```
 
 A signal change/event occurred:
 ------------------------------------------------
