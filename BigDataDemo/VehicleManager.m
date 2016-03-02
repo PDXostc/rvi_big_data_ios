@@ -86,7 +86,7 @@
     [BackendServerManager sendPacket:[AllSignalsPacket packetWithVehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
-+ (Vehicle *)getVehicle
++ (Vehicle *)vehicle
 {
     return [[VehicleManager sharedManager] vehicle];
 }

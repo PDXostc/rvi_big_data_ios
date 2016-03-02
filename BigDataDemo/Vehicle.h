@@ -16,6 +16,18 @@
 #import <Foundation/Foundation.h>
 #import "Signal.h"
 
+#define kVehicleThrottlePressureKeyPath @"throttlePressure"
+#define kVehicleBreakPressureKeyPath    @"breakPressure"
+#define kVehicleSpeedKeyPath            @"speed"
+#define kVehicleEngineRPMsKeyPath       @"engineRPMs"
+#define kVehicleBearingKeyPath          @"bearing"
+#define kVehicleLocationKeyPath         @"location"
+#define kVehicleLeftFrontKeyPath        @"leftFront"
+#define kVehicleRightFrontKeyPath       @"rightFront"
+#define kVehicleLeftRearKeyPath         @"leftRear"
+#define kVehicleRightRearKeyPath        @"rightRear"
+#define kVehicleBitchKeyPath            @"bitch"
+
 
 @interface Vehicle : NSObject
 @property (nonatomic, strong) NSString *vehicleId;
@@ -40,3 +52,17 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,6 +14,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import <Foundation/Foundation.h>
+#import "Vehicle.h"
 
 
 @interface VehicleManager : NSObject
@@ -24,4 +25,5 @@
 + (void)getAllSignals;
 
 + (NSArray *)defaultSignals;
++ (Vehicle *)vehicle;
 @end
