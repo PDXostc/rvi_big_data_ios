@@ -139,22 +139,60 @@
                                     <outlet property="delegate" destination="QMy-5U-gz2" id="Xvd-4E-KYl"/>
                                 </connections>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mft-jP-SJx">
+                                <rect key="frame" x="20" y="271" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" constant="80" id="MDO-5V-BWV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqd-h8-4f5">
+                                <rect key="frame" x="20" y="327" width="152" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" priority="250" constant="188" id="Qyt-Ns-gGe"/>
+                                    <constraint firstAttribute="height" constant="35" id="mYq-WU-jjQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Reconnect To Server">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dao-2A-rk8">
+                                <rect key="frame" x="491" y="327" width="89" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Dbo-S1-rCl"/>
+                                    <constraint firstAttribute="width" priority="250" constant="133" id="P9S-ie-e9G"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Clear Cache">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="mft-jP-SJx" firstAttribute="top" secondItem="r1k-EC-dmS" secondAttribute="bottom" constant="25" id="1UG-7h-faN"/>
+                            <constraint firstItem="Oqd-h8-4f5" firstAttribute="top" secondItem="mft-jP-SJx" secondAttribute="bottom" constant="35" id="1YS-l0-ojP"/>
                             <constraint firstAttribute="leadingMargin" secondItem="a14-MH-rDk" secondAttribute="leading" id="1rH-lJ-f0D"/>
                             <constraint firstAttribute="leadingMargin" secondItem="P8D-2A-Sva" secondAttribute="leading" id="7h7-ra-Ez2"/>
                             <constraint firstItem="jAk-QJ-hqy" firstAttribute="top" secondItem="lf0-6S-9BG" secondAttribute="bottom" constant="8" id="9rJ-TW-xqf"/>
                             <constraint firstItem="lf0-6S-9BG" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="AvJ-FS-5HF"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Oqd-h8-4f5" secondAttribute="leading" id="CY9-FD-waJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="P8D-2A-Sva" secondAttribute="trailing" id="Cgd-ON-CaA"/>
                             <constraint firstItem="jAk-QJ-hqy" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="MLj-zB-E4K"/>
+                            <constraint firstItem="mft-jP-SJx" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="Myv-GH-A8F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="a14-MH-rDk" secondAttribute="trailing" id="OwD-xZ-OEy"/>
+                            <constraint firstItem="dao-2A-rk8" firstAttribute="top" secondItem="mft-jP-SJx" secondAttribute="bottom" constant="35" id="Q7K-w9-HZ2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="lf0-6S-9BG" secondAttribute="leading" id="Rgm-EU-chh"/>
                             <constraint firstItem="r1k-EC-dmS" firstAttribute="top" secondItem="a14-MH-rDk" secondAttribute="bottom" id="Ro1-FH-nJ7"/>
+                            <constraint firstItem="dao-2A-rk8" firstAttribute="top" secondItem="Oqd-h8-4f5" secondAttribute="top" id="SYX-N4-MrI"/>
                             <constraint firstItem="yZN-YY-lVu" firstAttribute="top" secondItem="jAk-QJ-hqy" secondAttribute="bottom" id="UB4-lq-XJY"/>
                             <constraint firstItem="r1k-EC-dmS" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="W55-AT-CRL"/>
                             <constraint firstItem="P8D-2A-Sva" firstAttribute="top" secondItem="4or-ZG-gmu" secondAttribute="bottom" id="XoC-eQ-X7n"/>
                             <constraint firstItem="r1k-EC-dmS" firstAttribute="top" secondItem="a14-MH-rDk" secondAttribute="bottom" id="XvW-v9-aQE"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="mft-jP-SJx" secondAttribute="leading" id="Yil-nE-PqY"/>
                             <constraint firstAttribute="leadingMargin" secondItem="r1k-EC-dmS" secondAttribute="leading" id="ZXq-fr-Hky"/>
                             <constraint firstItem="lf0-6S-9BG" firstAttribute="top" secondItem="P8D-2A-Sva" secondAttribute="bottom" id="a7t-VS-88S"/>
                             <constraint firstAttribute="trailingMargin" secondItem="r1k-EC-dmS" secondAttribute="trailing" id="bm0-m6-CGR"/>
@@ -163,13 +201,20 @@
                             <constraint firstItem="P8D-2A-Sva" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="fWv-8J-XGC"/>
                             <constraint firstItem="yZN-YY-lVu" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="gnG-LA-igc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lf0-6S-9BG" secondAttribute="trailing" id="nNL-Lg-GBg"/>
+                            <constraint firstItem="dao-2A-rk8" firstAttribute="bottom" secondItem="Oqd-h8-4f5" secondAttribute="bottom" id="pZa-PE-10H"/>
+                            <constraint firstItem="dao-2A-rk8" firstAttribute="height" secondItem="Oqd-h8-4f5" secondAttribute="height" id="qhE-n8-jqr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dao-2A-rk8" secondAttribute="trailing" id="tLV-r3-CUv"/>
                             <constraint firstItem="a14-MH-rDk" firstAttribute="centerX" secondItem="adA-eK-Tg8" secondAttribute="centerX" id="u5b-jF-PNv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mft-jP-SJx" secondAttribute="trailing" id="wV1-j0-bNr"/>
                             <constraint firstAttribute="leadingMargin" secondItem="jAk-QJ-hqy" secondAttribute="leading" id="xnf-bp-L9R"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearCacheButton" destination="dao-2A-rk8" id="y0F-hj-CYP"/>
+                        <outlet property="reconnectButton" destination="Oqd-h8-4f5" id="3e1-ed-urs"/>
                         <outlet property="serverPortTextField" destination="r1k-EC-dmS" id="mVQ-JS-PUy"/>
                         <outlet property="serverUrlTextField" destination="yZN-YY-lVu" id="Tfp-yv-JCI"/>
+                        <outlet property="statusLabel" destination="mft-jP-SJx" id="PhP-2p-zav"/>
                         <outlet property="vehicleIdTextField" destination="lf0-6S-9BG" id="IHW-3G-fte"/>
                     </connections>
                 </viewController>

@@ -37,10 +37,10 @@
 
 typedef enum
 {
-    UNKNOWN,
-    CONNECTED,
-    NOT_CONNECTED,
-    INVALID_ID
+    VEHICLE_STATUS_UNKNOWN,
+    VEHICLE_STATUS_CONNECTED,
+    VEHICLE_STATUS_NOT_CONNECTED,
+    VEHICLE_STATUS_INVALID_ID
 } VehicleStatus;
 
 @interface Vehicle : NSObject
