@@ -40,17 +40,17 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
-    dictionary[@""] = @"throttlePressure";
-    dictionary[@""] = @"breakPressure";
-    dictionary[@""] = @"speed";
-    dictionary[@""] = @"engineRPMs";
-    dictionary[@""] = @"bearing";
-    dictionary[@""] = @"location";
-    dictionary[@""] = @"leftFront";
-    dictionary[@""] = @"rightFront";
-    dictionary[@""] = @"leftRear";
-    dictionary[@""] = @"rightRear";
-    dictionary[@""] = @"bitch";
+    dictionary[@"ThrottlePosition_MS"] = @"throttlePressure";
+//    dictionary[@""] = @"breakPressure";
+//    dictionary[@""] = @"speed";
+//    dictionary[@""] = @"engineRPMs";
+//    dictionary[@""] = @"bearing";
+//    dictionary[@""] = @"location";
+//    dictionary[@""] = @"leftFront";
+//    dictionary[@""] = @"rightFront";
+//    dictionary[@""] = @"leftRear";
+//    dictionary[@""] = @"rightRear";
+//    dictionary[@""] = @"bitch";
 
     return [NSDictionary dictionaryWithDictionary:dictionary];
 }

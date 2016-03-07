@@ -106,7 +106,7 @@
 
 + (ServerPacket *)packetFromString:(NSString *)string
 {
-    DLog(@"Received packet: %@", string);
+//    DLog(@"Received packet: %@", string);
 
 //    if ([self.delegate respondsToSelector:@selector(onJsonStringParsed:)])
 //        [self.delegate onJsonStringParsed:string];

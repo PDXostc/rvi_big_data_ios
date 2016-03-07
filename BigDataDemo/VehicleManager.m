@@ -56,17 +56,23 @@
 
 + (void)start
 {
+    DLog(@"");
+
     [[VehicleManager sharedManager] registerObservers];
 }
 
 - (void)getStatusForVehicle:(NSString *)vehicleId
 {
+    DLog(@"");
+
     [self.vehicle setVehicleStatus:VEHICLE_STATUS_UNKNOWN];
     [BackendServerManager sendPacket:[StatusPacket packetWithVehicleId:vehicleId]];
 }
 
 - (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
+    DLog(@"");
+
     [self.vehicle setVehicleId:vehicleId];
     [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:[self.vehicle defaultSignals]
                                                               vehicleId:vehicleId]];
@@ -74,6 +80,8 @@
 
 - (void)unsubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
+    DLog(@"");
+
     [self.vehicle setVehicleId:NULL];
     [BackendServerManager sendPacket:[UnsubscribePacket packetWithSignals:[self.vehicle defaultSignals]
                                                                 vehicleId:vehicleId]];
@@ -81,18 +89,24 @@
 
 + (void)subscribeToSignal:(NSString *)signal
 {
+    DLog(@"");
+
     [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:@[signal]
                                                               vehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
 + (void)unsubscribeFromSignal:(NSString *)signal
 {
+    DLog(@"");
+
     [BackendServerManager sendPacket:[UnsubscribePacket packetWithSignals:@[signal]
                                                                 vehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
 + (void)getAllSignals
 {
+    DLog(@"");
+
     [BackendServerManager sendPacket:[AllSignalsPacket packetWithVehicleId:[ConfigurationDataManager getVehicleId]]];
 }
 
@@ -103,6 +117,8 @@
 
 - (void)registerObservers
 {
+    DLog(@"");
+
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerVehicleIdKeyPath
                                   options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
@@ -131,6 +147,8 @@
 
 - (void)unregisterObservers
 {
+    DLog(@"");
+
     [ConfigurationDataManager removeObserver:self
                                   forKeyPath:kConfigurationDataManagerVehicleIdKeyPath];
 

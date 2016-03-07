@@ -58,6 +58,8 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
 + (void)start
 {
+    DLog(@"");
+
     [[BackendServerManager sharedManager] registerObservers];
     [[BackendServerManager sharedManager] reconnectToServer];
 }
@@ -66,10 +68,14 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 {
     if (self.isConnected)
     {
+        DLog(@"Closing socket...");
+
         [self.webSocket close];
     }
     if ([ConfigurationDataManager hasValidConfigurationData])
     {
+        DLog(@"Opening socket to: %@", [ConfigurationDataManager fullyQualifiedUrlWithScheme:@"ws"]);
+
         [self setWebSocket:[[SRWebSocket alloc] initWithURL:[ConfigurationDataManager fullyQualifiedUrlWithScheme:@"ws"]]];
         [self.webSocket setDelegate:self];
         [self.webSocket open];
@@ -78,12 +84,15 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
 + (void)sendPacket:(ServerPacket *)packet
 {
-    NSString *data = [PacketParser stringFromPacket:packet];
-
-    if (!data)
+    if (!packet) // TODO: Error?
         return;
 
-    DLog(@"Socket send: @%", data);
+    NSString *data = [PacketParser stringFromPacket:packet];
+
+    if (!data) // TODO: Error?
+        return;
+
+    DLog(@"Socket send: %@", data);
 
     [[[BackendServerManager sharedManager] webSocket] send:data];
 }
@@ -95,6 +104,8 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
 - (void)registerObservers
 {
+    DLog(@"");
+
     [ConfigurationDataManager addObserver:self
                                forKeyPath:kConfigurationDataManagerServerUrlKeyPath
                                   options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
@@ -108,6 +119,8 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
 - (void)unregisterObservers
 {
+    DLog(@"");
+
     [ConfigurationDataManager removeObserver:self
                                   forKeyPath:kConfigurationDataManagerServerUrlKeyPath];
 
@@ -144,7 +157,7 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
                                                         object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationErrorKey : reason}];
+                                                      userInfo:reason ? @{ kBackendServerNotificationErrorKey : reason } : nil];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
@@ -156,13 +169,13 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
     if (packet)
         [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidReceivePacketNotification
                                                             object:[BackendServerManager class]
-                                                          userInfo:@{kBackendServerNotificationPacketKey : packet}];
+                                                          userInfo:@{ kBackendServerNotificationPacketKey : packet }];
     else
         [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerCommunicationDidFailNotification
                                                             object:[BackendServerManager class]
-                                                          userInfo:@{kBackendServerNotificationErrorKey : [NSError errorWithDomain:ERROR_DOMAIN
-                                                                                                                              code:NULL_PACKET_ERROR_DOMAIN
-                                                                                                                          userInfo:@{NSLocalizedDescriptionKey : @"Parsed packet is null"}]}];
+                                                          userInfo:@{ kBackendServerNotificationErrorKey : [NSError errorWithDomain:ERROR_DOMAIN
+                                                                                                                               code:NULL_PACKET_ERROR_DOMAIN
+                                                                                                                           userInfo:@{ NSLocalizedDescriptionKey : @"Parsed packet is null" }] }];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
@@ -171,7 +184,7 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerCommunicationDidFailNotification
                                                         object:[BackendServerManager class]
-                                                      userInfo:@{kBackendServerNotificationErrorKey : error}];
+                                                      userInfo:error ? @{ kBackendServerNotificationErrorKey : error } : nil];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload

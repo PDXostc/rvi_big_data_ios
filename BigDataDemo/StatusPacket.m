@@ -42,10 +42,10 @@
     if ((self = [super initFromDictionary:dict]))
     {
         _status        = dict[@"status"];
-        _numberDoors   = [((NSNumber *)dict[@"numberDoors"]) integerValue];
-        _numberWindows = [((NSNumber *)dict[@"numberWindows"]) integerValue];
-        _numberSeats   = [((NSNumber *)dict[@"numberSeats"]) integerValue];
-        _driversSide   = dict[@"driversSide"];
+        _numberDoors   = [((NSNumber *)dict[@"number_doors"]) integerValue];
+        _numberWindows = [((NSNumber *)dict[@"number_windows"]) integerValue];
+        _numberSeats   = [((NSNumber *)dict[@"number_seats"]) integerValue];
+        _driversSide   = dict[@"drivers_side"];
     }
 
     return self;

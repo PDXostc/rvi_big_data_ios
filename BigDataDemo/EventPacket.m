@@ -35,6 +35,7 @@
         _event      = dict[@"event"];
         _location   = dict[@"location"];
         _source     = dict[@"source"];
+        _signal     = dict[@"signal"];
     }
 
     return self;

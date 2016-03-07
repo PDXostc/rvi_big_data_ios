@@ -158,6 +158,9 @@
                                 <state key="normal" title="Reconnect To Server">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="reconnectButtonClicked:" destination="QMy-5U-gz2" eventType="touchUpInside" id="Vxm-fE-Usl"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dao-2A-rk8">
                                 <rect key="frame" x="491" y="327" width="89" height="35"/>
@@ -169,6 +172,9 @@
                                 <state key="normal" title="Clear Cache">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="clearCacheButtonPressed:" destination="QMy-5U-gz2" eventType="touchUpInside" id="FSh-A6-mr1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>

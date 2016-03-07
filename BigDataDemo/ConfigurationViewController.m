@@ -233,7 +233,7 @@ typedef enum
 
 - (IBAction)clearCacheButtonPressed:(id)sender
 {
-    
+
 }
 
 - (void)registerObservers
