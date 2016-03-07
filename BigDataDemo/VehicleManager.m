@@ -61,7 +61,7 @@
 
 - (void)getStatusForVehicle:(NSString *)vehicleId
 {
-    [self.vehicle setVehicleStatus:UNKNOWN];
+    [self.vehicle setVehicleStatus:VEHICLE_STATUS_UNKNOWN];
     [BackendServerManager sendPacket:[StatusPacket packetWithVehicleId:vehicleId]];
 }
 
@@ -180,16 +180,16 @@
         /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
         if ([[statusPacket status] isEqualToString:@"INVALID"])
         {
-            self.vehicle.vehicleStatus = INVALID_ID;
+            self.vehicle.vehicleStatus = VEHICLE_STATUS_INVALID_ID;
         }
         else
         {
             [self resubscribeDefaultsForVehicle:statusPacket.vehicleId];
 
             if ([[statusPacket status] isEqualToString:@"CONNECTED"])
-                self.vehicle.vehicleStatus = CONNECTED;
+                self.vehicle.vehicleStatus = VEHICLE_STATUS_CONNECTED;
             else if ([[statusPacket status] isEqualToString:@"NOT_CONNECTED"])
-                self.vehicle.vehicleStatus = NOT_CONNECTED;
+                self.vehicle.vehicleStatus = VEHICLE_STATUS_NOT_CONNECTED;
 
             self.vehicle.numberDoors   = statusPacket.numberDoors;
             self.vehicle.numberWindows = statusPacket.numberWindows;

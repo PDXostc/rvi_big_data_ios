@@ -18,6 +18,7 @@
 #import "ConfigurationDataManager.h"
 #import "Vehicle.h"
 #import "VehicleManager.h"
+#import "BackendServerManager.h"
 
 @interface UITextField (BorderStuff)
 - (void)addRedBorder;
@@ -58,11 +59,24 @@
 @end
 
 
+typedef enum
+{
+    CONNECTING,
+    CONNECTED,
+    DISCONNECTED,
+} ServerStatus;
+
+
 @interface ConfigurationViewController ()
 @property (nonatomic, weak) IBOutlet UITextField *vehicleIdTextField;
 @property (nonatomic, weak) IBOutlet UITextField *serverUrlTextField;
 @property (nonatomic, weak) IBOutlet UITextField *serverPortTextField;
+@property (nonatomic, weak) IBOutlet UILabel     *statusLabel;
+@property (nonatomic, weak) IBOutlet UIButton    *reconnectButton;
+@property (nonatomic, weak) IBOutlet UIButton    *clearCacheButton;
+
 @property (nonatomic, weak) Vehicle *vehicle;
+@property (nonatomic)       ServerStatus assumedServerStatus;
 @end
 
 @implementation ConfigurationViewController
@@ -92,6 +106,8 @@
     UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                       action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleFingerTap];
+
+    self.assumedServerStatus = [BackendServerManager isConnected] ? CONNECTED : DISCONNECTED;
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
@@ -175,6 +191,12 @@
         [ConfigurationDataManager setServerUrl:self.serverUrlTextField.text];
     else if (textField == self.serverPortTextField)
         [ConfigurationDataManager setServerPort:self.serverPortTextField.text];
+
+    if (textField != self.vehicleIdTextField)
+    {
+        self.assumedServerStatus = CONNECTING;
+        [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -203,18 +225,79 @@
     return YES;
 }
 
+- (IBAction)reconnectButtonClicked:(id)sender
+{
+    self.assumedServerStatus = CONNECTING;
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+}
+
+- (IBAction)clearCacheButtonPressed:(id)sender
+{
+    
+}
+
 - (void)registerObservers
 {
     [self.vehicle addObserver:self
                    forKeyPath:kVehicleVehicleStatusKeyPath
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerDidConnect:)
+                                                 name:kBackendServerDidConnectNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerDidDisconnect:)
+                                                 name:kBackendServerDidDisconnectNotification
+                                               object:nil];
+
+}
+
+- (void)setLabelForServerStatus:(ServerStatus)serverStatus vehicleStatus:(VehicleStatus)vehicleStatus
+{
+    NSMutableString *string = [NSMutableString stringWithString:@"Server status: "];
+
+    switch (serverStatus)
+    {
+        case CONNECTING:
+            [string appendString:@"Connecting\n"];
+            break;
+        case CONNECTED:
+            [string appendString:@"Connected\n"];
+            break;
+        case DISCONNECTED:
+            [string appendString:@"Disconnected\n"];
+            break;
+    }
+
+    [string appendString:@"Vehicle status: "];
+    switch (vehicleStatus)
+    {
+        case VEHICLE_STATUS_UNKNOWN:
+            [string appendString:@"Unknown"];
+            break;
+        case VEHICLE_STATUS_CONNECTED:
+            [string appendString:@"Connected"];
+            break;
+        case VEHICLE_STATUS_NOT_CONNECTED:
+            [string appendString:@"Not connected"];
+            break;
+        case VEHICLE_STATUS_INVALID_ID:
+            [string appendString:@"Invalid ID"];
+            break;
+    }
+
+    self.statusLabel.text = string;
 }
 
 - (void)unregisterObservers
 {
     [self.vehicle removeObserver:self
                       forKeyPath:kVehicleVehicleStatusKeyPath];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -223,9 +306,29 @@
 
     if ([keyPath isEqualToString:kVehicleSignalEventAttributeKeyPath])
     {
-
+        VehicleStatus value;
+        [change[NSKeyValueChangeNewKey] getValue:&value];
+        [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:value];
     }
 }
 
+- (void)backendServerDidConnect:(NSNotification *)notification
+{
+    DLog(@"");
+
+    self.assumedServerStatus = CONNECTED;
+
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+}
+
+- (void)backendServerDidDisconnect:(NSNotification *)notification
+{
+    DLog(@"");
+
+    self.assumedServerStatus = DISCONNECTED;
+
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+
+}
 
 @end
