@@ -135,13 +135,13 @@
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(backendServerDidReceiveData:)
-                                                 name:kBackendServerDidReceivePacketNotification
+                                             selector:@selector(backendServerDidConnect:)
+                                                 name:kBackendServerDidFailToConnectNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(backendServerCommunicationDidFail:)
-                                                 name:kBackendServerCommunicationDidFailNotification
+                                             selector:@selector(backendServerDidReceiveData:)
+                                                 name:kBackendServerDidReceivePacketNotification
                                                object:nil];
 }
 
@@ -175,6 +175,8 @@
 - (void)backendServerDidDisconnect:(NSNotification *)notification
 {
     DLog(@"");
+
+    [self.vehicle setVehicleStatus:VEHICLE_STATUS_UNKNOWN];
 }
 
 - (void)backendServerDidReceiveData:(NSNotification *)notification
@@ -192,8 +194,6 @@
     if ([packet isKindOfClass:[StatusPacket class]])
     {
         StatusPacket *statusPacket = (StatusPacket *)packet;
-
-        // TODO: Add a variable to report vehicle status to UI through KVO
 
         /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
         if ([[statusPacket status] isEqualToString:@"INVALID"])
@@ -228,10 +228,5 @@
     {
         ; /* No-op for now */
     }
-}
-
-- (void)backendServerCommunicationDidFail:(NSNotification *)notification
-{
-    DLog(@"");
 }
 @end

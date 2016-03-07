@@ -65,8 +65,11 @@
 
 + (void)setVehicleId:(NSString *)vehicleId
 {
-    [[ConfigurationDataManager sharedManager] setVehicleId:vehicleId];
+    if ([vehicleId isEqualToString:[ConfigurationDataManager getVehicleId]])
+        return;
+
     [ConfigurationDataManager setString:vehicleId forKey:kVehicleIdPrefsKey];
+    [[ConfigurationDataManager sharedManager] setVehicleId:vehicleId];
 }
 
 + (NSString *)getServerUrl
@@ -76,8 +79,11 @@
 
 + (void)setServerUrl:(NSString *)serverUrl
 {
-    [[ConfigurationDataManager sharedManager] setServerUrl:serverUrl];
+    if ([serverUrl isEqualToString:[ConfigurationDataManager getServerUrl]])
+        return;
+
     [ConfigurationDataManager setString:serverUrl forKey:kServerUrlPrefsKey];
+    [[ConfigurationDataManager sharedManager] setServerUrl:serverUrl];
 }
 
 + (NSString *)getServerPort
@@ -87,8 +93,11 @@
 
 + (void)setServerPort:(NSString *)serverPort
 {
-    [[ConfigurationDataManager sharedManager] setServerPort:serverPort];
+    if ([serverPort isEqualToString:[ConfigurationDataManager getServerPort]])
+        return;
+
     [ConfigurationDataManager setString:serverPort forKey:kServerPortPrefsKey];
+    [[ConfigurationDataManager sharedManager] setServerPort:serverPort];
 }
 
 + (BOOL)hasValidConfigurationData

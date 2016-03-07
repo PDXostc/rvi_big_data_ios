@@ -96,30 +96,40 @@ typedef enum
 
     UIToolbar* numberToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
 
-    numberToolbar.items = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                            [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)]];
+    numberToolbar.items = @[[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(next)],
+                            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+            [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(done:)]];
 
     [numberToolbar sizeToFit];
 
+    self.vehicleIdTextField.inputAccessoryView  = numberToolbar;
+    self.serverUrlTextField.inputAccessoryView  = numberToolbar;
     self.serverPortTextField.inputAccessoryView = numberToolbar;
 
     UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(handleSingleTap:)];
+                                                                                      action:@selector(done:)];
     [self.view addGestureRecognizer:singleFingerTap];
 
     self.assumedServerStatus = [BackendServerManager isConnected] ? CONNECTED : DISCONNECTED;
+
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
 }
 
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
+- (void)done:(UITapGestureRecognizer *)recognizer
 {
     [self.vehicleIdTextField resignFirstResponder];
     [self.serverUrlTextField resignFirstResponder];
     [self.serverPortTextField resignFirstResponder];
 }
 
-- (void)doneWithNumberPad
+- (void)next
 {
-    [self.serverPortTextField resignFirstResponder];
+    if ([self.vehicleIdTextField isFirstResponder])
+        [self.serverUrlTextField becomeFirstResponder];
+    else if ([self.serverUrlTextField isFirstResponder])
+        [self.serverPortTextField becomeFirstResponder];
+    else if ([self.serverPortTextField isFirstResponder])
+        [self.vehicleIdTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -192,11 +202,11 @@ typedef enum
     else if (textField == self.serverPortTextField)
         [ConfigurationDataManager setServerPort:self.serverPortTextField.text];
 
-    if (textField != self.vehicleIdTextField)
-    {
-        self.assumedServerStatus = CONNECTING;
-        [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
-    }
+//    if (textField != self.vehicleIdTextField)
+//    {
+//        self.assumedServerStatus = CONNECTING;
+//        [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+//    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -215,20 +225,16 @@ typedef enum
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.vehicleIdTextField)
-        [self.serverUrlTextField becomeFirstResponder];
-    else if (textField == self.serverUrlTextField)
-        [self.serverPortTextField becomeFirstResponder];
-    else if (textField == self.serverPortTextField)
-        [self.serverPortTextField resignFirstResponder];
+    [self next];
 
     return YES;
 }
 
 - (IBAction)reconnectButtonClicked:(id)sender
 {
-    self.assumedServerStatus = CONNECTING;
-    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+//    self.assumedServerStatus = CONNECTING;
+//    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+    [BackendServerManager restart];
 }
 
 - (IBAction)clearCacheButtonPressed:(id)sender
@@ -244,6 +250,11 @@ typedef enum
                       context:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerWillConnect:)
+                                                 name:kBackendServerWillConnectNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backendServerDidConnect:)
                                                  name:kBackendServerDidConnectNotification
                                                object:nil];
@@ -251,6 +262,11 @@ typedef enum
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backendServerDidDisconnect:)
                                                  name:kBackendServerDidDisconnectNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerDidDisconnect:)
+                                                 name:kBackendServerDidFailToConnectNotification
                                                object:nil];
 
 }
@@ -304,7 +320,7 @@ typedef enum
 {
     DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 
-    if ([keyPath isEqualToString:kVehicleSignalEventAttributeKeyPath])
+    if ([keyPath isEqualToString:kVehicleVehicleStatusKeyPath])
     {
         VehicleStatus value;
         [change[NSKeyValueChangeNewKey] getValue:&value];
@@ -312,12 +328,19 @@ typedef enum
     }
 }
 
+- (void)backendServerWillConnect:(id)backendServerWillConnect
+{
+    DLog(@"");
+
+    [self setAssumedServerStatus:CONNECTING];
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+}
+
 - (void)backendServerDidConnect:(NSNotification *)notification
 {
     DLog(@"");
 
-    self.assumedServerStatus = CONNECTED;
-
+    [self setAssumedServerStatus:CONNECTED];
     [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
 }
 
@@ -325,10 +348,8 @@ typedef enum
 {
     DLog(@"");
 
-    self.assumedServerStatus = DISCONNECTED;
-
+    [self setAssumedServerStatus:DISCONNECTED];
     [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
-
 }
 
 @end

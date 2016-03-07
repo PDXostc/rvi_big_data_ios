@@ -16,6 +16,7 @@
 #import <Foundation/Foundation.h>
 
 
+extern NSString *const kBackendServerWillConnectNotification;
 extern NSString *const kBackendServerDidConnectNotification;
 extern NSString *const kBackendServerDidFailToConnectNotification;
 extern NSString *const kBackendServerDidDisconnectNotification;
@@ -27,7 +28,9 @@ extern NSString *const kBackendServerNotificationErrorKey;
 
 @class ServerPacket;
 @interface BackendServerManager : NSObject
++ (void)stop;
 + (void)start;
++ (void)restart;
 + (BOOL)isConnected;
 + (void)sendPacket:(ServerPacket *)packet;
 @end
