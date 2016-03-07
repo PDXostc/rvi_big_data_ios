@@ -25,7 +25,7 @@ To the Server
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "SIGNAL_DESCRIPTOR",
-    "signalName": "some_signal"
+    "signal": "some_signal"
 }
 ```
 
@@ -55,7 +55,7 @@ To the Server
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "HISTORY",
-    "signalName": "some_signal",
+    "signal": "some_signal",
     "start": 1456768000000,
     "stop": 1456768999999
 }
@@ -71,7 +71,7 @@ From the Server
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "STATUS",
-    "status": ["CONNECTED"|"NOT_CONNECTED"|"INVALID_VEHICLE_ID"]
+    "status": ["VEHICLE_STATUS_CONNECTED"|"VEHICLE_STATUS_NOT_CONNECTED"|"INVALID_VEHICLE_ID"]
     "number_doors": <num_doors>,
     "number_windows": <num_windows>,
     "number_seats": <num_seats>,
@@ -95,7 +95,7 @@ From the Server
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "SIGNAL_DESCRIPTOR",
-    "signalName": "some_signal",
+    "signal": "some_signal",
     "descriptor": {...}
 }
 ```
@@ -106,7 +106,7 @@ From the Server
     "vehicle_id": "vehicle_55",
     "timestamp": 1456768736936,
     "command": "HISTORY",
-    "signalName": "some_signal",
+    "signal": "some_signal",
     "start": 1456768000000,
     "stop": 1456768999999,
     "events": [(see event data description below)]
@@ -120,7 +120,7 @@ From the Server
         "value": "??? what should be here ???"
     },
     "vehicle_id": "vehicle_55",
-    "signalName": "IVI_TONE_CHANGE",
+    "signal": "IVI_TONE_CHANGE",
     "location": {
         "coordinates": [9.454, 61.163],
         "type": "Point"
@@ -139,7 +139,7 @@ From the Server
     "command": "ERROR",
     "error": "error_message",
     "orig_command": "<SIGNALS|SIGNAL_DESCRIPTOR|HISTORY>"
-    "signalName": <signal_if_available>
+    "signal": <signal_if_available>
 }
 ```
 
