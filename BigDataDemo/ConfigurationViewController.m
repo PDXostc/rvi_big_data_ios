@@ -111,6 +111,8 @@ typedef enum
     [self.view addGestureRecognizer:singleFingerTap];
 
     self.assumedServerStatus = [BackendServerManager isConnected] ? CONNECTED : DISCONNECTED;
+
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
 }
 
 - (void)done:(UITapGestureRecognizer *)recognizer
@@ -200,11 +202,11 @@ typedef enum
     else if (textField == self.serverPortTextField)
         [ConfigurationDataManager setServerPort:self.serverPortTextField.text];
 
-    if (textField != self.vehicleIdTextField)
-    {
-        self.assumedServerStatus = CONNECTING;
-        [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
-    }
+//    if (textField != self.vehicleIdTextField)
+//    {
+//        self.assumedServerStatus = CONNECTING;
+//        [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+//    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -230,8 +232,9 @@ typedef enum
 
 - (IBAction)reconnectButtonClicked:(id)sender
 {
-    self.assumedServerStatus = CONNECTING;
-    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+//    self.assumedServerStatus = CONNECTING;
+//    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+    [BackendServerManager restart];
 }
 
 - (IBAction)clearCacheButtonPressed:(id)sender
@@ -247,6 +250,11 @@ typedef enum
                       context:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerWillConnect:)
+                                                 name:kBackendServerWillConnectNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backendServerDidConnect:)
                                                  name:kBackendServerDidConnectNotification
                                                object:nil];
@@ -254,6 +262,11 @@ typedef enum
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backendServerDidDisconnect:)
                                                  name:kBackendServerDidDisconnectNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(backendServerDidDisconnect:)
+                                                 name:kBackendServerDidFailToConnectNotification
                                                object:nil];
 
 }
@@ -307,7 +320,7 @@ typedef enum
 {
     DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 
-    if ([keyPath isEqualToString:kVehicleSignalEventAttributeKeyPath])
+    if ([keyPath isEqualToString:kVehicleVehicleStatusKeyPath])
     {
         VehicleStatus value;
         [change[NSKeyValueChangeNewKey] getValue:&value];
@@ -315,12 +328,19 @@ typedef enum
     }
 }
 
+- (void)backendServerWillConnect:(id)backendServerWillConnect
+{
+    DLog(@"");
+
+    [self setAssumedServerStatus:CONNECTING];
+    [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
+}
+
 - (void)backendServerDidConnect:(NSNotification *)notification
 {
     DLog(@"");
 
-    self.assumedServerStatus = CONNECTED;
-
+    [self setAssumedServerStatus:CONNECTED];
     [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
 }
 
@@ -328,10 +348,8 @@ typedef enum
 {
     DLog(@"");
 
-    self.assumedServerStatus = DISCONNECTED;
-
+    [self setAssumedServerStatus:DISCONNECTED];
     [self setLabelForServerStatus:self.assumedServerStatus vehicleStatus:self.vehicle.vehicleStatus];
-
 }
 
 @end

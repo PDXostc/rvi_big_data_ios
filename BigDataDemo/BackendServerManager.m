@@ -20,6 +20,7 @@
 #import "ServerPacket.h"
 #import "PacketParser.h"
 
+NSString *const kBackendServerWillConnectNotification          = @"backend_server_will_connect_notification";
 NSString *const kBackendServerDidConnectNotification           = @"backend_server_did_connect_notification";
 NSString *const kBackendServerDidFailToConnectNotification     = @"backend_server_did_fail_to_connect_notification";
 NSString *const kBackendServerDidDisconnectNotification        = @"backend_server_did_disconnect_notification";
@@ -64,17 +65,38 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
     [[BackendServerManager sharedManager] reconnectToServer];
 }
 
++ (void)restart
+{
+    DLog(@"");
+
+    [[BackendServerManager sharedManager] reconnectToServer];
+}
+
++ (void)stop
+{
+    [[BackendServerManager sharedManager] disconnectFromServer];
+}
+
+- (void)disconnectFromServer
+{
+    DLog(@"Closing socket...");
+
+    [self.webSocket close];
+}
+
 - (void)reconnectToServer
 {
     if (self.isConnected)
     {
-        DLog(@"Closing socket...");
-
-        [self.webSocket close];
+        [self disconnectFromServer];
     }
     if ([ConfigurationDataManager hasValidConfigurationData])
     {
         DLog(@"Opening socket to: %@", [ConfigurationDataManager fullyQualifiedUrlWithScheme:@"ws"]);
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerWillConnectNotification
+                                                            object:[BackendServerManager class]
+                                                          userInfo:nil];
 
         [self setWebSocket:[[SRWebSocket alloc] initWithURL:[ConfigurationDataManager fullyQualifiedUrlWithScheme:@"ws"]]];
         [self.webSocket setDelegate:self];
@@ -155,7 +177,7 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
     //[self.packetParser clear];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidDisconnectNotification
                                                         object:[BackendServerManager class]
                                                       userInfo:reason ? @{ kBackendServerNotificationErrorKey : reason } : nil];
 }
@@ -182,7 +204,7 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 {
     DLog(@"Socket error: %@", error.localizedDescription);
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerCommunicationDidFailNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
                                                         object:[BackendServerManager class]
                                                       userInfo:error ? @{ kBackendServerNotificationErrorKey : error } : nil];
 }
