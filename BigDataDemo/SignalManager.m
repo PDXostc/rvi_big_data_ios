@@ -166,23 +166,22 @@
     NSDictionary *userInfo     = notification.userInfo;
     ServerPacket *packet       = userInfo[kBackendServerNotificationPacketKey];
 
-    NSString     *signalName   = ((SignalDescriptorPacket *)packet).signal;
-    NSString     *vehicleId    = packet.vehicleId;
-
-    CallbackData *callbackData = self.ongoingSignalDescriptorRequests[signalName];
-
     if ([packet isKindOfClass:[SignalDescriptorPacket class]])
     {
+        NSString     *signalName   = ((SignalDescriptorPacket *)packet).signal;
+        NSString     *vehicleId    = packet.vehicleId;
+        CallbackData *callbackData = self.ongoingSignalDescriptorRequests[signalName];
+
         Signal *signal = [self parseSignalFromDescriptor:((SignalDescriptorPacket *)packet) signalName:signalName];
         CallbackBlock callbackBlock = callbackData.callback;
 
         callbackBlock(signalName, vehicleId, signal);
+
+        [self.ongoingSignalDescriptorRequests removeObjectForKey:signalName];
     }
     else if ([packet isKindOfClass:[ErrorPacket class]])
     {
 
     }
-
-    [self.ongoingSignalDescriptorRequests removeObjectForKey:signalName];
 }
 @end

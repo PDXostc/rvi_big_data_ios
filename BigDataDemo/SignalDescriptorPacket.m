@@ -46,7 +46,7 @@
 
     if ((self = [super initFromDictionary:dict]))
     {
-        _signal = dict[@"signalName"];
+        _signal = dict[@"signal"];
     }
 
     return self;
@@ -61,7 +61,7 @@
 {
     NSMutableDictionary *dict = (NSMutableDictionary *)[super toDictionary];
 
-    dict[@"signalName"] = self.signal;
+    dict[@"signal"] = self.signal;
 
     return [NSDictionary dictionaryWithDictionary:dict];
 }

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString     *event;
 @property (nonatomic, strong) NSDictionary *location;
 @property (nonatomic, strong) NSString     *source;
+@property (nonatomic, strong) NSString     *signal;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 + (id)packetWithDictionary:(NSDictionary *)dictionary;

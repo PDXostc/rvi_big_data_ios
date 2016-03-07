@@ -79,9 +79,9 @@ Command commandForString(NSString * string)
 
     if ((self = [super init]))
     {
-        _command   = commandForString(dict[@"cmd"]);
+        _command   = commandForString(dict[@"command"]);
         _vehicleId = dict[@"vehicle_id"];
-        _timestamp = [((NSNumber *)dict[@"timestamp"]) longValue];
+        _timestamp = ((NSTimeInterval)[((NSNumber *)dict[@"timestamp"]) longValue]) / 1000.0;
     }
 
     return self;
@@ -94,7 +94,7 @@ Command commandForString(NSString * string)
 
 - (NSDictionary *)toDictionary
 {
-    return [@{@"cmd" : stringForCommand(self.command), @"vehicle_id" : self.vehicleId, @"timestamp" : @(self.timestamp) } mutableCopy];
+    return [@{@"command" : stringForCommand(self.command), @"vehicle_id" : self.vehicleId, @"timestamp" : @((long)(self.timestamp * 1000)) } mutableCopy];
 }
 
 @end
