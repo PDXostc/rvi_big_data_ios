@@ -96,30 +96,38 @@ typedef enum
 
     UIToolbar* numberToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
 
-    numberToolbar.items = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                            [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)]];
+    numberToolbar.items = @[[[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStyleDone target:self action:@selector(next)],
+                            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+            [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(done:)]];
 
     [numberToolbar sizeToFit];
 
+    self.vehicleIdTextField.inputAccessoryView  = numberToolbar;
+    self.serverUrlTextField.inputAccessoryView  = numberToolbar;
     self.serverPortTextField.inputAccessoryView = numberToolbar;
 
     UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(handleSingleTap:)];
+                                                                                      action:@selector(done:)];
     [self.view addGestureRecognizer:singleFingerTap];
 
     self.assumedServerStatus = [BackendServerManager isConnected] ? CONNECTED : DISCONNECTED;
 }
 
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
+- (void)done:(UITapGestureRecognizer *)recognizer
 {
     [self.vehicleIdTextField resignFirstResponder];
     [self.serverUrlTextField resignFirstResponder];
     [self.serverPortTextField resignFirstResponder];
 }
 
-- (void)doneWithNumberPad
+- (void)next
 {
-    [self.serverPortTextField resignFirstResponder];
+    if ([self.vehicleIdTextField isFirstResponder])
+        [self.serverUrlTextField becomeFirstResponder];
+    else if ([self.serverUrlTextField isFirstResponder])
+        [self.serverPortTextField becomeFirstResponder];
+    else if ([self.serverPortTextField isFirstResponder])
+        [self.vehicleIdTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -215,12 +223,7 @@ typedef enum
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.vehicleIdTextField)
-        [self.serverUrlTextField becomeFirstResponder];
-    else if (textField == self.serverUrlTextField)
-        [self.serverPortTextField becomeFirstResponder];
-    else if (textField == self.serverPortTextField)
-        [self.serverPortTextField resignFirstResponder];
+    [self next];
 
     return YES;
 }
