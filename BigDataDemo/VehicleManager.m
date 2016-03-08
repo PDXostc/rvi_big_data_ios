@@ -25,6 +25,7 @@
 #import "EventPacket.h"
 #import "StatusPacket.h"
 #import "ErrorPacket.h"
+#import "PacketParser.h"
 
 @interface Vehicle (MANAGER_ACCESS_ONLY)
 @property (nonatomic)         NSInteger     numberDoors;
@@ -81,6 +82,10 @@
 - (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
     DLog(@"");
+
+#ifdef TESTING
+    [self processEventPacket:[PacketParser packetFromString:@"{\"vehicle_id\": \"f-type\", \"timestamp\": 1457479882929, \"command\": \"EVENT\", \"source\": \"test\", \"signal\": \"ThrottlePosition_MS\", \"attributes\": {\"value\": 1}}"]];
+#endif
 
     [self.vehicle setVehicleId:vehicleId];
     [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:[self.vehicle defaultSignals]
