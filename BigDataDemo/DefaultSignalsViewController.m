@@ -66,20 +66,20 @@
     [self unregisterObservers];
 }
 
-- (NSArray *)signalKeypathsToObserve
+- (NSArray *)signalKeyPathsToObserve
 {
     return @[kVehicleBreakPressureKeyPath,
              kVehicleThrottlePressureKeyPath,
              kVehicleLeftFrontKeyPath,
              kVehicleRightFrontKeyPath,
              kVehicleLeftRearKeyPath,
-             kVehicleBitchKeyPath,
+             kVehicleMiddleRearKeyPath,
              kVehicleRightRearKeyPath];
 }
 
 - (void)registerObservers
 {
-    for (NSString *keyPath in [self signalKeypathsToObserve])
+    for (NSString *keyPath in [self signalKeyPathsToObserve])
     {
         DLog(@"Adding observer for: vehicle.%@", keyPath);
 
@@ -93,7 +93,7 @@
 
         /* And register the signal's attributes as well, since that's what's updated during events. */
         [[self.vehicle valueForKey:keyPath] addObserver:self
-                                             forKeyPath:kVehicleSignalEventAttributeKeyPath
+                                             forKeyPath:kVehicleSignalCurrentValueKeyPath
                                                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                                                 context:NULL];
     }
@@ -116,9 +116,9 @@
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
 
-    DLog(@"Adding observer for: vehicle.%@", kVehicleDriversSideKeyPath);
+    DLog(@"Adding observer for: vehicle.%@", kVehicleDriverSideKeyPath);
     [self.vehicle addObserver:self
-                   forKeyPath:kVehicleDriversSideKeyPath
+                   forKeyPath:kVehicleDriverSideKeyPath
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
 }
@@ -142,18 +142,18 @@
 
 - (void)unregisterObservers
 {
-    for (NSString *keyPath in [self signalKeypathsToObserve])
+    for (NSString *keyPath in [self signalKeyPathsToObserve])
     {
         [self removeSelfAsObserverFromObject:self.vehicle keyPath:keyPath];
 
         DLog(@"Removing observer for: vehicle.%@.eventAttributes", keyPath);
-        [self removeSelfAsObserverFromObject:[self.vehicle valueForKey:keyPath] keyPath:kVehicleSignalEventAttributeKeyPath];
+        [self removeSelfAsObserverFromObject:[self.vehicle valueForKey:keyPath] keyPath:kVehicleSignalCurrentValueKeyPath];
     }
 
     [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleNumberDoorsKeyPath];
     [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleNumberWindowsKeyPath];
     [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleNumberSeatsKeyPath];
-    [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleDriversSideKeyPath];
+    [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleDriverSideKeyPath];
 }
 
 - (void)transferEventAttributeObserverFromOldSignal:(Signal *)oldSignal toNewSignal:(Signal *)newSignal
@@ -164,13 +164,13 @@
     {
         /* Start observing the new signal's attributes (first, in case exception is thrown below)... */
         [newSignal addObserver:self
-                    forKeyPath:kVehicleSignalEventAttributeKeyPath
+                    forKeyPath:kVehicleSignalCurrentValueKeyPath
                        options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                 context:NULL];
 
         /* ... and stop observing the old signal's attributes. */
         [oldSignal removeObserver:self
-                       forKeyPath:kVehicleSignalEventAttributeKeyPath];
+                       forKeyPath:kVehicleSignalCurrentValueKeyPath];
     }
     @catch (NSException *exception)
     {
@@ -183,7 +183,7 @@
 {
     DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 
-    if ([[self signalKeypathsToObserve] containsObject:keyPath])
+    if ([[self signalKeyPathsToObserve] containsObject:keyPath])
     {
         [self transferEventAttributeObserverFromOldSignal:change[NSKeyValueChangeOldKey]
                                               toNewSignal:change[NSKeyValueChangeNewKey]];
@@ -201,11 +201,11 @@
     {
 
     }
-    else if ([keyPath isEqualToString:kVehicleDriversSideKeyPath])
+    else if ([keyPath isEqualToString:kVehicleDriverSideKeyPath])
     {
 
     }
-    else if ([keyPath isEqualToString:kVehicleSignalEventAttributeKeyPath])
+    else if ([keyPath isEqualToString:kVehicleSignalCurrentValueKeyPath])
     {
         if (object == self.vehicle.throttlePressure)
         {
@@ -227,7 +227,7 @@
         {
             // TODO: Update seat belt
         }
-        else if (object == self.vehicle.bitch)
+        else if (object == self.vehicle.middleRear)
         {
             // TODO: Update seat belt
         }

@@ -82,12 +82,12 @@
 
     /* And register the signal's attributes as well, since that's what's updated. */
     [self.vehicle.location addObserver:self
-                            forKeyPath:kVehicleSignalEventAttributeKeyPath
+                            forKeyPath:kVehicleSignalCurrentValueKeyPath
                                options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                                context:NULL];
 
     [self.vehicle.bearing addObserver:self
-                           forKeyPath:kVehicleSignalEventAttributeKeyPath
+                           forKeyPath:kVehicleSignalCurrentValueKeyPath
                               options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                               context:NULL];
 
@@ -119,10 +119,10 @@
                                  keyPath:kVehicleBearingKeyPath];
 
     [self removeSelfAsObserverFromObject:self.vehicle.location
-                                 keyPath:kVehicleSignalEventAttributeKeyPath];
+                                 keyPath:kVehicleSignalCurrentValueKeyPath];
 
     [self removeSelfAsObserverFromObject:self.vehicle.bearing
-                                 keyPath:kVehicleSignalEventAttributeKeyPath];
+                                 keyPath:kVehicleSignalCurrentValueKeyPath];
 }
 
 - (void)transferEventAttributeObserverFromOldSignal:(Signal *)oldSignal toNewSignal:(Signal *)newSignal
@@ -131,13 +131,13 @@
     {
         /* Start observing the new signal's attributes (first, in case exception is thrown below)... */
         [newSignal addObserver:self
-                    forKeyPath:kVehicleSignalEventAttributeKeyPath
+                    forKeyPath:kVehicleSignalCurrentValueKeyPath
                        options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                 context:NULL];
 
         /* ... and stop observing the old signal's attributes. */
         [oldSignal removeObserver:self
-                       forKeyPath:kVehicleSignalEventAttributeKeyPath];
+                       forKeyPath:kVehicleSignalCurrentValueKeyPath];
     }
     @catch (NSException *exception)
     {
@@ -156,7 +156,7 @@
                                               toNewSignal:change[NSKeyValueChangeNewKey]];
 
     }
-    else if ([keyPath isEqualToString:kVehicleSignalEventAttributeKeyPath])
+    else if ([keyPath isEqualToString:kVehicleSignalCurrentValueKeyPath])
     {
         if (object == self.vehicle.location)
         {

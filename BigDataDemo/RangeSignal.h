@@ -17,12 +17,12 @@
 #import "Signal.h"
 
 
-@interface RangeSignal : Signal
-@property (nonatomic)         NSInteger lowVal;
-@property (nonatomic)         NSInteger highVal;
-@property (nonatomic)         NSInteger scaledLowValue;
-@property (nonatomic)         NSInteger scaledHighValue;
-@property (nonatomic, strong) NSString *units;
-
-+ (id)rangeSignalWithSignalName:(NSString *)signalName;
-@end
+//@interface RangeSignal : Signal
+////@property (nonatomic)         NSInteger lowVal;
+////@property (nonatomic)         NSInteger highVal;
+////@property (nonatomic)         NSInteger scaledLowValue;
+////@property (nonatomic)         NSInteger scaledHighValue;
+////@property (nonatomic, strong) NSString *units;
+//
+//+ (id)rangeSignalWithSignalName:(NSString *)signalName;
+//@end

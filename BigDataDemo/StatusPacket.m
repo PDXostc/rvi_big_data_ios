@@ -41,11 +41,11 @@
 
     if ((self = [super initFromDictionary:dict]))
     {
-        _status        = dict[@"status"];
+        _status        = [dict[@"status"] copy];
         _numberDoors   = [((NSNumber *)dict[@"number_doors"]) integerValue];
         _numberWindows = [((NSNumber *)dict[@"number_windows"]) integerValue];
         _numberSeats   = [((NSNumber *)dict[@"number_seats"]) integerValue];
-        _driversSide   = dict[@"drivers_side"];
+        _driverSide    = [dict[@"driver_side"] copy];
     }
 
     return self;

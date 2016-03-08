@@ -16,14 +16,14 @@
 #import "RangeSignal.h"
 
 
-@implementation RangeSignal
-{
-
-}
-
-+ (id)rangeSignalWithSignalName:(NSString *)signalName
-{
-    return [[RangeSignal alloc] initWithSignalName:signalName];
-}
-
-@end
+//@implementation RangeSignal
+//{
+//
+//}
+//
+//+ (id)rangeSignalWithSignalName:(NSString *)signalName
+//{
+//    return [[RangeSignal alloc] initWithSignalName:signalName];
+//}
+//
+//@end

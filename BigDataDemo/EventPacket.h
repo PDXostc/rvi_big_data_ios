@@ -18,7 +18,7 @@
 
 
 @interface EventPacket : ServerPacket
-@property (nonatomic, strong) NSObject     *attributes;
+@property (nonatomic, strong) NSDictionary *attributes;
 @property (nonatomic, strong) NSString     *event;
 @property (nonatomic, strong) NSDictionary *location;
 @property (nonatomic, strong) NSString     *source;

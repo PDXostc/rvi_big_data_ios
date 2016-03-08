@@ -49,7 +49,6 @@
 }
 @end
 
-
 @interface SignalManager ()
 //@property (nonatomic, strong) NSMutableDictionary *pendingSignalDescriptorRequests;
 @property (nonatomic, strong) NSMutableDictionary *ongoingSignalDescriptorRequests;
@@ -140,10 +139,10 @@
 //    DLog(@"Key: %@, old val: %@, new val: %@", keyPath, change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 //}
 
-- (Signal *)parseSignalFromDescriptor:(NSObject *)descriptor signalName:(NSString *)signalName
-{
-    return  [Signal signalWithSignalName:signalName];
-}
+//- (Signal *)parseSignalFromDescriptor:(NSDictionary *)descriptor
+//{
+//    return [Signal signalWithDictionary:descriptor];
+//}
 
 - (void)backendServerDidConnect:(NSNotification *)notification
 {
@@ -168,11 +167,11 @@
 
     if ([packet isKindOfClass:[SignalDescriptorPacket class]])
     {
-        NSString     *signalName   = ((SignalDescriptorPacket *)packet).signal;
-        NSString     *vehicleId    = packet.vehicleId;
-        CallbackData *callbackData = self.ongoingSignalDescriptorRequests[signalName];
+        NSString     *signalName    = ((SignalDescriptorPacket *)packet).signal;
+        NSString     *vehicleId     = packet.vehicleId;
+        CallbackData *callbackData  = self.ongoingSignalDescriptorRequests[signalName];
 
-        Signal *signal = [self parseSignalFromDescriptor:((SignalDescriptorPacket *)packet) signalName:signalName];
+        Signal       *signal        = [Signal signalWithSignalName:signalName descriptorDictionary:((SignalDescriptorPacket *)packet).descriptor];
         CallbackBlock callbackBlock = callbackData.callback;
 
         callbackBlock(signalName, vehicleId, signal);

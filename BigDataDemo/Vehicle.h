@@ -26,12 +26,12 @@
 #define kVehicleRightFrontKeyPath       @"rightFront"
 #define kVehicleLeftRearKeyPath         @"leftRear"
 #define kVehicleRightRearKeyPath        @"rightRear"
-#define kVehicleBitchKeyPath            @"bitch"
+#define kVehicleMiddleRearKeyPath       @"middleRear"
 
 #define kVehicleNumberDoorsKeyPath      @"numberDoors"
 #define kVehicleNumberWindowsKeyPath    @"numberWindows"
 #define kVehicleNumberSeatsKeyPath      @"numberSeats"
-#define kVehicleDriversSideKeyPath      @"driversSide"
+#define kVehicleDriverSideKeyPath       @"driverSide"
 
 #define kVehicleVehicleStatusKeyPath    @"vehicleStatus"
 
@@ -44,34 +44,29 @@ typedef enum
 } VehicleStatus;
 
 @interface Vehicle : NSObject
-@property (nonatomic, strong) NSString  *vehicleId;
-@property (nonatomic, strong) Signal    *speed;
-@property (nonatomic, strong) Signal    *engineRPMs;
-@property (nonatomic, strong) Signal    *throttlePressure;
-@property (nonatomic, strong) Signal    *breakPressure;
-@property (nonatomic, strong) Signal    *bearing;
-@property (nonatomic, strong) Signal    *location;
-@property (nonatomic, strong) Signal    *leftFront;
-@property (nonatomic, strong) Signal    *rightFront;
-@property (nonatomic, strong) Signal    *leftRear;
-@property (nonatomic, strong) Signal    *rightRear;
-@property (nonatomic, strong) Signal    *bitch;
+@property (nonatomic, strong, readonly) NSString  *vehicleId;
+@property (nonatomic, strong, readonly) Signal    *speed;
+@property (nonatomic, strong, readonly) Signal    *engineRPMs;
+@property (nonatomic, strong, readonly) Signal    *throttlePressure;
+@property (nonatomic, strong, readonly) Signal    *breakPressure;
+@property (nonatomic, strong, readonly) Signal    *bearing;
+@property (nonatomic, strong, readonly) Signal    *location;
+@property (nonatomic, strong, readonly) Signal    *leftFront;
+@property (nonatomic, strong, readonly) Signal    *rightFront;
+@property (nonatomic, strong, readonly) Signal    *leftRear;
+@property (nonatomic, strong, readonly) Signal    *rightRear;
+@property (nonatomic, strong, readonly) Signal    *middleRear;
 
-@property (nonatomic)         NSInteger  numberDoors;
-@property (nonatomic)         NSInteger  numberWindows;
-@property (nonatomic)         NSInteger  numberSeats;
-@property (nonatomic)         NSString  *driversSide;
+@property (nonatomic, readonly)         NSInteger  numberDoors;
+@property (nonatomic, readonly)         NSInteger  numberWindows;
+@property (nonatomic, readonly)         NSInteger  numberSeats;
+@property (nonatomic, strong, readonly) NSString  *driverSide;
 
-@property (nonatomic)         VehicleStatus vehicleStatus;
+@property (nonatomic, readonly)         VehicleStatus vehicleStatus;
 
 - (NSArray *)defaultSignals;
 - (BOOL)isSignalDefault:(NSString *)signalName;
-- (void)eventForSignalName:(NSString *)signalName attributes:(NSObject *)attributes;
-
-- (id)init;//WithVehicleId:(NSString *)vehicleId;
-+ (id)vehicle;//WithVehicleId:(NSString *)vehicleId;
-
-
+- (void)eventForVehicleId:(NSString *) vehicleId signalName:(NSString *)signalName attributes:(NSDictionary *)attributes;
 @end
 
 
