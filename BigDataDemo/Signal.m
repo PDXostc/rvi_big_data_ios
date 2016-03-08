@@ -61,14 +61,14 @@
 {
     NSArray *rangeArray = descriptor[@"range"];
 
-    if (rangeArray.count > 2) {
+    if (rangeArray.count >= 2) {
         _lowVal  = [rangeArray[0] integerValue];
         _highVal = [rangeArray[rangeArray.count - 1] integerValue];
     }
 
     NSArray *unitRangeArray = descriptor[@"unit_range"];
 
-    if (unitRangeArray.count > 2) {
+    if (unitRangeArray.count >= 2) {
         _scaledLowValue  = [unitRangeArray[0] integerValue];
         _scaledHighValue = [unitRangeArray[unitRangeArray.count - 1] integerValue];
     }
@@ -103,8 +103,7 @@
 
 - (id)initWithSignalName:(NSString *)signalName descriptorDictionary:(NSDictionary *)descriptor
 {
-
-    if (signalName == nil)
+    if (signalName == nil && ![signalName isEqualToString:@""])
         return nil;
 
     if ((self = [super init]))

@@ -32,8 +32,6 @@
     if ((self = [super initFromDictionary:dict]))
     {
         _attributes = [dict[@"attributes"] copy];
-        _event      = [dict[@"event"] copy];
-        _location   = [dict[@"location"] copy];
         _source     = [dict[@"source"] copy];
         _signal     = [dict[@"signal"] copy];
     }

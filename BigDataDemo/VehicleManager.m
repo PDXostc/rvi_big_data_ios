@@ -213,8 +213,8 @@
 
 - (void)processEventPacket:(EventPacket *)eventPacket
 {
-    if ([self.vehicle isSignalDefault:eventPacket.event])
-        [self.vehicle eventForVehicleId:eventPacket.vehicleId signalName:eventPacket.event attributes:eventPacket.attributes];
+    if ([self.vehicle isSignalDefault:eventPacket.signal])
+        [self.vehicle eventForVehicleId:eventPacket.vehicleId signalName:eventPacket.signal attributes:eventPacket.attributes];
     else ; /* We have an event for a signalName that isn't default... pass it along to the UI class that's looking for it??? */
 }
 

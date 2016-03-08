@@ -20,6 +20,8 @@
 
 @interface DefaultSignalsViewController ()
 @property (nonatomic, weak) Vehicle *vehicle;
+@property (nonatomic, strong) IBOutlet UILabel *testLabel;
+
 @end
 
 @implementation DefaultSignalsViewController
@@ -209,6 +211,7 @@
     {
         if (object == self.vehicle.throttlePressure)
         {
+            self.testLabel.text = [NSString stringWithFormat:@"%d", [change[NSKeyValueChangeNewKey] integerValue]];
             // TODO: Update pressure
         }
         else if (object == self.vehicle.breakPressure)
