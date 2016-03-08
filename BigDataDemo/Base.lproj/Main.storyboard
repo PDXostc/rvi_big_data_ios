@@ -315,6 +315,14 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uiu-B0-0jX">
                                 <rect key="frame" x="20" y="40" width="150" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbq-9P-qb8">
+                                        <rect key="frame" x="54" y="64" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uiu-B0-0jX" secondAttribute="height" multiplier="1:1" id="Bza-eh-hGo"/>
@@ -396,7 +404,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="u6u-dt-vPg"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQS-bV-ax9" userLabel="View - Left Nut">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQS-bV-ax9" userLabel="View - Left Rear">
                                         <rect key="frame" x="0.0" y="220" width="190" height="120"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -406,17 +414,7 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="bcg-Q2-4HT"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh2-2m-0LE" userLabel="View - Right Nut">
-                                        <rect key="frame" x="370" y="220" width="190" height="120"/>
-                                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="CWV-Bd-Rqo"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="V7s-7r-i5P"/>
-                                            <constraint firstAttribute="height" priority="250" constant="120" id="WgR-HF-ByT"/>
-                                            <constraint firstAttribute="width" priority="250" constant="190" id="Z4D-hZ-CWA"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pky-pf-oKw" userLabel="View - Bitch">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pky-pf-oKw" userLabel="View - Middle Rear">
                                         <rect key="frame" x="190" y="220" width="180" height="120"/>
                                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -424,6 +422,16 @@
                                             <constraint firstAttribute="height" priority="250" constant="120" id="XwH-JB-ikY"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="m2E-Fg-RNI"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="ntF-Qd-ik2"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eh2-2m-0LE" userLabel="View - Right Rear">
+                                        <rect key="frame" x="370" y="220" width="190" height="120"/>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="CWV-Bd-Rqo"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="V7s-7r-i5P"/>
+                                            <constraint firstAttribute="height" priority="250" constant="120" id="WgR-HF-ByT"/>
+                                            <constraint firstAttribute="width" priority="250" constant="190" id="Z4D-hZ-CWA"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -505,6 +513,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="testLabel" destination="jbq-9P-qb8" id="DOs-2r-s8j"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kTU-5F-MFh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

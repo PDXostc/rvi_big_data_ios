@@ -310,8 +310,17 @@ typedef enum
 
 - (void)unregisterObservers
 {
-    [self.vehicle removeObserver:self
-                      forKeyPath:kVehicleVehicleStatusKeyPath];
+    /* Just in case we screwed up KVO, catch that shit. */
+    @try
+    {
+        [self.vehicle removeObserver:self
+                          forKeyPath:kVehicleVehicleStatusKeyPath];
+    }
+    @catch (NSException *exception)
+    {
+        /* Maybe the original signal was null... */
+        DLog(@"EXCEPTION THROWN: %@", exception.description);
+    }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

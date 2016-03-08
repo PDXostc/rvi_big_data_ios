@@ -46,7 +46,8 @@
 
     if ((self = [super initFromDictionary:dict]))
     {
-        _signal = dict[@"signal"];
+        _signal     = [dict[@"signal"] copy];
+        _descriptor = [dict[@"descriptor"] copy];
     }
 
     return self;

@@ -15,21 +15,21 @@
 
 #import <Foundation/Foundation.h>
 #import "Signal.h"
-
-@interface ValuePair : NSObject
-@property (nonatomic, strong) NSString *stringDescription;
-@property (nonatomic, strong) NSNumber *enumKey;
-- (id)initWithEnumKey:(NSNumber *)enumKey stringDescription:(NSString *)stringDescription;
-+ (id)valuePairWithEnumKey:(NSNumber *)enumKey stringDescription:(NSString *)stringDescription;
-@end
-
-@interface EnumSignal : Signal
-+ (id)enumSignalWithSignalName:(NSString *)signalName;
-
-- (void)addValuePair:(ValuePair *)valuePair;
-- (void)addStringDescription:(NSString *)stringDescription forEnumKey:(NSNumber *)enumKey;
-- (NSString *)stringDescriptionForEnumKey:(NSNumber *)enumKey;
-- (NSArray *)allEnumKeys;
-- (NSArray *)allValuePairs;
-- (NSInteger)numberOfValuePairs;
-@end
+//
+//@interface ValuePair : NSObject
+//@property (nonatomic, strong) NSString *stringDescription;
+//@property (nonatomic, strong) NSNumber *enumKey;
+//- (id)initWithEnumKey:(NSNumber *)enumKey stringDescription:(NSString *)stringDescription;
+//+ (id)valuePairWithEnumKey:(NSNumber *)enumKey stringDescription:(NSString *)stringDescription;
+//@end
+//
+//@interface EnumSignal : Signal
+//+ (id)enumSignalWithSignalName:(NSString *)signalName;
+//
+//- (void)addValuePair:(ValuePair *)valuePair;
+//- (void)addStringDescription:(NSString *)stringDescription forEnumKey:(NSNumber *)enumKey;
+//- (NSString *)stringDescriptionForEnumKey:(NSNumber *)enumKey;
+//- (NSArray *)allEnumKeys;
+//- (NSArray *)allValuePairs;
+//- (NSInteger)numberOfValuePairs;
+//@end

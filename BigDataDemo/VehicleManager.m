@@ -25,6 +25,21 @@
 #import "EventPacket.h"
 #import "StatusPacket.h"
 #import "ErrorPacket.h"
+#import "PacketParser.h"
+
+@interface Vehicle (MANAGER_ACCESS_ONLY)
+@property (nonatomic)         NSInteger     numberDoors;
+@property (nonatomic)         NSInteger     numberWindows;
+@property (nonatomic)         NSInteger     numberSeats;
+@property (nonatomic, strong) NSString     *driverSide;
+@property (nonatomic, strong) NSString     *vehicleId;
+@property (nonatomic)         VehicleStatus vehicleStatus;
+- (id)init;
++ (id)vehicle;
+@end
+
+@implementation Vehicle (MANAGER_ACCESS_ONLY)
+@end
 
 @interface VehicleManager ()
 @property (nonatomic, strong) Vehicle *vehicle;
@@ -34,11 +49,6 @@
 {
 
 }
-
-//+ (NSArray *)defaultSignals
-//{
-//    return @[@"foo", @"bar", @"baz"];
-//}
 
 + (id)sharedManager
 {
@@ -72,6 +82,10 @@
 - (void)resubscribeDefaultsForVehicle:(NSString *)vehicleId
 {
     DLog(@"");
+
+#ifdef TESTING
+    [self processEventPacket:[PacketParser packetFromString:@"{\"vehicle_id\": \"f-type\", \"timestamp\": 1457479882929, \"command\": \"EVENT\", \"source\": \"test\", \"signal\": \"ThrottlePosition_MS\", \"attributes\": {\"value\": 1}}"]];
+#endif
 
     [self.vehicle setVehicleId:vehicleId];
     [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:[self.vehicle defaultSignals]
@@ -179,6 +193,36 @@
     [self.vehicle setVehicleStatus:VEHICLE_STATUS_UNKNOWN];
 }
 
+- (void)processStatusPacket:(StatusPacket *)statusPacket
+{
+    /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
+    if ([[statusPacket status] isEqualToString:@"INVALID"])
+    {
+        self.vehicle.vehicleStatus = VEHICLE_STATUS_INVALID_ID;
+    }
+    else
+    {
+        [self resubscribeDefaultsForVehicle:statusPacket.vehicleId];
+
+        if ([[statusPacket status] isEqualToString:@"CONNECTED"])
+            self.vehicle.vehicleStatus = VEHICLE_STATUS_CONNECTED;
+        else if ([[statusPacket status] isEqualToString:@"NOT_CONNECTED"])
+            self.vehicle.vehicleStatus = VEHICLE_STATUS_NOT_CONNECTED;
+
+        self.vehicle.numberDoors   = statusPacket.numberDoors;
+        self.vehicle.numberWindows = statusPacket.numberWindows;
+        self.vehicle.numberSeats   = statusPacket.numberSeats;
+        self.vehicle.driverSide    = statusPacket.driverSide;
+    }
+}
+
+- (void)processEventPacket:(EventPacket *)eventPacket
+{
+    if ([self.vehicle isSignalDefault:eventPacket.signal])
+        [self.vehicle eventForVehicleId:eventPacket.vehicleId signalName:eventPacket.signal attributes:eventPacket.attributes];
+    else ; /* We have an event for a signalName that isn't default... pass it along to the UI class that's looking for it??? */
+}
+
 - (void)backendServerDidReceiveData:(NSNotification *)notification
 {
     DLog(@"");
@@ -193,36 +237,11 @@
 
     if ([packet isKindOfClass:[StatusPacket class]])
     {
-        StatusPacket *statusPacket = (StatusPacket *)packet;
-
-        /* If our vehicle id is good, set the vehicle's property (so it fetches the signalName descriptor stuff) and subscribe. */
-        if ([[statusPacket status] isEqualToString:@"INVALID"])
-        {
-            self.vehicle.vehicleStatus = VEHICLE_STATUS_INVALID_ID;
-        }
-        else
-        {
-            [self resubscribeDefaultsForVehicle:statusPacket.vehicleId];
-
-            if ([[statusPacket status] isEqualToString:@"CONNECTED"])
-                self.vehicle.vehicleStatus = VEHICLE_STATUS_CONNECTED;
-            else if ([[statusPacket status] isEqualToString:@"NOT_CONNECTED"])
-                self.vehicle.vehicleStatus = VEHICLE_STATUS_NOT_CONNECTED;
-
-            self.vehicle.numberDoors   = statusPacket.numberDoors;
-            self.vehicle.numberWindows = statusPacket.numberWindows;
-            self.vehicle.numberSeats   = statusPacket.numberSeats;
-            self.vehicle.driversSide   = statusPacket.driversSide;
-        }
+        [self processStatusPacket:(StatusPacket *)packet];
     }
     else if ([packet isKindOfClass:[EventPacket class]])
     {
-        EventPacket *eventPacket = (EventPacket *)packet;
-
-        if ([self.vehicle isSignalDefault:eventPacket.event])
-            [self.vehicle eventForSignalName:eventPacket.event attributes:eventPacket.attributes];
-        else ; /* We have an event for a signalName that isn't default... pass it along to the UI class that's looking for it??? */
-
+        [self processEventPacket:(EventPacket *)packet];
     }
     else if ([packet isKindOfClass:[ErrorPacket class]])
     {
