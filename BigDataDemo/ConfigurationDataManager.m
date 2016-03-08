@@ -14,6 +14,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "ConfigurationDataManager.h"
+#import "Util.h"
 
 @interface ConfigurationDataManager ()
 @property (nonatomic, strong) NSString *vehicleId;
@@ -150,6 +151,15 @@
 
 + (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void *)context
 {
-    [[ConfigurationDataManager sharedManager] removeObserver:observer forKeyPath:keyPath context:context];
+    /* Just in case we screwed up KVO, catch that shit. */
+    @try
+    {
+        [[ConfigurationDataManager sharedManager] removeObserver:observer forKeyPath:keyPath context:context];
+    }
+    @catch (NSException *exception)
+    {
+        /* Maybe the original signal was null... */
+        DLog(@"EXCEPTION THROWN: %@", exception.description);
+    }
 }
 @end

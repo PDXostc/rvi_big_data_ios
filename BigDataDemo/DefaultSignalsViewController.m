@@ -68,8 +68,8 @@
 
 - (NSArray *)signalKeypathsToObserve
 {
-    return @[kVehicleThrottlePressureKeyPath,
-             kVehicleBreakPressureKeyPath,
+    return @[kVehicleBreakPressureKeyPath,
+             kVehicleThrottlePressureKeyPath,
              kVehicleLeftFrontKeyPath,
              kVehicleRightFrontKeyPath,
              kVehicleLeftRearKeyPath,
@@ -81,65 +81,102 @@
 {
     for (NSString *keyPath in [self signalKeypathsToObserve])
     {
-        /* Register both the signal objects themselves, as their type may change... */
+        DLog(@"Adding observer for: vehicle.%@", keyPath);
+
+        /* Register both the signal objects themselves, as their type may change when we receive SIGNAL_DESCRIPTOR stuff back... */
         [self.vehicle addObserver:self
                        forKeyPath:keyPath
                           options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                           context:NULL];
 
-        /* And register the signal's attributes as well, since that's what's updated. */
+        DLog(@"Adding observer for: vehicle.%@.eventAttributes", keyPath);
+
+        /* And register the signal's attributes as well, since that's what's updated during events. */
         [[self.vehicle valueForKey:keyPath] addObserver:self
                                              forKeyPath:kVehicleSignalEventAttributeKeyPath
                                                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                                                 context:NULL];
     }
 
+    DLog(@"Adding observer for: vehicle.%@", kVehicleNumberDoorsKeyPath);
     [self.vehicle addObserver:self
                    forKeyPath:kVehicleNumberDoorsKeyPath
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
 
+    DLog(@"Adding observer for: vehicle.%@", kVehicleNumberWindowsKeyPath);
     [self.vehicle addObserver:self
                    forKeyPath:kVehicleNumberWindowsKeyPath
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
 
+    DLog(@"Adding observer for: vehicle.%@", kVehicleNumberSeatsKeyPath);
     [self.vehicle addObserver:self
                    forKeyPath:kVehicleNumberSeatsKeyPath
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
 
+    DLog(@"Adding observer for: vehicle.%@", kVehicleDriversSideKeyPath);
     [self.vehicle addObserver:self
                    forKeyPath:kVehicleDriversSideKeyPath
                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                       context:NULL];
 }
 
+- (void)removeSelfAsObserverFromObject:(NSObject *)object keyPath:(NSString *)keyPath
+{
+    /* Just in case we screwed up KVO, catch that shit. */
+    @try
+    {
+        DLog(@"Removing observer for: %@.%@", [object class], keyPath);
+        [object removeObserver:self
+                    forKeyPath:keyPath];
+    }
+    @catch (NSException *exception)
+    {
+        /* Maybe the original signal was null... */
+        DLog(@"EXCEPTION THROWN: %@", exception.description);
+    }
+
+}
+
 - (void)unregisterObservers
 {
     for (NSString *keyPath in [self signalKeypathsToObserve])
     {
-        [self.vehicle removeObserver:self
-                          forKeyPath:keyPath];
+        [self removeSelfAsObserverFromObject:self.vehicle keyPath:keyPath];
 
-        [[self.vehicle valueForKey:keyPath] removeObserver:self
-                                                forKeyPath:kVehicleSignalEventAttributeKeyPath];
-
-
+        DLog(@"Removing observer for: vehicle.%@.eventAttributes", keyPath);
+        [self removeSelfAsObserverFromObject:[self.vehicle valueForKey:keyPath] keyPath:kVehicleSignalEventAttributeKeyPath];
     }
+
+    [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleNumberDoorsKeyPath];
+    [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleNumberWindowsKeyPath];
+    [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleNumberSeatsKeyPath];
+    [self removeSelfAsObserverFromObject:self.vehicle keyPath:kVehicleDriversSideKeyPath];
 }
 
 - (void)transferEventAttributeObserverFromOldSignal:(Signal *)oldSignal toNewSignal:(Signal *)newSignal
 {
-    /* Stop observing the old signal's attributes... */
-    [oldSignal removeObserver:self
-                   forKeyPath:kVehicleSignalEventAttributeKeyPath];
+    DLog(@"");
 
-    /* and start observing the new signal's attributes */
-    [newSignal addObserver:self
-                forKeyPath:kVehicleSignalEventAttributeKeyPath
-                   options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-                   context:NULL];
+    @try
+    {
+        /* Start observing the new signal's attributes (first, in case exception is thrown below)... */
+        [newSignal addObserver:self
+                    forKeyPath:kVehicleSignalEventAttributeKeyPath
+                       options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                context:NULL];
+
+        /* ... and stop observing the old signal's attributes. */
+        [oldSignal removeObserver:self
+                       forKeyPath:kVehicleSignalEventAttributeKeyPath];
+    }
+    @catch (NSException *exception)
+    {
+        /* Maybe the original signal was null or we messed up KVO or something... */
+        DLog(@"EXCEPTION THROWN: %@", exception.description);
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
