@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "DataViewController.h"
-#import "SignalManager.h"
 
 
 @interface AllSignalsViewController : DataViewController

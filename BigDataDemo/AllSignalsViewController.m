@@ -18,48 +18,14 @@
 #import "ConfigurationDataManager.h"
 
 
-@interface SearchResultsController : UIViewController <UISearchControllerDelegate>
-
-@end
-
-@implementation SearchResultsController
-
-- (void)willPresentSearchController:(UISearchController *)searchController
-{
-    DLog(@"");
-}
-
-- (void)didPresentSearchController:(UISearchController *)searchController
-{
-    DLog(@"");
-}
-
-- (void)willDismissSearchController:(UISearchController *)searchController
-{
-    DLog(@"");
-}
-
-- (void)didDismissSearchController:(UISearchController *)searchController
-{
-    DLog(@"");
-}
-
-- (void)presentSearchController:(UISearchController *)searchController
-{
-    DLog(@"");
-}
-
-
-@end
-
 @interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 @property (nonatomic, strong) IBOutlet UITableView        *tableView;
 @property (nonatomic, strong)          NSArray            *allSignals;
 @property (nonatomic, strong)          NSArray            *searchResults;
 @property (nonatomic, strong)          UISearchController *searchController;
 @property (nonatomic, copy)            NSString           *savedSearchText;
-@property (nonatomic)                  NSInteger          selectedNumber;
-@property (nonatomic, strong)          UIRefreshControl  *refreshControl;
+@property (nonatomic)                  NSInteger          selectedRow;
+@property (nonatomic, strong)          UIRefreshControl   *refreshControl;
 @end
 
 @implementation AllSignalsViewController
@@ -73,24 +39,28 @@
     [super viewDidLoad];
 
     // Create the search results controller and store a reference to it.
-    SearchResultsController* resultsController = [[SearchResultsController alloc] init];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
+    //SearchResultsController* resultsController = [[SearchResultsController alloc] init];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];//resultsController];
 
     // Use the current view controller to update the search results.
     self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
 
     // Install the search bar as the table header.
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    //self.tableView.tableHeaderView = self.searchController.searchBar;
+
+
 
     // It is usually good to set the presentation context.
-    //self.definesPresentationContext = YES;
+    self.definesPresentationContext = NO;
 
-    self.selectedNumber = -1;
+    self.selectedRow = -1;
 
     // Initialize the refresh control.
     self.refreshControl                 = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor purpleColor];
     self.refreshControl.tintColor       = [UIColor whiteColor];
+
     [self.refreshControl addTarget:self
                             action:@selector(getAllSignals)
                   forControlEvents:UIControlEventValueChanged];
@@ -157,12 +127,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == self.selectedNumber)
+    if (indexPath.row == self.selectedRow)
         return 150;
 
     return 44;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 44;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.searchController.searchBar;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -174,7 +158,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *reuseIdentifier = [indexPath row] == self.selectedNumber ? @"ExpandedCell" : @"RegularCell";
+    NSString *reuseIdentifier = [indexPath row] == self.selectedRow ? @"ExpandedCell" : @"RegularCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 
@@ -202,14 +186,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.selectedNumber == [indexPath row])
+    DLog(@"Row: %d", [indexPath row]);
+
+    if (self.selectedRow >= 0 && self.selectedRow == [indexPath row])
     {
-        self.selectedNumber = -1;
+        self.selectedRow = -1;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
     else
     {
-        self.selectedNumber = [indexPath row];
+        self.selectedRow = [indexPath row];
     }
 
     [tableView beginUpdates];
@@ -218,7 +204,9 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedNumber = -1;
+    DLog(@"Row: %d", [indexPath row]);
+
+    self.selectedRow = -1;
 
     [tableView beginUpdates];
     [tableView endUpdates];
@@ -240,6 +228,10 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     //DLog(@"Search text: %@", searchController.searchBar.text);
+    DLog(@"");
+
+    if (self.selectedRow >= 0)
+        [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedRow inSection:0]];
 
     [self filterContentForSearchText:searchController.searchBar.text];
     [self.tableView reloadData];
