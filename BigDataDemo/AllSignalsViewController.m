@@ -58,7 +58,8 @@
 @property (nonatomic, strong)          NSArray            *searchResults;
 @property (nonatomic, strong)          UISearchController *searchController;
 @property (nonatomic, copy)            NSString           *savedSearchText;
-@property (nonatomic)                  NSInteger           selectedNumber;
+@property (nonatomic)                  NSInteger          selectedNumber;
+@property (nonatomic, strong)          UIRefreshControl  *refreshControl;
 @end
 
 @implementation AllSignalsViewController
@@ -82,9 +83,19 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
 
     // It is usually good to set the presentation context.
-    self.definesPresentationContext = YES;
+    //self.definesPresentationContext = YES;
 
     self.selectedNumber = -1;
+
+    // Initialize the refresh control.
+    self.refreshControl                 = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor       = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(getAllSignals)
+                  forControlEvents:UIControlEventValueChanged];
+
+    [self.tableView addSubview:self.refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -106,7 +117,7 @@
     DLog(@"");
     [super viewDidAppear:animated];
 
-    [SignalManager getAllSignalsForVehicle:[ConfigurationDataManager getVehicleId]];
+    [self getAllSignals];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -126,10 +137,16 @@
     [super viewDidDisappear:animated];
 }
 
+- (void)getAllSignals
+{
+    [SignalManager getAllSignalsForVehicle:[ConfigurationDataManager getVehicleId]];
+}
+
 - (void)signalManagerDidGetAllSignals:(NSArray *)signals forVehicle:(NSString *)vehicleId
 {
     self.allSignals = [signals copy];
 
+    [self.refreshControl endRefreshing];
     [self.tableView reloadData];
 }
 

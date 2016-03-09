@@ -80,6 +80,7 @@
 
 + (void)start
 {
+    DLog(@"");
     [[SignalManager sharedManager] registerObservers];
 }
 
