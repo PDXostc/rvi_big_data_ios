@@ -18,6 +18,8 @@
 
 
 @interface AllSignalsPacket : ServerPacket
+@property (nonatomic, readonly) NSArray *signals;
+
 - (id)initWithVehicleId:(NSString *)vehicleId;
 + (id)packetWithVehicleId:(NSString *)vehicleId;
 

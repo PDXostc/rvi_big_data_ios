@@ -144,7 +144,7 @@
     if (![vehicleId isEqualToString:self.vehicleId])
         return;
 #endif
-    
+
     /* Get our Vehicle class's property string from the car's signalName name. */
     NSString *propertyName = self.defaultSignalsMap[signalName];
 

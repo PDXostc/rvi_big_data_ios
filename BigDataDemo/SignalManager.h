@@ -15,10 +15,19 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol SignalManagerDelegate <NSObject>
+- (void)signalManagerDidGetAllSignals:(NSArray *)signals forVehicle:(NSString *)vehicleId;
+- (void)signalManagerDidReceiveEventForVehicle:(NSString *)vehicleId signalName:(NSString *)signals attributes:(NSDictionary *)attributes;
+@end
+
 @class Signal;
 typedef void (^CallbackBlock)(NSString * signalName, NSString *vehicleId, Signal *signal);
 
 @interface SignalManager : NSObject
 + (void)start;
 + (void)getDescriptorsForSignalNames:(NSArray *)signalNames vehicleId:(NSString *)vehicleId block:(CallbackBlock)callbackBlock;
++ (void)setDelegate:(id<SignalManagerDelegate>)delegate;
++ (void)subscribeToSignal:(NSString *)signal forVehicle:(NSString *)vehicleId;
++ (void)unsubscribeFromSignal:(NSString *)signal forVehicle:(NSString *)vehicleId;
++ (void)getAllSignalsForVehicle:(NSString *)vehicleId;
 @end
