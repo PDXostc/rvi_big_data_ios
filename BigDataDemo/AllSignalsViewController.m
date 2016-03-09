@@ -53,10 +53,11 @@
 @end
 
 @interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating>
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong)          NSArray     *allSignals;
-@property (nonatomic, strong)          NSArray     *searchResults;
+@property (nonatomic, strong) IBOutlet UITableView        *tableView;
+@property (nonatomic, strong)          NSArray            *allSignals;
+@property (nonatomic, strong)          NSArray            *searchResults;
 @property (nonatomic, strong)          UISearchController *searchController;
+@property (nonatomic, copy) NSString                      *savedSearchText;
 @end
 
 @implementation AllSignalsViewController
@@ -82,7 +83,6 @@
 
     // It is usually good to set the presentation context.
     self.definesPresentationContext = YES;
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -91,6 +91,12 @@
     [super viewWillAppear:animated];
 
     [SignalManager setDelegate:self];
+
+    if (self.savedSearchText && [self.savedSearchText isEqualToString:@""])
+    {
+        [self.searchController setActive:YES];
+        [self.searchController.searchBar setText:self.savedSearchText];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -107,6 +113,9 @@
     [super viewWillDisappear:animated];
 
     [SignalManager setDelegate:nil];
+
+    [self setSavedSearchText:self.searchController.searchBar.text];
+    [self.searchController setActive:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -171,7 +180,6 @@
     DLog(@"Search text: %@", searchController.searchBar.text);
 
     [self filterContentForSearchText:searchController.searchBar.text];
-
     [self.tableView reloadData];
 }
 
