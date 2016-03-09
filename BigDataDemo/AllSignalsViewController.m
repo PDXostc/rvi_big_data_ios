@@ -157,18 +157,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell"];
+    NSString *reuseIdentifier = [indexPath row] == self.selectedNumber ? @"ExpandedCell" : @"RegularCell";
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"myCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
+    UILabel *titleLabel = [cell viewWithTag:100];
+
     if (self.searchController.active)//self.searchResults.count)
-        cell.textLabel.text = self.searchResults[(NSUInteger)indexPath.row];
+        titleLabel.text = self.searchResults[(NSUInteger)indexPath.row];
     else
-        cell.textLabel.text = self.allSignals[(NSUInteger)indexPath.row];
+        titleLabel.text = self.allSignals[(NSUInteger)indexPath.row];
+
+
+
+
+
+
 
     return cell;
 }
@@ -176,9 +186,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.selectedNumber == [indexPath row])
+    {
         self.selectedNumber = -1;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
     else
+    {
         self.selectedNumber = [indexPath row];
+    }
 
     [tableView beginUpdates];
     [tableView endUpdates];
