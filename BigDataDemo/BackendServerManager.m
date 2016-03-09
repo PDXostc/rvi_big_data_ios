@@ -106,6 +106,9 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
 + (void)sendPacket:(ServerPacket *)packet
 {
+    if (![BackendServerManager isConnected])
+        return; // TODO: Error?
+
     if (!packet) // TODO: Error?
         return;
 
@@ -114,9 +117,16 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
     if (!data) // TODO: Error?
         return;
 
-    DLog(@"Socket send: %@", data);
-
-    [[[BackendServerManager sharedManager] webSocket] send:data];
+    /* Just in case our state gets corrupted, we still won't crash. */
+    @try
+    {
+        DLog(@"Socket send: %@", data);
+        [[[BackendServerManager sharedManager] webSocket] send:data];
+    }
+    @catch(NSException *exception)
+    {
+        DLog(@"Exception thrown: %@", exception.description);
+    }
 }
 
 + (BOOL)isConnected

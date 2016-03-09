@@ -18,10 +18,45 @@
 #import "ConfigurationDataManager.h"
 
 
-@interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface SearchResultsController : UIViewController <UISearchControllerDelegate>
+
+@end
+
+@implementation SearchResultsController
+
+- (void)willPresentSearchController:(UISearchController *)searchController
+{
+    DLog(@"");
+}
+
+- (void)didPresentSearchController:(UISearchController *)searchController
+{
+    DLog(@"");
+}
+
+- (void)willDismissSearchController:(UISearchController *)searchController
+{
+    DLog(@"");
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController
+{
+    DLog(@"");
+}
+
+- (void)presentSearchController:(UISearchController *)searchController
+{
+    DLog(@"");
+}
+
+
+@end
+
+@interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)          NSArray     *allSignals;
 @property (nonatomic, strong)          NSArray     *searchResults;
+@property (nonatomic, strong)          UISearchController *searchController;
 @end
 
 @implementation AllSignalsViewController
@@ -29,11 +64,25 @@
 
 }
 
-
 - (void)viewDidLoad
 {
     DLog(@"");
     [super viewDidLoad];
+
+
+    // Create the search results controller and store a reference to it.
+    SearchResultsController* resultsController = [[SearchResultsController alloc] init];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
+
+    // Use the current view controller to update the search results.
+    self.searchController.searchResultsUpdater = self;
+
+    // Install the search bar as the table header.
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+
+    // It is usually good to set the presentation context.
+    self.definesPresentationContext = YES;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,7 +129,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView)
+    if (self.searchController.active)//self.searchResults.count)
         return [self.searchResults count];
     else
         return [self.allSignals count];
@@ -96,10 +145,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    if (tableView == self.searchDisplayController.searchResultsTableView)
-        cell.textLabel.text = self.allSignals[(NSUInteger)indexPath.row];
-    else
+    if (self.searchController.active)//self.searchResults.count)
         cell.textLabel.text = self.searchResults[(NSUInteger)indexPath.row];
+    else
+        cell.textLabel.text = self.allSignals[(NSUInteger)indexPath.row];
 
     return cell;
 }
@@ -110,10 +159,20 @@
     self.searchResults = [self.allSignals filteredArrayUsingPredicate:resultPredicate];
 }
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self filterContentForSearchText:searchString];
 
     return YES;
 }
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    DLog(@"Search text: %@", searchController.searchBar.text);
+
+    [self filterContentForSearchText:searchController.searchBar.text];
+
+    [self.tableView reloadData];
+}
+
 @end
