@@ -18,9 +18,10 @@
 #import "ConfigurationDataManager.h"
 
 
-@interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong)          NSArray     *allSignals;
+@property (nonatomic, strong)          NSArray     *searchResults;
 @end
 
 @implementation AllSignalsViewController
@@ -79,7 +80,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.allSignals.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+        return [self.searchResults count];
+    else
+        return [self.allSignals count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,8 +96,24 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    cell.textLabel.text = self.allSignals[(NSUInteger)indexPath.row];
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+        cell.textLabel.text = self.allSignals[(NSUInteger)indexPath.row];
+    else
+        cell.textLabel.text = self.searchResults[(NSUInteger)indexPath.row];
 
     return cell;
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText// scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
+    self.searchResults = [self.allSignals filteredArrayUsingPredicate:resultPredicate];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString];
+
+    return YES;
 }
 @end
