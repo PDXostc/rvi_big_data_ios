@@ -35,7 +35,7 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
 
-    NSUInteger startingIndex = [ConfigurationDataManager hasValidConfigurationData] ? 2 : 0;
+    NSUInteger startingIndex = [ConfigurationDataManager hasValidConfigurationData] ? 3 : 0;
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:startingIndex
                                                                                   storyboard:self.storyboard];
 
