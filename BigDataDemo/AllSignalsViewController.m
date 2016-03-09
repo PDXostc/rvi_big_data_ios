@@ -57,7 +57,8 @@
 @property (nonatomic, strong)          NSArray            *allSignals;
 @property (nonatomic, strong)          NSArray            *searchResults;
 @property (nonatomic, strong)          UISearchController *searchController;
-@property (nonatomic, copy) NSString                      *savedSearchText;
+@property (nonatomic, copy)            NSString           *savedSearchText;
+@property (nonatomic)                  NSInteger           selectedNumber;
 @end
 
 @implementation AllSignalsViewController
@@ -69,7 +70,6 @@
 {
     DLog(@"");
     [super viewDidLoad];
-
 
     // Create the search results controller and store a reference to it.
     SearchResultsController* resultsController = [[SearchResultsController alloc] init];
@@ -83,6 +83,8 @@
 
     // It is usually good to set the presentation context.
     self.definesPresentationContext = YES;
+
+    self.selectedNumber = -1;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,6 +138,15 @@
 
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == self.selectedNumber)
+        return 150;
+
+    return 44;
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.searchController.active)//self.searchResults.count)
@@ -162,6 +173,25 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.selectedNumber == [indexPath row])
+        self.selectedNumber = -1;
+    else
+        self.selectedNumber = [indexPath row];
+
+    [tableView beginUpdates];
+    [tableView endUpdates];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedNumber = -1;
+
+    [tableView beginUpdates];
+    [tableView endUpdates];
+}
+
 - (void)filterContentForSearchText:(NSString*)searchText// scope:(NSString*)scope
 {
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
@@ -177,7 +207,7 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
-    DLog(@"Search text: %@", searchController.searchBar.text);
+    //DLog(@"Search text: %@", searchController.searchBar.text);
 
     [self filterContentForSearchText:searchController.searchBar.text];
     [self.tableView reloadData];
