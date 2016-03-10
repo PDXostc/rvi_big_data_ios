@@ -28,7 +28,7 @@
 //
 //- (void)addValuePair:(ValuePair *)valuePair;
 //- (void)addStringDescription:(NSString *)stringDescription forEnumKey:(NSNumber *)enumKey;
-//- (NSString *)stringDescriptionForEnumKey:(NSNumber *)enumKey;
+//- (NSString *)stringDescriptionForValue:(NSNumber *)enumKey;
 //- (NSArray *)allEnumKeys;
 //- (NSArray *)allValuePairs;
 //- (NSInteger)numberOfValuePairs;

@@ -24,34 +24,36 @@
 #import "UnsubscribePacket.h"
 #import "EventPacket.h"
 
-@interface CallbackData : NSObject
-@property (nonatomic, strong) NSString      *signalName;
-@property (nonatomic, strong) NSString      *vehicleId;
-@property (nonatomic, copy)   CallbackBlock  callback;
-@end
+#define key(vehicleId, signalName) [NSString stringWithFormat:@"%@:%@", vehicleId, signalName]
 
-@implementation CallbackData
-- (id)initWithSignalName:(NSString *)signalName vehicleId:(id)vehicleId callbackBlock:(CallbackBlock)callbackBlock
-{
-    if ((signalName == nil) || (vehicleId == nil) || (callbackBlock == nil))
-        return nil;
-
-    if ((self = [super init]))
-    {
-        _signalName = [signalName copy];
-        _vehicleId  = [vehicleId copy];
-        _callback   = [callbackBlock copy];
-
-    }
-
-    return self;
-}
-
-+ (id)callbackDataWithSignalName:(NSString *)signalName vehicleId:(id)vehicleId callbackBlock:(CallbackBlock)callbackBlock
-{
-    return [[CallbackData alloc] initWithSignalName:signalName vehicleId:vehicleId callbackBlock:callbackBlock];
-}
-@end
+//@interface CallbackData : NSObject
+//@property (nonatomic, strong) NSString      *signalName;
+//@property (nonatomic, strong) NSString      *vehicleId;
+//@property (nonatomic, copy)   CallbackBlock  callback;
+//@end
+//
+//@implementation CallbackData
+//- (id)initWithSignalName:(NSString *)signalName vehicleId:(id)vehicleId callbackBlock:(CallbackBlock)callbackBlock
+//{
+//    if ((signalName == nil) || (vehicleId == nil) || (callbackBlock == nil))
+//        return nil;
+//
+//    if ((self = [super init]))
+//    {
+//        _signalName = [signalName copy];
+//        _vehicleId  = [vehicleId copy];
+//        _callback   = [callbackBlock copy];
+//
+//    }
+//
+//    return self;
+//}
+//
+//+ (id)callbackDataWithSignalName:(NSString *)signalName vehicleId:(id)vehicleId callbackBlock:(CallbackBlock)callbackBlock
+//{
+//    return [[CallbackData alloc] initWithSignalName:signalName vehicleId:vehicleId callbackBlock:callbackBlock];
+//}
+//@end
 
 @interface SignalManager ()
 @property (nonatomic, weak)   id<SignalManagerDelegate> delegate;
@@ -71,7 +73,6 @@
     dispatch_once(&onceToken, ^{
         _sharedManager = [[SignalManager alloc] init];
 
-//        _sharedManager.pendingSignalDescriptorRequests = [NSMutableDictionary dictionary];
         _sharedManager.ongoingSignalDescriptorRequests = [NSMutableDictionary dictionary];
     });
 
@@ -84,6 +85,11 @@
     [[SignalManager sharedManager] registerObservers];
 }
 
++ (void)getDescriptorsForSignalNames:(NSArray *)signalNames vehicleId:(NSString *)vehicleId
+{
+    [self getDescriptorsForSignalNames:signalNames vehicleId:vehicleId block:nil];
+}
+
 + (void)getDescriptorsForSignalNames:(NSArray *)signalNames vehicleId:(NSString *)vehicleId block:(CallbackBlock)callbackBlock
 {
     for (NSString *signalName in signalNames)
@@ -93,16 +99,14 @@
         else
         {
             SignalDescriptorPacket *packet = [SignalDescriptorPacket packetWithSignal:signalName vehicleId:vehicleId];
-            CallbackData *data = [CallbackData callbackDataWithSignalName:signalName vehicleId:vehicleId callbackBlock:callbackBlock];
+            //CallbackData *data = [CallbackData callbackDataWithSignalName:signalName vehicleId:vehicleId callbackBlock:callbackBlock];
 
-            [[SignalManager sharedManager] ongoingSignalDescriptorRequests][signalName] = data;
+            if (callbackBlock)
+                [[SignalManager sharedManager] ongoingSignalDescriptorRequests][key(vehicleId, signalName)] = callbackBlock;
+
             [BackendServerManager sendPacket:packet];
         }
     }
-//
-//
-//    if ([BackendServerManager isConnected])
-//        [[SignalManager sharedManager] tryAndSendPackets];
 }
 
 + (void)setDelegate:(id <SignalManagerDelegate>)delegate
@@ -170,17 +174,19 @@
     /* Move all ongoing requests to pending requests? Or drop them? */
 }
 
-
 - (void)processSignalDescriptorPacket:(SignalDescriptorPacket *)signalDescriptorPacket
 {
     NSString     *signalName    = signalDescriptorPacket.signal;
     NSString     *vehicleId     = signalDescriptorPacket.vehicleId;
-    CallbackData *callbackData  = self.ongoingSignalDescriptorRequests[signalName];
+    //CallbackData *callbackData  = self.ongoingSignalDescriptorRequests[signalName];
 
     Signal       *signal        = [Signal signalWithSignalName:signalName descriptorDictionary:signalDescriptorPacket.descriptor];
-    CallbackBlock callbackBlock = callbackData.callback;
+    CallbackBlock callbackBlock = self.ongoingSignalDescriptorRequests[key(vehicleId, signalName)];//callbackData.callback;
 
-    callbackBlock(signalName, vehicleId, signal);
+    if (callbackBlock) /* If there was a callback block, call it... */
+        callbackBlock(signalName, vehicleId, signal);
+    else /* ...otherwise post to delegate. */
+        [self.delegate signalManagerDidReceiveSignalDescriptorForVehicle:vehicleId signal:signal signalName:signalName];
 
     [self.ongoingSignalDescriptorRequests removeObjectForKey:signalName];
 }
@@ -193,6 +199,12 @@
 - (void)processEventPacket:(EventPacket *)eventPacket
 {
     [self.delegate signalManagerDidReceiveEventForVehicle:eventPacket.vehicleId signalName:eventPacket.signal attributes:eventPacket.attributes];
+}
+
+- (void)processErrorPacket:(ErrorPacket *)errorPacket
+{
+    if (errorPacket.originalCommand == SIGNAL_DESCRIPTOR)
+        [self.delegate signalManagerDidReceiveErrorWhenRetrievingSignalDescriptorForVehicle:errorPacket.vehicleId signalName:errorPacket.signal errorMessage:errorPacket.errorMessage];
 }
 
 - (void)backendServerDidReceiveData:(NSNotification *)notification
@@ -216,7 +228,7 @@
     }
     else if ([packet isKindOfClass:[ErrorPacket class]])
     {
-        ; // TODO: Error
+        [self processErrorPacket:(ErrorPacket *)packet];
     }
 }
 @end

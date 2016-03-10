@@ -560,13 +560,27 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="214"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-7U-Uxy">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-7U-Uxy">
                                                     <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="27" id="cRe-Dj-pKI"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView opaque="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nus-hD-oVs">
+                                                    <rect key="frame" x="290" y="43" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3p2-7U-Uxy" firstAttribute="leading" secondItem="34n-5W-D8p" secondAttribute="leadingMargin" id="Bol-hZ-qts"/>
+                                                <constraint firstItem="3p2-7U-Uxy" firstAttribute="top" secondItem="34n-5W-D8p" secondAttribute="topMargin" id="INA-q1-B9j"/>
+                                                <constraint firstItem="nus-hD-oVs" firstAttribute="top" secondItem="3p2-7U-Uxy" secondAttribute="bottom" constant="8" id="PsZ-BJ-Og3"/>
+                                                <constraint firstItem="3p2-7U-Uxy" firstAttribute="centerX" secondItem="nus-hD-oVs" secondAttribute="centerX" id="Tib-Yp-NWX"/>
+                                                <constraint firstItem="nus-hD-oVs" firstAttribute="top" secondItem="3p2-7U-Uxy" secondAttribute="bottom" constant="8" id="Vwm-8O-AKx"/>
+                                                <constraint firstItem="nus-hD-oVs" firstAttribute="centerX" secondItem="34n-5W-D8p" secondAttribute="centerX" id="sMZ-nk-oK4"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>

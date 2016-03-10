@@ -15,6 +15,10 @@
 
 #import "ErrorPacket.h"
 
+@interface ServerPacket (CommandStuff)
+NSString * stringForCommand(Command command);
+Command commandForString(NSString * string);
+@end
 
 @implementation ErrorPacket
 {
@@ -29,8 +33,8 @@
     if ((self = [super initFromDictionary:dict]))
     {
         _signal           = [dict[@"signal"] copy];
-        _errorMessage     = [dict[@"error_message"] copy];
-        _originalCommand  = [dict[@"orig_command"] copy];
+        _errorMessage     = [dict[@"error"] copy];
+        _originalCommand  = commandForString(dict[@"orig_command"]);
     }
 
     return self;

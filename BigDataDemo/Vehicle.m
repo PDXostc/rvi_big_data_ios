@@ -119,7 +119,7 @@
                                                   NSNumber *cachedValue = [self valueForKey:[self cachedPropertyKeyPathForPropertyNamed:propertyName]];
 
                                                   /* Set our signal object's value to our cached value. */
-                                                  signal.currentValue = [cachedValue integerValue];
+                                                  signal.currentValue = cachedValue;
 
                                                   /* Remove the cached value. */
                                                   [self setValue:nil forKey:[self cachedPropertyKeyPathForPropertyNamed:propertyName]];
@@ -156,7 +156,7 @@
 
     /* If it's not null, the SignalManager has returned its descriptor data, so set its current value. */
     if (signal)
-        signal.currentValue = [attributes[@"value"] integerValue];
+        signal.currentValue = attributes[@"value"];
     /* Otherwise, SignalManager hasn't returned its descriptor data, so just cache the current value, again, using KVC. */
     else
         [self setValue:[attributes[@"value"] copy] forKey:[self cachedPropertyKeyPathForPropertyNamed:propertyName]];

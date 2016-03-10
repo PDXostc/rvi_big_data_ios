@@ -16,16 +16,102 @@
 #import "Util.h"
 #import "SignalManager.h"
 #import "ConfigurationDataManager.h"
+#import "Signal.h"
+#import "ServerPacket.h"
+#import "AllSignalsViewController+CellDrawing.h"
 
+#define key(vehicleId, signalName) [NSString stringWithFormat:@"%@:%@", vehicleId, signalName]
+
+@implementation SelectedCellData
+- (instancetype)initWithSignalName:(NSString *)signalName vehicleId:(NSString *)vehicleId;
+{
+    self = [super init];
+    if (self)
+    {
+        self.signalName   = [signalName copy];
+        self.vehicleId    = [vehicleId copy];
+        self.cachedValues = [NSMutableArray array];
+    }
+
+    return self;
+}
+
++ (instancetype)dataWithSignalName:(NSString *)signalName vehicleId:(NSString *)vehicleId;
+{
+    return [[self alloc] initWithSignalName:signalName vehicleId:vehicleId];
+}
+
+- (NSInteger)heightForDescriptorData
+{
+    NSInteger heightForDescriptorData = 0;
+
+    switch (self.signal.signalType) {
+
+        case SIGNAL_TYPE_UNKNOWN:
+            break;
+
+        case SIGNAL_TYPE_CONVERTED_RANGE:
+
+            heightForDescriptorData += LINE_HEIGHT * 2;
+        case SIGNAL_TYPE_RANGE:
+
+            heightForDescriptorData += LINE_HEIGHT * 2;
+            break;
+
+        case SIGNAL_TYPE_RANGE_ENUMERATION:
+
+            heightForDescriptorData += LINE_HEIGHT * 2;
+
+        case SIGNAL_TYPE_ENUMERATION:
+
+            heightForDescriptorData += LINE_HEIGHT + (self.signal.allValuePairs.count * LINE_HEIGHT);
+            break;
+    }
+
+    return heightForDescriptorData + VERTICAL_PADDING;
+}
+
+- (NSInteger)heightForCachedValues
+{
+    if (!self.cachedValues.count) return 0;
+
+    return LINE_HEIGHT + (self.cachedValues.count * LINE_HEIGHT) + VERTICAL_PADDING;
+}
+
+- (NSInteger)heightForCurrentValue
+{
+    if (!self.currentValue) return 0;
+
+    return LINE_HEIGHT + LINE_HEIGHT + VERTICAL_PADDING;
+}
+
+- (NSInteger)heightForCell
+{
+    if (self.signal == nil)
+        return 80;
+
+    return EXTENDED_DATA_START + [self heightForDescriptorData] + [self heightForCachedValues] + [self heightForCurrentValue];
+}
+
+- (void)updateCurrentValue:(NSNumber *)newValue
+{
+    if (self.currentValue)
+        [self.cachedValues addObject:self.currentValue];
+
+    self.currentValue = newValue;
+}
+@end
 
 @interface AllSignalsViewController () <SignalManagerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating>
-@property (nonatomic, strong) IBOutlet UITableView        *tableView;
-@property (nonatomic, strong)          NSArray            *allSignals;
-@property (nonatomic, strong)          NSArray            *searchResults;
-@property (nonatomic, strong)          UISearchController *searchController;
-@property (nonatomic, copy)            NSString           *savedSearchText;
-@property (nonatomic)                  NSInteger          selectedRow;
-@property (nonatomic, strong)          UIRefreshControl   *refreshControl;
+@property (nonatomic, strong) IBOutlet UITableView         *tableView;
+@property (nonatomic, strong)          NSArray             *allSignals;
+@property (nonatomic, strong)          NSArray             *searchResults;
+@property (nonatomic, strong)          UISearchController  *searchController;
+@property (nonatomic, copy)            NSString            *savedSearchText;
+@property (nonatomic, strong)          UIRefreshControl    *refreshControl;
+@property (nonatomic, strong)          SelectedCellData    *selectedCellData;
+@property (nonatomic, strong)          NSMutableDictionary *cachedSignalData;
+@property (nonatomic)                  NSInteger            selectedRow;
 @end
 
 @implementation AllSignalsViewController
@@ -49,12 +135,12 @@
     // Install the search bar as the table header.
     //self.tableView.tableHeaderView = self.searchController.searchBar;
 
-
-
     // It is usually good to set the presentation context.
     self.definesPresentationContext = NO;
 
     self.selectedRow = -1;
+
+    self.cachedSignalData = [NSMutableDictionary dictionary];
 
     // Initialize the refresh control.
     self.refreshControl                 = [[UIRefreshControl alloc] init];
@@ -88,12 +174,24 @@
     [super viewDidAppear:animated];
 
     [self getAllSignals];
+
+    for (NSString *key in self.cachedSignalData.allKeys)
+    {
+        NSArray *keyParts = [key componentsSeparatedByString:@":"];
+        if (keyParts.count == 2) [SignalManager subscribeToSignal:keyParts[1] forVehicle:keyParts[0]];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
     [super viewWillDisappear:animated];
+
+    for (NSString *key in self.cachedSignalData.allKeys)
+    {
+        NSArray *keyParts = [key componentsSeparatedByString:@":"];
+        if (keyParts.count == 2) [SignalManager unsubscribeFromSignal:keyParts[1] forVehicle:keyParts[0]];
+    }
 
     [SignalManager setDelegate:nil];
 
@@ -120,15 +218,66 @@
     [self.tableView reloadData];
 }
 
-- (void)signalManagerDidReceiveEventForVehicle:(NSString *)vehicleId signalName:(NSString *)signals attributes:(NSDictionary *)attributes
+- (void)signalManagerDidReceiveErrorWhenRetrievingSignalDescriptorForVehicle:(NSString *)vehicleId signalName:(NSString *)signalName errorMessage:(NSString *)errorMessage
 {
+    DLog(@"");
+    SelectedCellData *selectedCellData = self.cachedSignalData[key(vehicleId, signalName)];
 
+    if (!selectedCellData) return; /* Weird... should always be here, but adding this anyway. */
+
+    selectedCellData.errorMessage = [errorMessage copy];
+
+    /* And readjust the height of the selected cell; happens automatically if this is called for the selected cell. */
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+
+    if (self.selectedRow != -1)
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.selectedRow inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
+}
+
+
+- (void)signalManagerDidReceiveSignalDescriptorForVehicle:(NSString *)vehicleId signal:(Signal *)signal signalName:(NSString *)signalName
+{
+    DLog(@"");
+    SelectedCellData *selectedCellData = self.cachedSignalData[key(vehicleId, signalName)];
+
+    if (!selectedCellData) return; /* Weird... should always be here, but adding this anyway. */
+
+    selectedCellData.signal = signal;
+
+    /* And readjust the height of the selected cell; happens automatically if this is called for the selected cell. */
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+
+    if (self.selectedRow != -1)
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.selectedRow inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)signalManagerDidReceiveEventForVehicle:(NSString *)vehicleId signalName:(NSString *)signalName attributes:(NSDictionary *)attributes
+{
+    DLog(@"");
+    SelectedCellData *selectedCellData = self.cachedSignalData[key(vehicleId, signalName)];
+
+    if (!selectedCellData) return; /* Weird... should always be here, but adding this anyway. */
+
+    [selectedCellData updateCurrentValue:attributes[@"value"]];
+    [selectedCellData.signal setCurrentValue:attributes[@"value"]];
+
+    /* And readjust the height of the selected cell; happens automatically if this is called for the selected cell. */
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+
+    if (self.selectedRow != -1)
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.selectedRow inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == self.selectedRow)
-        return 150;
+    if (indexPath.row == self.selectedRow && self.selectedCellData)
+        return [self.selectedCellData heightForCell];
 
     return 44;
 }
@@ -150,14 +299,23 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.searchController.active)//self.searchResults.count)
+    if (self.searchController.active)
         return [self.searchResults count];
     else
         return [self.allSignals count];
 }
 
+#define TAG_CELL_TITLE_LABEL          100
+#define TAG_CELL_ACTIVITY_INDICATOR   101
+#define TAG_CELL_DESCRIPTOR_DATA_VIEW 102
+#define TAG_CELL_CACHED_VALUES_VIEW   103
+#define TAG_CELL_CURRENT_VALUE_VIEW   104
+#define TAG_CELL_ERROR_MESSAGE_LABEL        105
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    DLog(@"");
+
     NSString *reuseIdentifier = [indexPath row] == self.selectedRow ? @"ExpandedCell" : @"RegularCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
@@ -168,20 +326,136 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    UILabel *titleLabel = [cell viewWithTag:100];
+    UILabel *titleLabel = [cell viewWithTag:TAG_CELL_TITLE_LABEL];
 
-    if (self.searchController.active)//self.searchResults.count)
+    if (self.searchController.active)
         titleLabel.text = self.searchResults[(NSUInteger)indexPath.row];
     else
         titleLabel.text = self.allSignals[(NSUInteger)indexPath.row];
 
+    if (indexPath.row == self.selectedRow) {
+        UIActivityIndicatorView *activityIndicatorView = [cell.contentView viewWithTag:TAG_CELL_ACTIVITY_INDICATOR];
 
+        UIView  *oldDescriptorDataView                 = [cell.contentView viewWithTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];
+        UIView  *oldCachedDataView                     = [cell.contentView viewWithTag:TAG_CELL_CACHED_VALUES_VIEW];
+        UIView  *oldCurrentDataView                    = [cell.contentView viewWithTag:TAG_CELL_CURRENT_VALUE_VIEW];
+        UILabel *oldErrorLabel                         = [cell.contentView viewWithTag:TAG_CELL_ERROR_MESSAGE_LABEL];
 
+        if (oldDescriptorDataView) [oldDescriptorDataView removeFromSuperview];
+        if (oldCachedDataView    ) [oldCachedDataView     removeFromSuperview];
+        if (oldCurrentDataView   ) [oldCurrentDataView    removeFromSuperview];
+        if (oldErrorLabel        ) [oldErrorLabel         removeFromSuperview];
 
+        @try
+        {
+            if (!self.selectedCellData.signal)
+            {
+                if (self.selectedCellData.errorMessage)
+                {
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, EXTENDED_DATA_START, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), LINE_HEIGHT)];
 
+                    label.font = [UIFont systemFontOfSize:12.0];
+                    label.text = self.selectedCellData.errorMessage;
 
+                    [label setTag:TAG_CELL_ERROR_MESSAGE_LABEL];
+                    [cell.contentView addSubview:label];
+
+                    [activityIndicatorView setHidden:YES];
+                }
+                else
+                {
+                    [activityIndicatorView setHidden:NO];
+                    [activityIndicatorView startAnimating];
+                }
+                return cell;
+            }
+
+            [activityIndicatorView stopAnimating];
+            [activityIndicatorView setHidden:YES];
+
+            NSInteger verticalStartPosition = EXTENDED_DATA_START;
+
+            UIView *descriptorDataView = [[UIView alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, verticalStartPosition, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), [self.selectedCellData heightForDescriptorData])];
+
+            [self buildOutDescriptorDataView:descriptorDataView withSelectedCellData:self.selectedCellData];
+
+            [descriptorDataView setTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];
+            [cell.contentView addSubview:descriptorDataView];
+
+            verticalStartPosition += [self.selectedCellData heightForDescriptorData];
+
+            UIView *cachedDataView = [[UIView alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, verticalStartPosition, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), [self.selectedCellData heightForCachedValues])];
+
+            [self buildOutCachedDataView:cachedDataView withSelectedCellData:self.selectedCellData];
+
+            [cachedDataView setTag:TAG_CELL_CACHED_VALUES_VIEW];
+            [cell.contentView addSubview:cachedDataView];
+
+            verticalStartPosition += [self.selectedCellData heightForCachedValues];
+
+            UIView *currentDataView = [[UIView alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, verticalStartPosition, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), [self.selectedCellData heightForCurrentValue])];
+
+            [self buildOutCurrentDataView:currentDataView withSelectedCellData:self.selectedCellData];
+
+            [currentDataView setTag:TAG_CELL_CURRENT_VALUE_VIEW];
+            [cell.contentView addSubview:currentDataView];
+        }
+        @catch (NSException *exception)
+        {
+            oldDescriptorDataView = [cell.contentView viewWithTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];
+            oldCachedDataView     = [cell.contentView viewWithTag:TAG_CELL_CACHED_VALUES_VIEW];
+            oldCurrentDataView    = [cell.contentView viewWithTag:TAG_CELL_CURRENT_VALUE_VIEW];
+            oldErrorLabel         = [cell.contentView viewWithTag:TAG_CELL_ERROR_MESSAGE_LABEL];
+
+            if (oldDescriptorDataView) [oldDescriptorDataView removeFromSuperview];
+            if (oldCachedDataView    ) [oldCachedDataView     removeFromSuperview];
+            if (oldCurrentDataView   ) [oldCurrentDataView    removeFromSuperview];
+            if (oldErrorLabel        ) [oldErrorLabel         removeFromSuperview];
+
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, EXTENDED_DATA_START, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), LINE_HEIGHT)];
+
+            label.font = [UIFont systemFontOfSize:12.0];
+            label.text = @"There was an error drawing the cell.";
+
+            [label setTag:TAG_CELL_ERROR_MESSAGE_LABEL];
+            [cell.contentView addSubview:label];
+
+            [activityIndicatorView setHidden:YES];
+
+            return cell;
+        }
+    }
 
     return cell;
+}
+
+- (void)handleDidSelectTableViewCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *vehicleId  = [ConfigurationDataManager getVehicleId];
+    NSString *signalName = self.searchController.active ?
+                                     self.searchResults[(NSUInteger)indexPath.row] :
+                                     self.allSignals[(NSUInteger)indexPath.row];
+
+    /* If we've selected this cell before, and already have the signal descriptor data... */
+    if (self.cachedSignalData[key(vehicleId, signalName)] && ((SelectedCellData *)self.cachedSignalData[key(vehicleId, signalName)]).signal)
+    {
+        self.selectedCellData = self.cachedSignalData[key(vehicleId, signalName)];
+        return;
+    }
+
+    self.selectedCellData = [SelectedCellData dataWithSignalName:signalName
+                                                       vehicleId:vehicleId];
+
+    self.cachedSignalData[key(vehicleId, signalName)] = self.selectedCellData;
+
+    [SignalManager getDescriptorsForSignalNames:@[signalName] vehicleId:vehicleId];
+    [SignalManager subscribeToSignal:signalName forVehicle:vehicleId];
+}
+
+- (void)handleDidDeselectTableViewCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self setSelectedCellData:nil];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -191,15 +465,18 @@
     if (self.selectedRow >= 0 && self.selectedRow == [indexPath row])
     {
         self.selectedRow = -1;
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self handleDidDeselectTableViewCellAtIndexPath:indexPath];
     }
     else
     {
         self.selectedRow = [indexPath row];
+        [self handleDidSelectTableViewCellAtIndexPath:indexPath];
     }
 
     [tableView beginUpdates];
     [tableView endUpdates];
+
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -212,22 +489,14 @@
     [tableView endUpdates];
 }
 
-- (void)filterContentForSearchText:(NSString*)searchText// scope:(NSString*)scope
+- (void)filterContentForSearchText:(NSString*)searchText
 {
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
     self.searchResults = [self.allSignals filteredArrayUsingPredicate:resultPredicate];
 }
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    [self filterContentForSearchText:searchString];
-
-    return YES;
-}
-
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
-    //DLog(@"Search text: %@", searchController.searchBar.text);
     DLog(@"");
 
     if (self.selectedRow >= 0)

@@ -103,7 +103,7 @@
 
 - (id)initWithSignalName:(NSString *)signalName descriptorDictionary:(NSDictionary *)descriptor
 {
-    if (signalName == nil && ![signalName isEqualToString:@""])
+    if (signalName == nil || [signalName isEqualToString:@""])
         return nil;
 
     if ((self = [super init]))
@@ -135,9 +135,16 @@
     return [[Signal alloc] initWithSignalName:signalName descriptorDictionary:descriptor];
 }
 
-- (NSString *)stringDescriptionForEnumKey:(NSInteger)enumKey
+- (NSString *)stringDescriptionForValue:(NSString *)value
 {
-    return ((NSString *)self.valuePairs[@(enumKey)]);
+    return ((NSString *)self.valuePairs[value]);
+}
+
+- (NSString *)stringDescriptionForCurrentValue
+{
+    if (!self.currentValue) return nil;
+
+    return ((NSString *)self.valuePairs[[self.currentValue stringValue]]);
 }
 
 - (NSArray *)allEnumKeys
@@ -153,6 +160,47 @@
 - (NSInteger)numberOfValuePairs
 {
     return self.valuePairs.count;
+}
+
+- (NSNumber *)getScaledValueForValue:(NSNumber *)value
+{
+    if (self.signalType != SIGNAL_TYPE_CONVERTED_RANGE)
+        return nil;
+
+    if (!value)
+        return nil;
+
+    NSInteger delta = self.highVal - self.lowVal;
+    NSInteger scaledDelta = self.scaledHighValue - self.scaledLowValue;
+
+    if (delta <= 0 || scaledDelta <= 0)
+        return nil;
+
+    double percentThrough = ([value integerValue] - self.lowVal) / delta;
+    double amountThrough  = (percentThrough * scaledDelta) + self.scaledLowValue;
+
+    return @((int)amountThrough);
+}
+
+- (NSNumber *)getCurrentScaledValue
+{
+    return [self getScaledValueForValue:self.currentValue];
+}
+
+- (BOOL)valueWithinRange:(NSNumber *)value
+{
+    if (value == nil)
+        return NO;
+
+    if (self.signalType == SIGNAL_TYPE_ENUMERATION)
+        return NO;
+
+    return [value integerValue] >= self.lowVal && [value integerValue] <= self.highVal;
+}
+
+- (BOOL)currentValueWithinRange
+{
+    return [self valueWithinRange:self.currentValue];
 }
 
 @end

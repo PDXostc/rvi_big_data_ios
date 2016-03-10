@@ -72,7 +72,7 @@
 //    self.valuePairs[enumKey] = [ValuePair valuePairWithEnumKey:enumKey stringDescription:stringDescription];
 //}
 //
-//- (NSString *)stringDescriptionForEnumKey:(NSNumber *)enumKey
+//- (NSString *)stringDescriptionForValue:(NSNumber *)enumKey
 //{
 //    return ((ValuePair *)self.valuePairs[enumKey]).stringDescription;
 //}
