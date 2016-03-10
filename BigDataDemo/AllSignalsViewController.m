@@ -133,7 +133,7 @@
     self.searchController.dimsBackgroundDuringPresentation = NO;
 
     // Install the search bar as the table header.
-    //self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
 
     // It is usually good to set the presentation context.
     self.definesPresentationContext = NO;
@@ -287,15 +287,15 @@
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 44;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return self.searchController.searchBar;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 44;
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    return self.searchController.searchBar;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -499,8 +499,13 @@
 {
     DLog(@"");
 
-    if (self.selectedRow >= 0)
-        [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedRow inSection:0]];
+    /* If there's a row selected, deselect it. */
+    if (self.selectedRow >= 0) {
+        self.selectedRow = -1;
+
+        [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedRow inSection:0] animated:YES];
+        [self setSelectedCellData:nil];
+    }
 
     [self filterContentForSearchText:searchController.searchBar.text];
     [self.tableView reloadData];
