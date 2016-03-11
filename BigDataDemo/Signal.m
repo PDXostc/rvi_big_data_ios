@@ -170,14 +170,14 @@
     if (!value)
         return nil;
 
-    NSInteger delta = self.highVal - self.lowVal;
-    NSInteger scaledDelta = self.scaledHighValue - self.scaledLowValue;
+    double delta = self.highVal - self.lowVal;
+    double scaledDelta = self.scaledHighValue - self.scaledLowValue;
 
     if (delta <= 0 || scaledDelta <= 0)
         return nil;
 
-    double percentThrough = ([value integerValue] - self.lowVal) / delta;
-    double amountThrough  = (percentThrough * scaledDelta) + self.scaledLowValue;
+    double percentThrough = ([value doubleValue] - (double)self.lowVal) / delta;
+    double amountThrough  = (percentThrough * scaledDelta) + (double)self.scaledLowValue;
 
     return @((int)amountThrough);
 }

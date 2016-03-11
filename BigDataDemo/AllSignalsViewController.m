@@ -21,6 +21,7 @@
 #import "AllSignalsViewController+CellDrawing.h"
 
 #define key(vehicleId, signalName) [NSString stringWithFormat:@"%@:%@", vehicleId, signalName]
+#define MAX_CACHED 7
 
 @implementation SelectedCellData
 - (instancetype)initWithSignalName:(NSString *)signalName vehicleId:(NSString *)vehicleId;
@@ -97,6 +98,9 @@
 {
     if (self.currentValue)
         [self.cachedValues addObject:self.currentValue];
+
+    if (self.cachedValues.count > MAX_CACHED)
+        [self.cachedValues removeObjectAtIndex:0];
 
     self.currentValue = newValue;
 }
@@ -472,6 +476,8 @@
         self.selectedRow = [indexPath row];
         [self handleDidSelectTableViewCellAtIndexPath:indexPath];
     }
+
+    [self.searchController.searchBar resignFirstResponder];
 
     [tableView beginUpdates];
     [tableView endUpdates];
