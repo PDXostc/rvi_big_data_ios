@@ -43,13 +43,22 @@ typedef enum
 @property (nonatomic, strong, readonly) NSString  *units;
 @property (nonatomic, strong, readonly) NSString  *unitsDescription;
 @property (nonatomic, strong, readonly) NSString  *signalName;
-@property (nonatomic)                   NSInteger  currentValue;
+@property (nonatomic)                   NSNumber  *currentValue;
 
 - (id)initWithSignalName:(NSString *)signalName descriptorDictionary:(NSDictionary *)descriptor;
 + (id)signalWithSignalName:(NSString *)signalName descriptorDictionary:(NSDictionary *)descriptor;
 
-- (NSString *)stringDescriptionForEnumKey:(NSInteger)enumKey;
 - (NSArray *)allEnumKeys;
 - (NSArray *)allValuePairs;
 - (NSInteger)numberOfValuePairs;
+
+- (NSNumber *)getCurrentScaledValue;
+- (NSNumber *)getScaledValueForValue:(NSNumber *)value;
+
+- (BOOL)currentValueWithinRange;
+- (BOOL)valueWithinRange:(NSNumber *)value;
+
+- (NSString *)stringDescriptionForCurrentValue;
+- (NSString *)stringDescriptionForValue:(NSString *)value;
+
 @end

@@ -101,29 +101,6 @@
                                                                 vehicleId:vehicleId]];
 }
 
-+ (void)subscribeToSignal:(NSString *)signal
-{
-    DLog(@"");
-
-    [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:@[signal]
-                                                              vehicleId:[ConfigurationDataManager getVehicleId]]];
-}
-
-+ (void)unsubscribeFromSignal:(NSString *)signal
-{
-    DLog(@"");
-
-    [BackendServerManager sendPacket:[UnsubscribePacket packetWithSignals:@[signal]
-                                                                vehicleId:[ConfigurationDataManager getVehicleId]]];
-}
-
-+ (void)getAllSignals
-{
-    DLog(@"");
-
-    [BackendServerManager sendPacket:[AllSignalsPacket packetWithVehicleId:[ConfigurationDataManager getVehicleId]]];
-}
-
 + (Vehicle *)vehicle
 {
     return [[VehicleManager sharedManager] vehicle];

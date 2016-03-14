@@ -16,7 +16,7 @@
 #import "AllSignalsPacket.h"
 
 @interface AllSignalsPacket ()
-@property (nonatomic, strong) NSArray  *signals;
+@property (nonatomic, strong) NSArray *signals;
 @end
 
 @implementation AllSignalsPacket

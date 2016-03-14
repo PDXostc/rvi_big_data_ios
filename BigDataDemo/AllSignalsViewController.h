@@ -16,6 +16,23 @@
 #import <UIKit/UIKit.h>
 #import "DataViewController.h"
 
+@class Signal;
+@interface SelectedCellData : NSObject
+@property (nonatomic, strong) NSString       *errorMessage;
+@property (nonatomic, strong) NSString       *signalName;
+@property (nonatomic, strong) NSString       *vehicleId;
+@property (nonatomic, strong) Signal         *signal;
+@property (nonatomic, strong) NSMutableArray *cachedValues;
+@property (nonatomic)         NSNumber       *currentValue;
+
+- (instancetype)initWithSignalName:(NSString *)signalName vehicleId:(NSString *)vehicleId;
++ (instancetype)dataWithSignalName:(NSString *)signalName vehicleId:(NSString *)vehicleId;
+- (NSInteger)heightForDescriptorData;
+- (NSInteger)heightForCachedValues;
+- (NSInteger)heightForCurrentValue;
+- (NSInteger)heightForCell;
+- (void)updateCurrentValue:(NSNumber *)newValue;
+@end
 
 @interface AllSignalsViewController : DataViewController
 @end

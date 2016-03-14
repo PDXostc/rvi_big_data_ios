@@ -20,10 +20,5 @@
 @interface VehicleManager : NSObject
 
 + (void)start;
-+ (void)subscribeToSignal:(NSString *)signal;
-+ (void)unsubscribeFromSignal:(NSString *)signal;
-+ (void)getAllSignals;
-
-//+ (NSArray *)defaultSignals;
 + (Vehicle *)vehicle;
 @end

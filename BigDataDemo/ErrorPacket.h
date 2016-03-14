@@ -18,9 +18,9 @@
 
 
 @interface ErrorPacket : ServerPacket
-@property (nonatomic, strong) NSObject     *signal;
+@property (nonatomic, strong) NSString     *signal;
 @property (nonatomic, strong) NSString     *errorMessage;
-@property (nonatomic, strong) NSDictionary *originalCommand;
+@property (nonatomic)         Command       originalCommand;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 + (id)packetWithDictionary:(NSDictionary *)dictionary;
