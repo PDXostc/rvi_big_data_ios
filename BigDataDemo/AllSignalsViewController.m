@@ -309,12 +309,7 @@
         return [self.allSignals count];
 }
 
-#define TAG_CELL_TITLE_LABEL          100
-#define TAG_CELL_ACTIVITY_INDICATOR   101
-#define TAG_CELL_DESCRIPTOR_DATA_VIEW 102
-#define TAG_CELL_CACHED_VALUES_VIEW   103
-#define TAG_CELL_CURRENT_VALUE_VIEW   104
-#define TAG_CELL_ERROR_MESSAGE_LABEL        105
+#define TAG_CELL_TITLE_LABEL 100
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -337,97 +332,9 @@
     else
         titleLabel.text = self.allSignals[(NSUInteger)indexPath.row];
 
-    if (indexPath.row == self.selectedRow) {
-        UIActivityIndicatorView *activityIndicatorView = [cell.contentView viewWithTag:TAG_CELL_ACTIVITY_INDICATOR];
-
-        UIView  *oldDescriptorDataView                 = [cell.contentView viewWithTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];
-        UIView  *oldCachedDataView                     = [cell.contentView viewWithTag:TAG_CELL_CACHED_VALUES_VIEW];
-        UIView  *oldCurrentDataView                    = [cell.contentView viewWithTag:TAG_CELL_CURRENT_VALUE_VIEW];
-        UILabel *oldErrorLabel                         = [cell.contentView viewWithTag:TAG_CELL_ERROR_MESSAGE_LABEL];
-
-        if (oldDescriptorDataView) [oldDescriptorDataView removeFromSuperview];
-        if (oldCachedDataView    ) [oldCachedDataView     removeFromSuperview];
-        if (oldCurrentDataView   ) [oldCurrentDataView    removeFromSuperview];
-        if (oldErrorLabel        ) [oldErrorLabel         removeFromSuperview];
-
-        @try
-        {
-            if (!self.selectedCellData.signal)
-            {
-                if (self.selectedCellData.errorMessage)
-                {
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, EXTENDED_DATA_START, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), LINE_HEIGHT)];
-
-                    label.font = [UIFont systemFontOfSize:12.0];
-                    label.text = self.selectedCellData.errorMessage;
-
-                    [label setTag:TAG_CELL_ERROR_MESSAGE_LABEL];
-                    [cell.contentView addSubview:label];
-
-                    [activityIndicatorView setHidden:YES];
-                }
-                else
-                {
-                    [activityIndicatorView setHidden:NO];
-                    [activityIndicatorView startAnimating];
-                }
-                return cell;
-            }
-
-            [activityIndicatorView stopAnimating];
-            [activityIndicatorView setHidden:YES];
-
-            NSInteger verticalStartPosition = EXTENDED_DATA_START;
-
-            UIView *descriptorDataView = [[UIView alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, verticalStartPosition, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), [self.selectedCellData heightForDescriptorData])];
-
-            [self buildOutDescriptorDataView:descriptorDataView withSelectedCellData:self.selectedCellData];
-
-            [descriptorDataView setTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];
-            [cell.contentView addSubview:descriptorDataView];
-
-            verticalStartPosition += [self.selectedCellData heightForDescriptorData];
-
-            UIView *cachedDataView = [[UIView alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, verticalStartPosition, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), [self.selectedCellData heightForCachedValues])];
-
-            [self buildOutCachedDataView:cachedDataView withSelectedCellData:self.selectedCellData];
-
-            [cachedDataView setTag:TAG_CELL_CACHED_VALUES_VIEW];
-            [cell.contentView addSubview:cachedDataView];
-
-            verticalStartPosition += [self.selectedCellData heightForCachedValues];
-
-            UIView *currentDataView = [[UIView alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, verticalStartPosition, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), [self.selectedCellData heightForCurrentValue])];
-
-            [self buildOutCurrentDataView:currentDataView withSelectedCellData:self.selectedCellData];
-
-            [currentDataView setTag:TAG_CELL_CURRENT_VALUE_VIEW];
-            [cell.contentView addSubview:currentDataView];
-        }
-        @catch (NSException *exception)
-        {
-            oldDescriptorDataView = [cell.contentView viewWithTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];
-            oldCachedDataView     = [cell.contentView viewWithTag:TAG_CELL_CACHED_VALUES_VIEW];
-            oldCurrentDataView    = [cell.contentView viewWithTag:TAG_CELL_CURRENT_VALUE_VIEW];
-            oldErrorLabel         = [cell.contentView viewWithTag:TAG_CELL_ERROR_MESSAGE_LABEL];
-
-            if (oldDescriptorDataView) [oldDescriptorDataView removeFromSuperview];
-            if (oldCachedDataView    ) [oldCachedDataView     removeFromSuperview];
-            if (oldCurrentDataView   ) [oldCurrentDataView    removeFromSuperview];
-            if (oldErrorLabel        ) [oldErrorLabel         removeFromSuperview];
-
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(HORIZONTAL_PADDING, EXTENDED_DATA_START, cell.contentView.frame.size.width - (HORIZONTAL_PADDING * 2), LINE_HEIGHT)];
-
-            label.font = [UIFont systemFontOfSize:12.0];
-            label.text = @"There was an error drawing the cell.";
-
-            [label setTag:TAG_CELL_ERROR_MESSAGE_LABEL];
-            [cell.contentView addSubview:label];
-
-            [activityIndicatorView setHidden:YES];
-
-            return cell;
-        }
+    if (indexPath.row == self.selectedRow)
+    {
+        return [self drawCell:cell forSelectedCellData:self.selectedCellData];
     }
 
     return cell;

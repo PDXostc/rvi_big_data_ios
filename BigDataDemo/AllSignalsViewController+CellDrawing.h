@@ -23,10 +23,9 @@
 
 @interface AllSignalsViewController (CellDrawing)
 + (UILabel *)headerLabelWithFrame:(CGRect)frame;
-
 + (UILabel *)labelWithFrame:(CGRect)frame;
-
 - (void)buildOutCachedDataView:(UIView *)view withSelectedCellData:(SelectedCellData *)data;
 - (void)buildOutCurrentDataView:(UIView *)view withSelectedCellData:(SelectedCellData *)data;
 - (void)buildOutDescriptorDataView:(UIView *)view withSelectedCellData:(SelectedCellData *)data;
+- (UITableViewCell *)drawCell:(UITableViewCell *)cell forSelectedCellData:(SelectedCellData *)selectedCellData;
 @end

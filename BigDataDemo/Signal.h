@@ -53,12 +53,12 @@ typedef enum
 - (NSInteger)numberOfValuePairs;
 
 - (NSNumber *)getCurrentScaledValue;
-- (NSNumber *)getScaledValueForValue:(NSString *)value;
+- (NSNumber *)getScaledValueForValue:(NSNumber *)value;
 
 - (BOOL)currentValueWithinRange;
 - (BOOL)valueWithinRange:(NSNumber *)value;
 
 - (NSString *)stringDescriptionForCurrentValue;
-- (NSString *)stringDescriptionForValue:(NSNumber *)value;
+- (NSString *)stringDescriptionForValue:(NSString *)value;
 
 @end
