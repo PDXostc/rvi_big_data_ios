@@ -23,10 +23,10 @@
 @property (nonatomic, weak) Vehicle *vehicle;
 @property (nonatomic, strong) IBOutlet UILabel *testLabel;
 @property (nonatomic, strong) IBOutlet UIView  *hoodView;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+@property (nonatomic, strong) IBOutlet UIView  *leftFrontDoorView;
+@property (nonatomic, strong) IBOutlet UIView  *leftRearDoorView;
+@property (nonatomic, strong) IBOutlet UIView  *rightFrontDoorView;
+@property (nonatomic, strong) IBOutlet UIView  *rightRearDoorView;
 //@property (nonatomic, strong) IBOutlet UIView  *testLabel;
 //@property (nonatomic, strong) IBOutlet UIView  *testLabel;
 //@property (nonatomic, strong) IBOutlet UIView  *testLabel;
@@ -65,6 +65,10 @@
     [super viewDidAppear:animated];
 
     [self drawHood:self.hoodView];
+    [self drawLeftFrontDoorView:self.leftFrontDoorView];
+    [self drawRightFrontDoorView:self.rightFrontDoorView];
+    [self drawLeftRearDoorView:self.leftRearDoorView];
+    [self drawRightRearDoorView:self.rightRearDoorView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

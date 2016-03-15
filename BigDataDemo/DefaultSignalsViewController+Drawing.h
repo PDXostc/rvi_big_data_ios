@@ -18,4 +18,9 @@
 
 @interface DefaultSignalsViewController (Drawing)
 - (void)drawHood:(UIView *)hoodView;
+- (void)drawRightRearDoorView:(UIView *)doorView;
+- (void)drawRightFrontDoorView:(UIView *)doorView;
+- (void)drawLeftRearDoorView:(UIView *)doorView;
+- (void)drawLeftFrontDoorView:(UIView *)doorView;
+
 @end

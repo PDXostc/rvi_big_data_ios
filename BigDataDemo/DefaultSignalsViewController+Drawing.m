@@ -15,8 +15,39 @@
 
 #import "DefaultSignalsViewController+Drawing.h"
 
+typedef enum
+{
+    NONE = 0,
+    TOP_LEFT = 1,
+    TOP_RIGHT = 2,
+    BOTTOM_LEFT = 4,
+    BOTTOM_RIGHT = 8
+} RoundedCorners;
 
 @implementation DefaultSignalsViewController (Drawing)
+
+- (CGMutablePathRef)roundedRectangleForFrame:(CGRect)frame withRadius:(CGFloat)cornerRadius corners:(RoundedCorners)roundedCorners
+{
+    CGMutablePathRef path = CGPathCreateMutable();
+
+    CGFloat bottomLeftCornerRadius  = roundedCorners & BOTTOM_LEFT  ? cornerRadius : 0;
+    CGFloat bottomRightCornerRadius = roundedCorners & BOTTOM_RIGHT ? cornerRadius : 0;
+    CGFloat topLeftCornerRadius     = roundedCorners & TOP_LEFT     ? cornerRadius : 0;
+    CGFloat topRightCornerRadius    = roundedCorners & TOP_RIGHT    ? cornerRadius : 0;
+
+    CGPathMoveToPoint(path, NULL, 0, frame.size.height - bottomLeftCornerRadius);
+    CGPathAddLineToPoint(path, NULL, 0, topLeftCornerRadius);
+    CGPathAddArc(path, NULL, topLeftCornerRadius, topLeftCornerRadius, topLeftCornerRadius, M_PI, -M_PI_2, NO);
+    CGPathAddLineToPoint(path, NULL, frame.size.width - topRightCornerRadius, 0);
+    CGPathAddArc(path, NULL, frame.size.width - topRightCornerRadius, topRightCornerRadius, topRightCornerRadius, -M_PI_2, 0, NO);
+    CGPathAddLineToPoint(path, NULL, frame.size.width, frame.size.height - bottomRightCornerRadius);
+    CGPathAddArc(path, NULL, frame.size.width - bottomRightCornerRadius, frame.size.height - bottomRightCornerRadius, bottomRightCornerRadius, 0, M_PI_2, NO);
+    CGPathAddLineToPoint(path, NULL, bottomLeftCornerRadius, frame.size.height);
+    CGPathAddArc(path, NULL, (bottomLeftCornerRadius), frame.size.height - bottomLeftCornerRadius, bottomLeftCornerRadius, M_PI_2, M_PI, NO);
+
+    return path;
+}
+
 
 - (void)drawHood:(UIView *)hoodView
 {
@@ -25,20 +56,26 @@
 
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
 
-    CGMutablePathRef path = CGPathCreateMutable();
+//    shapeLayer.path = [self roundedRectangleForFrame:frame withRadius:cornerRadius corners:TOP_LEFT | TOP_RIGHT];
+//
+//    shapeLayer.backgroundColor = [[UIColor clearColor] CGColor];
+//    shapeLayer.frame           = frame;
+//    shapeLayer.masksToBounds   = NO;
+//    shapeLayer.fillColor       = [[UIColor grayColor] CGColor];
+//    shapeLayer.strokeColor     = [[UIColor clearColor] CGColor];
+//    shapeLayer.lineWidth       = 0;
+//    shapeLayer.lineCap         = kCALineCapRound;
+//
+//    [hoodView.layer addSublayer:shapeLayer];
+}
 
-    CGPathMoveToPoint(path, NULL, 0, frame.size.height);// - cornerRadius);
-    CGPathAddLineToPoint(path, NULL, 0, cornerRadius);
-    CGPathAddArc(path, NULL, cornerRadius, cornerRadius, cornerRadius, M_PI, -M_PI_2, NO);
-    CGPathAddLineToPoint(path, NULL, frame.size.width - cornerRadius, 0);
-    CGPathAddArc(path, NULL, frame.size.width - cornerRadius, cornerRadius, cornerRadius, -M_PI_2, 0, NO);
-    CGPathAddLineToPoint(path, NULL, frame.size.width, frame.size.height);// - cornerRadius);
-    //CGPathAddArc(path, NULL, frame.size.width - cornerRadius, frame.size.height - cornerRadius, cornerRadius, 0, M_PI_2, NO);
-    CGPathAddLineToPoint(path, NULL, 0/*cornerRadius*/, frame.size.height);
-    //CGPathAddArc(path, NULL, cornerRadius, frame.size.height - cornerRadius, cornerRadius, M_PI_2, M_PI, NO);
+- (CAShapeLayer *)shapeLayerForDoorWithFrame:(CGRect)frame corners:(RoundedCorners)roundedCorners
+{
+    CGFloat cornerRadius = 5;
 
-    shapeLayer.path = path;
-    CGPathRelease(path);
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+
+    shapeLayer.path = [self roundedRectangleForFrame:frame withRadius:cornerRadius corners:roundedCorners];
 
     shapeLayer.backgroundColor = [[UIColor clearColor] CGColor];
     shapeLayer.frame           = frame;
@@ -48,8 +85,42 @@
     shapeLayer.lineWidth       = 0;
     shapeLayer.lineCap         = kCALineCapRound;
 
-    [hoodView.layer addSublayer:shapeLayer];
+    return shapeLayer;
 }
+
+#define DOOR_WIDTH 10
+- (void)drawLeftFrontDoorView:(UIView *)doorView
+{
+    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(doorView.frame.size.width - DOOR_WIDTH, 0, DOOR_WIDTH, doorView.frame.size.height)
+                                                         corners:TOP_LEFT]];
+}
+
+- (void)drawLeftRearDoorView:(UIView *)doorView
+{
+    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(doorView.frame.size.width - DOOR_WIDTH, 0, DOOR_WIDTH, doorView.frame.size.height)
+                                                         corners:BOTTOM_LEFT]];
+}
+
+- (void)drawRightFrontDoorView:(UIView *)doorView
+{
+    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(0, 0, DOOR_WIDTH, doorView.frame.size.height)
+                                                         corners:TOP_RIGHT]];
+}
+
+- (void)drawRightRearDoorView:(UIView *)doorView
+{
+    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(0, 0, DOOR_WIDTH, doorView.frame.size.height)
+                                                         corners:BOTTOM_RIGHT]];
+}
+
+
+
+- (void)drawTrunk:(UIView *)trunkView
+{
+
+}
+
+
 
 //- (void)updateTemperatureBars
 //{

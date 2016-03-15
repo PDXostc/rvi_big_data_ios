@@ -806,6 +806,10 @@
                     </view>
                     <connections>
                         <outlet property="hoodView" destination="yxb-P3-Kc7" id="RVl-q1-1b7"/>
+                        <outlet property="leftFrontDoorView" destination="bea-Vn-ZzT" id="Pk7-NQ-uZF"/>
+                        <outlet property="leftRearDoorView" destination="gzx-ui-jsp" id="ozo-qF-hvT"/>
+                        <outlet property="rightFrontDoorView" destination="3pe-4x-dEj" id="wz2-gB-uIC"/>
+                        <outlet property="rightRearDoorView" destination="0mI-dW-kDX" id="br5-bU-dxE"/>
                         <outlet property="testLabel" destination="jbq-9P-qb8" id="DOs-2r-s8j"/>
                     </connections>
                 </viewController>
