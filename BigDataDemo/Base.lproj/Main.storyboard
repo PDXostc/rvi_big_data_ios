@@ -364,38 +364,50 @@
                                         <rect key="frame" x="110" y="0.0" width="340" height="340"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHY-TE-8Ce" userLabel="View - Lights">
-                                                <rect key="frame" x="0.0" y="0.0" width="340" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="340" height="20"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" priority="250" constant="30" id="18j-dE-2Tk"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="27" id="Ebv-qo-jjk"/>
+                                                    <constraint firstAttribute="height" priority="250" constant="20" id="GHY-T0-Twy"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="HHN-cw-Vlv"/>
                                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="x6b-as-aFL"/>
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
+                                                        <exclude reference="18j-dE-2Tk"/>
+                                                        <exclude reference="Ebv-qo-jjk"/>
                                                         <exclude reference="x6b-as-aFL"/>
                                                     </mask>
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxb-P3-Kc7" userLabel="View - Hood">
-                                                <rect key="frame" x="0.0" y="30" width="340" height="50"/>
+                                                <rect key="frame" x="0.0" y="20" width="340" height="80"/>
                                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="5uj-tD-yrB"/>
                                                     <constraint firstAttribute="height" priority="250" constant="50" id="Fvi-Ph-X1x"/>
                                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="IKL-zY-2Nf"/>
+                                                    <constraint firstAttribute="height" constant="70" id="Yb2-CV-Xd1"/>
+                                                    <constraint firstAttribute="height" priority="250" constant="80" id="cdS-Lh-TIy"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="72" id="dPF-An-igK"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="efn-Cq-lrQ"/>
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
+                                                        <exclude reference="5uj-tD-yrB"/>
+                                                        <exclude reference="Fvi-Ph-X1x"/>
                                                         <exclude reference="IKL-zY-2Nf"/>
+                                                        <exclude reference="Yb2-CV-Xd1"/>
+                                                        <exclude reference="efn-Cq-lrQ"/>
                                                     </mask>
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YFR-bE-uyq" userLabel="View - Front Compartment Container">
-                                                <rect key="frame" x="0.0" y="80" width="340" height="120"/>
+                                                <rect key="frame" x="0.0" y="100" width="340" height="100"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLw-In-bFN" userLabel="View - Spacer">
-                                                        <rect key="frame" x="160" y="0.0" width="20" height="120"/>
+                                                        <rect key="frame" x="160" y="0.0" width="20" height="100"/>
                                                         <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -420,11 +432,11 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tJ2-Jv-qzc" userLabel="View - LF Seat">
-                                                        <rect key="frame" x="0.0" y="20" width="160" height="100"/>
+                                                        <rect key="frame" x="0.0" y="20" width="160" height="80"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6uW-ke-wOf" userLabel="View - RF Seat">
-                                                        <rect key="frame" x="180" y="20" width="160" height="100"/>
+                                                        <rect key="frame" x="180" y="20" width="160" height="80"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
                                                 </subviews>
@@ -451,9 +463,11 @@
                                                     <constraint firstItem="tJ2-Jv-qzc" firstAttribute="trailing" secondItem="RRo-by-hJC" secondAttribute="trailing" id="W0g-IY-VDb"/>
                                                     <constraint firstItem="tJ2-Jv-qzc" firstAttribute="top" secondItem="RRo-by-hJC" secondAttribute="bottom" id="b8x-2p-xFB"/>
                                                     <constraint firstItem="Lx6-NS-oNK" firstAttribute="top" secondItem="YFR-bE-uyq" secondAttribute="top" id="dfy-GY-StV"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="dgx-dV-tf9"/>
                                                     <constraint firstItem="TLw-In-bFN" firstAttribute="bottom" secondItem="tJ2-Jv-qzc" secondAttribute="bottom" id="fH9-wJ-Dpd"/>
                                                     <constraint firstItem="RRo-by-hJC" firstAttribute="leading" secondItem="YFR-bE-uyq" secondAttribute="leading" id="fOG-KV-nmO"/>
                                                     <constraint firstItem="tJ2-Jv-qzc" firstAttribute="leading" secondItem="YFR-bE-uyq" secondAttribute="leading" id="fW9-cf-UCf"/>
+                                                    <constraint firstAttribute="height" priority="250" constant="100" id="hGI-MH-8pL"/>
                                                     <constraint firstItem="6uW-ke-wOf" firstAttribute="height" secondItem="tJ2-Jv-qzc" secondAttribute="height" id="j6C-c9-4e3"/>
                                                     <constraint firstItem="Lx6-NS-oNK" firstAttribute="height" secondItem="RRo-by-hJC" secondAttribute="height" id="jRN-Vq-oCH"/>
                                                     <constraint firstItem="6uW-ke-wOf" firstAttribute="leading" secondItem="Lx6-NS-oNK" secondAttribute="leading" id="k9b-tV-qrS"/>
@@ -468,12 +482,14 @@
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
+                                                        <exclude reference="H8s-sb-xc5"/>
+                                                        <exclude reference="Ki4-de-kYe"/>
                                                         <exclude reference="5J6-Ti-v3o"/>
                                                     </mask>
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pam-YM-bfB" userLabel="View - Rear Compartment Container">
-                                                <rect key="frame" x="0.0" y="200" width="340" height="100"/>
+                                                <rect key="frame" x="0.0" y="200" width="340" height="90"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Yv-L9-uRu" userLabel="View - Spacer">
                                                         <rect key="frame" x="0.0" y="0.0" width="340" height="20"/>
@@ -512,12 +528,13 @@
                                                 <constraints>
                                                     <constraint firstItem="ZYO-xU-xgq" firstAttribute="top" secondItem="7Yv-L9-uRu" secondAttribute="bottom" id="5c1-34-dvB"/>
                                                     <constraint firstItem="ZYO-xU-xgq" firstAttribute="height" secondItem="i1A-7L-CeF" secondAttribute="height" id="6qh-w8-buY"/>
-                                                    <constraint firstAttribute="bottom" secondItem="bgR-Av-B8j" secondAttribute="bottom" id="IrP-Uw-vS9"/>
+                                                    <constraint firstAttribute="bottom" secondItem="bgR-Av-B8j" secondAttribute="bottom" constant="-10" id="IrP-Uw-vS9"/>
                                                     <constraint firstItem="bgR-Av-B8j" firstAttribute="height" secondItem="i1A-7L-CeF" secondAttribute="height" id="Kbr-U3-xYo"/>
                                                     <constraint firstItem="7Yv-L9-uRu" firstAttribute="centerX" secondItem="Pam-YM-bfB" secondAttribute="centerX" id="Lw7-n2-waz"/>
+                                                    <constraint firstAttribute="height" priority="250" constant="90" id="OJP-YP-J7a"/>
                                                     <constraint firstItem="ZYO-xU-xgq" firstAttribute="bottom" secondItem="i1A-7L-CeF" secondAttribute="bottom" id="U87-cW-WM5"/>
                                                     <constraint firstItem="bgR-Av-B8j" firstAttribute="top" secondItem="7Yv-L9-uRu" secondAttribute="bottom" id="Wjy-Y4-xyS"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="Xhc-a3-0JR"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="81" id="Xhc-a3-0JR"/>
                                                     <constraint firstItem="7Yv-L9-uRu" firstAttribute="leading" secondItem="Pam-YM-bfB" secondAttribute="leading" id="alo-wb-1l9"/>
                                                     <constraint firstItem="i1A-7L-CeF" firstAttribute="leading" secondItem="7Yv-L9-uRu" secondAttribute="leading" id="b5g-cI-nvK"/>
                                                     <constraint firstItem="ZYO-xU-xgq" firstAttribute="trailing" secondItem="7Yv-L9-uRu" secondAttribute="trailing" id="cLi-0B-Uh1"/>
@@ -534,14 +551,25 @@
                                                     <constraint firstItem="ZYO-xU-xgq" firstAttribute="width" secondItem="i1A-7L-CeF" secondAttribute="width" id="vMR-of-ut0"/>
                                                     <constraint firstAttribute="trailing" secondItem="7Yv-L9-uRu" secondAttribute="trailing" id="wan-IW-6mC"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="e5j-bU-wNh"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tYu-kf-Mjf" userLabel="View - Trunk/Hatch">
-                                                <rect key="frame" x="0.0" y="300" width="340" height="40"/>
+                                                <rect key="frame" x="0.0" y="290" width="340" height="50"/>
                                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" priority="250" constant="40" id="6YY-n2-CGn"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="fn9-fk-qBT"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="fn9-fk-qBT"/>
+                                                    <constraint firstAttribute="height" priority="250" constant="50" id="hOV-KS-3ho"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="6YY-n2-CGn"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -578,14 +606,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DqI-Kf-Qre" userLabel="View - LF Door/Window Container">
-                                        <rect key="frame" x="0.0" y="80" width="110" height="120"/>
+                                        <rect key="frame" x="0.0" y="100" width="110" height="100"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bea-Vn-ZzT" userLabel="View - LF Door">
-                                                <rect key="frame" x="10" y="0.0" width="100" height="120"/>
+                                                <rect key="frame" x="10" y="0.0" width="100" height="100"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uj3-Xr-VrD" userLabel="View - LF Window">
-                                                <rect key="frame" x="0.0" y="0.0" width="10" height="120"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="10" height="100"/>
                                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="10" id="Pnv-GZ-N1D"/>
@@ -606,14 +634,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkP-hb-HCy" userLabel="View - RF Door/Window Container">
-                                        <rect key="frame" x="450" y="80" width="110" height="120"/>
+                                        <rect key="frame" x="450" y="100" width="110" height="100"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pe-4x-dEj" userLabel="View - RF Door">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="120"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rDZ-gy-own" userLabel="View - RF Window">
-                                                <rect key="frame" x="100" y="0.0" width="10" height="120"/>
+                                                <rect key="frame" x="100" y="0.0" width="10" height="100"/>
                                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="10" id="Wib-lg-dN9"/>
@@ -634,14 +662,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wYC-DJ-38y" userLabel="View - LR Door/Window Container">
-                                        <rect key="frame" x="0.0" y="200" width="110" height="100"/>
+                                        <rect key="frame" x="0.0" y="200" width="110" height="90"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzx-ui-jsp" userLabel="View - LR Door">
-                                                <rect key="frame" x="10" y="0.0" width="100" height="100"/>
+                                                <rect key="frame" x="10" y="0.0" width="100" height="90"/>
                                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w91-id-4G6" userLabel="View - LR Window">
-                                                <rect key="frame" x="0.0" y="0.0" width="10" height="100"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="10" height="90"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="10" id="vgI-Td-xwt"/>
@@ -662,14 +690,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nOI-xg-0rk" userLabel="View - RR Door/Window Container">
-                                        <rect key="frame" x="450" y="200" width="110" height="100"/>
+                                        <rect key="frame" x="450" y="200" width="110" height="90"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0mI-dW-kDX" userLabel="View - RR Door">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="90"/>
                                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OvU-d9-xcc" userLabel="View - RR Window">
-                                                <rect key="frame" x="100" y="0.0" width="10" height="100"/>
+                                                <rect key="frame" x="100" y="0.0" width="10" height="90"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="10" id="ohI-Nr-wbp"/>
