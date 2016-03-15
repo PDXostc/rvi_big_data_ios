@@ -33,15 +33,18 @@
 @property (nonatomic, strong) NSString     *vehicleId;
 @property (nonatomic, strong) Signal       *speed;
 @property (nonatomic, strong) Signal       *engineRPMs;
-@property (nonatomic, strong) Signal       *throttlePressure;
-@property (nonatomic, strong) Signal       *breakPressure;
-@property (nonatomic, strong) Signal       *bearing;
-@property (nonatomic, strong) Signal       *location;
-@property (nonatomic, strong) Signal       *leftFront;
-@property (nonatomic, strong) Signal       *rightFront;
-@property (nonatomic, strong) Signal       *leftRear;
-@property (nonatomic, strong) Signal       *rightRear;
-@property (nonatomic, strong) Signal       *middleRear;
+@property (nonatomic, strong) Signal       *throttlePosition;
+@property (nonatomic, strong) Signal       *doorStatusMS;
+@property (nonatomic, strong) Signal       *passWindowPosition;
+@property (nonatomic, strong) Signal       *rearPassWindowPos;
+@property (nonatomic, strong) Signal       *rearDriverWindowPos;
+@property (nonatomic, strong) Signal       *driverWindowPosition;
+@property (nonatomic, strong) Signal       *drivSeatBeltBcklState;
+@property (nonatomic, strong) Signal       *passSeatBeltBcklState;
+@property (nonatomic, strong) Signal       *beltReminderSensorRL;
+@property (nonatomic, strong) Signal       *beltReminderSensorRR;
+@property (nonatomic, strong) Signal       *lowBeamIndication;
+@property (nonatomic, strong) Signal       *mainBeamIndication;
 
 @property (nonatomic)         NSInteger     numberDoors;
 @property (nonatomic)         NSInteger     numberWindows;
@@ -60,7 +63,19 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
-    dictionary[@"ThrottlePosition_MS"] = @"throttlePressure";
+    dictionary[@"ThrottlePosition_MS"     ] = @"throttlePosition";
+    dictionary[@"DoorStatusMS_MS"         ] = @"doorStatusMS";
+    dictionary[@"PassWindowPosition_MS"   ] = @"passWindowPosition";
+    dictionary[@"RearPassWindowPos_MS"    ] = @"rearPassWindowPos";
+    dictionary[@"RearDriverWindowPos_MS"  ] = @"rearDriverWindowPos";
+    dictionary[@"DriverWindowPosition_MS" ] = @"driverWindowPosition";
+    dictionary[@"DrivSeatBeltBcklState_MS"] = @"drivSeatBeltBcklState";
+    dictionary[@"PassSeatBeltBcklState_MS"] = @"passSeatBeltBcklState";
+    dictionary[@"BeltReminderSensorRL_MS" ] = @"beltReminderSensorRL";
+    dictionary[@"BeltReminderSensorRR_MS" ] = @"beltReminderSensorRR";
+    dictionary[@"LowBeamIndication_MS"    ] = @"lowBeamIndication";
+    dictionary[@"MainBeamIndication_MS"   ] = @"mainBeamIndication";
+
 //    dictionary[@""] = @"breakPressure";
 //    dictionary[@""] = @"speed";
 //    dictionary[@""] = @"engineRPMs";

@@ -48,6 +48,7 @@
 		62348E0E7F9800EDA95E217D /* StatusPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 623485155E14B0E2CA44FE76 /* StatusPacket.m */; };
 		62348E59C31F0273D9F42396 /* RangeSignal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234813C2CB3228B8D481E68 /* RangeSignal.m */; };
 		62348F8B889F5C4B477A37B3 /* BackendServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62348A28D36AD5D2095F9FAC /* BackendServerManager.m */; };
+		62348FC7C158EEFE16988852 /* DefaultSignalsViewController+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 623481B3DF823286E3AA19D9 /* DefaultSignalsViewController+Drawing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		623480CDCBCBCB4692AAD96E /* SignalManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalManager.h; sourceTree = "<group>"; };
 		6234813C2CB3228B8D481E68 /* RangeSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RangeSignal.m; sourceTree = "<group>"; };
 		623481839B33B6AA422CCF7C /* EventPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventPacket.h; sourceTree = "<group>"; };
+		623481B3DF823286E3AA19D9 /* DefaultSignalsViewController+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DefaultSignalsViewController+Drawing.m"; sourceTree = "<group>"; };
 		6234826BB73C8D032B357CD9 /* ConfigurationDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationDataManager.m; sourceTree = "<group>"; };
 		623482ED61640C3C66B12694 /* AllSignalsPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSignalsPacket.h; sourceTree = "<group>"; };
 		6234830517C28E235471F75B /* DefaultSignalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultSignalsViewController.m; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		62348A0F511A21B920BE73F4 /* Vehicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vehicle.h; sourceTree = "<group>"; };
 		62348A28D36AD5D2095F9FAC /* BackendServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendServerManager.m; sourceTree = "<group>"; };
 		62348A3F87D1877491D507CD /* MapDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDisplayViewController.h; sourceTree = "<group>"; };
+		62348AC2B2C690E9958427FC /* DefaultSignalsViewController+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DefaultSignalsViewController+Drawing.h"; sourceTree = "<group>"; };
 		62348B561B8FF27953C7C3B7 /* SignalDescriptorPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalDescriptorPacket.m; sourceTree = "<group>"; };
 		62348B8D14F116F5EE552991 /* EnumSignal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnumSignal.m; sourceTree = "<group>"; };
 		62348BD53756C1428CB0421C /* DefaultSignalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSignalsViewController.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				2335C7C21C7D0D2400BE6E80 /* ModelController.m */,
 				62348EC6C2AD7EFE3C49DF68 /* AllSignalsViewController+CellDrawing.m */,
 				623486DDFDA304EDEA10DC33 /* AllSignalsViewController+CellDrawing.h */,
+				623481B3DF823286E3AA19D9 /* DefaultSignalsViewController+Drawing.m */,
+				62348AC2B2C690E9958427FC /* DefaultSignalsViewController+Drawing.h */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -502,6 +507,7 @@
 				6234811D720144CB4C95B168 /* ErrorPacket.m in Sources */,
 				62348E0E7F9800EDA95E217D /* StatusPacket.m in Sources */,
 				62348708A504FF52528362C7 /* AllSignalsViewController+CellDrawing.m in Sources */,
+				62348FC7C158EEFE16988852 /* DefaultSignalsViewController+Drawing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

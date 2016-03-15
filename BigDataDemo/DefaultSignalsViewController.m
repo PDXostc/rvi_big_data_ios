@@ -17,10 +17,21 @@
 #import "Util.h"
 #import "Vehicle.h"
 #import "VehicleManager.h"
+#import "DefaultSignalsViewController+Drawing.h"
 
 @interface DefaultSignalsViewController ()
 @property (nonatomic, weak) Vehicle *vehicle;
 @property (nonatomic, strong) IBOutlet UILabel *testLabel;
+@property (nonatomic, strong) IBOutlet UIView  *hoodView;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+
 
 @end
 
@@ -52,6 +63,8 @@
 {
     DLog(@"");
     [super viewDidAppear:animated];
+
+    [self drawHood:self.hoodView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -214,30 +227,7 @@
             self.testLabel.text = [NSString stringWithFormat:@"%d", [change[NSKeyValueChangeNewKey] integerValue]];
             // TODO: Update pressure
         }
-        else if (object == self.vehicle.breakPressure)
-        {
-            // TODO: Update pressure
-        }
-        else if (object == self.vehicle.leftFront)
-        {
-            // TODO: Update seat belt
-        }
-        else if (object == self.vehicle.rightFront)
-        {
-            // TODO: Update seat belt
-        }
-        else if (object == self.vehicle.leftRear)
-        {
-            // TODO: Update seat belt
-        }
-        else if (object == self.vehicle.middleRear)
-        {
-            // TODO: Update seat belt
-        }
-        else if (object == self.vehicle.rightRear)
-        {
-            // TODO: Update seat belt
-        }
+
     }
 }
 

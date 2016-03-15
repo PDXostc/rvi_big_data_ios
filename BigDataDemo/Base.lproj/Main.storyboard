@@ -805,6 +805,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="hoodView" destination="yxb-P3-Kc7" id="RVl-q1-1b7"/>
                         <outlet property="testLabel" destination="jbq-9P-qb8" id="DOs-2r-s8j"/>
                     </connections>
                 </viewController>
