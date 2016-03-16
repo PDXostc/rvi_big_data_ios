@@ -19,18 +19,14 @@
 
 @interface Vehicle ()
 @property (nonatomic, strong) NSDictionary *defaultSignalsMap;
-@property (nonatomic, strong) NSObject     *throttlePressureCachedAttributes;
-@property (nonatomic, strong) NSObject     *breakPressureCachedAttributes;
-@property (nonatomic, strong) NSObject     *speedCachedAttributes;
-@property (nonatomic, strong) NSObject     *engineRPMsCachedAttributes;
-@property (nonatomic, strong) NSObject     *bearingCachedAttributes;
-@property (nonatomic, strong) NSObject     *locationCachedAttributes;
-@property (nonatomic, strong) NSObject     *leftFrontCachedAttributes;
-@property (nonatomic, strong) NSObject     *rightFrontCachedAttributes;
-@property (nonatomic, strong) NSObject     *leftRearCachedAttributes;
-@property (nonatomic, strong) NSObject     *rightRearCachedAttributes;
-@property (nonatomic, strong) NSObject     *middleRearCachedAttributes;
 @property (nonatomic, strong) NSString     *vehicleId;
+@property (nonatomic)         VehicleStatus vehicleStatus;
+
+@property (nonatomic)         NSInteger     numberDoors;
+@property (nonatomic)         NSInteger     numberWindows;
+@property (nonatomic)         NSInteger     numberSeats;
+@property (nonatomic, strong) NSString     *driverSide;
+
 @property (nonatomic, strong) Signal       *speed;
 @property (nonatomic, strong) Signal       *engineRPMs;
 @property (nonatomic, strong) Signal       *throttlePosition;
@@ -46,12 +42,20 @@
 @property (nonatomic, strong) Signal       *lowBeamIndication;
 @property (nonatomic, strong) Signal       *mainBeamIndication;
 
-@property (nonatomic)         NSInteger     numberDoors;
-@property (nonatomic)         NSInteger     numberWindows;
-@property (nonatomic)         NSInteger     numberSeats;
-@property (nonatomic, strong) NSString     *driverSide;
-
-@property (nonatomic)         VehicleStatus vehicleStatus;
+@property (nonatomic, strong) Signal       *speedCachedAttribute;
+@property (nonatomic, strong) Signal       *engineRPMsCachedAttribute;
+@property (nonatomic, strong) Signal       *throttlePositionCachedAttribute;
+@property (nonatomic, strong) Signal       *doorStatusMSCachedAttribute;
+@property (nonatomic, strong) Signal       *passWindowPositionCachedAttribute;
+@property (nonatomic, strong) Signal       *rearPassWindowPosCachedAttribute;
+@property (nonatomic, strong) Signal       *rearDriverWindowPosCachedAttribute;
+@property (nonatomic, strong) Signal       *driverWindowPositionCachedAttribute;
+@property (nonatomic, strong) Signal       *drivSeatBeltBcklStateCachedAttribute;
+@property (nonatomic, strong) Signal       *passSeatBeltBcklStateCachedAttribute;
+@property (nonatomic, strong) Signal       *beltReminderSensorRLCachedAttribute;
+@property (nonatomic, strong) Signal       *beltReminderSensorRRCachedAttribute;
+@property (nonatomic, strong) Signal       *lowBeamIndicationCachedAttribute;
+@property (nonatomic, strong) Signal       *mainBeamIndicationCachedAttribute;
 @end
 
 @implementation Vehicle
