@@ -21,6 +21,8 @@
 
 @interface DefaultSignalsViewController ()
 @property (nonatomic, weak) Vehicle *vehicle;
+@property (nonatomic, strong) IBOutlet UIView  *throttlePressureView;
+@property (nonatomic, strong) IBOutlet UIView  *steeringAngleView;
 @property (nonatomic, strong) IBOutlet UILabel *testLabel;
 @property (nonatomic, strong) IBOutlet UIView  *hoodView;
 @property (nonatomic, strong) IBOutlet UIView  *leftFrontDoorView;
@@ -64,11 +66,13 @@
     DLog(@"");
     [super viewDidAppear:animated];
 
-    [self drawHood:self.hoodView];
-    [self drawLeftFrontDoorView:self.leftFrontDoorView];
-    [self drawRightFrontDoorView:self.rightFrontDoorView];
-    [self drawLeftRearDoorView:self.leftRearDoorView];
-    [self drawRightRearDoorView:self.rightRearDoorView];
+    [self drawThrottlePressureView:self.throttlePressureView];
+
+//    [self drawHood:self.hoodView];
+//    [self drawLeftFrontDoorView:self.leftFrontDoorView];
+//    [self drawRightFrontDoorView:self.rightFrontDoorView];
+//    [self drawLeftRearDoorView:self.leftRearDoorView];
+//    [self drawRightRearDoorView:self.rightRearDoorView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

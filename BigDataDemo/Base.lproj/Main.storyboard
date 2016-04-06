@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="703-4V-yAM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="703-4V-yAM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -323,7 +323,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uiu-B0-0jX" secondAttribute="height" multiplier="1:1" id="Bza-eh-hGo"/>
                                     <constraint firstAttribute="width" constant="150" id="cE2-uU-BCe"/>
@@ -805,12 +805,12 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="hoodView" destination="yxb-P3-Kc7" id="RVl-q1-1b7"/>
                         <outlet property="leftFrontDoorView" destination="bea-Vn-ZzT" id="Pk7-NQ-uZF"/>
                         <outlet property="leftRearDoorView" destination="gzx-ui-jsp" id="ozo-qF-hvT"/>
                         <outlet property="rightFrontDoorView" destination="3pe-4x-dEj" id="wz2-gB-uIC"/>
                         <outlet property="rightRearDoorView" destination="0mI-dW-kDX" id="br5-bU-dxE"/>
                         <outlet property="testLabel" destination="jbq-9P-qb8" id="DOs-2r-s8j"/>
+                        <outlet property="throttlePressureView" destination="uiu-B0-0jX" id="l6o-fB-78c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kTU-5F-MFh" userLabel="First Responder" sceneMemberID="firstResponder"/>

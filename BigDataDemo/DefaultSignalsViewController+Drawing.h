@@ -17,6 +17,7 @@
 #import "DefaultSignalsViewController.h"
 
 @interface DefaultSignalsViewController (Drawing)
+- (void)drawThrottlePressureView:(UIView *)throttlePressureView;
 - (void)drawHood:(UIView *)hoodView;
 - (void)drawRightRearDoorView:(UIView *)doorView;
 - (void)drawRightFrontDoorView:(UIView *)doorView;

@@ -26,6 +26,36 @@ typedef enum
 
 @implementation DefaultSignalsViewController (Drawing)
 
+- (void)drawThrottlePressureView:(UIView *)throttlePressureView
+{
+    CALayer *bottomLayer = [CALayer layer];
+    CALayer *needleLayer = [CALayer layer];
+    CALayer *topLayer    = [CALayer layer];
+
+    bottomLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
+    needleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
+    topLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
+
+    bottomLayer.frame =
+            needleLayer.frame =
+                    topLayer.frame = throttlePressureView.bounds;
+
+//    bottomLayer.anchorPoint =
+//            needleLayer.anchorPoint =
+//                    topLayer.anchorPoint = throttlePressureView.center;
+
+    needleLayer.name = @"NEEDLE";
+
+    [[throttlePressureView layer] addSublayer:bottomLayer];
+    [[throttlePressureView layer] addSublayer:needleLayer];
+    [[throttlePressureView layer] addSublayer:topLayer];
+}
+
+- (void)drawSteeringAngleView
+{
+
+}
+
 - (CGMutablePathRef)roundedRectangleForFrame:(CGRect)frame withRadius:(CGFloat)cornerRadius corners:(RoundedCorners)roundedCorners
 {
     CGMutablePathRef path = CGPathCreateMutable();
@@ -47,7 +77,6 @@ typedef enum
 
     return path;
 }
-
 
 - (void)drawHood:(UIView *)hoodView
 {
@@ -112,8 +141,6 @@ typedef enum
     [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(0, 0, DOOR_WIDTH, doorView.frame.size.height)
                                                          corners:BOTTOM_RIGHT]];
 }
-
-
 
 - (void)drawTrunk:(UIView *)trunkView
 {
