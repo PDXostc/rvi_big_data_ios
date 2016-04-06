@@ -28,24 +28,29 @@ typedef enum
 
 - (void)drawThrottlePressureView:(UIView *)throttlePressureView
 {
+    CALayer *glowLayer = [CALayer layer];
     CALayer *bottomLayer = [CALayer layer];
     CALayer *needleLayer = [CALayer layer];
     CALayer *topLayer    = [CALayer layer];
 
+    glowLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
     bottomLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
     needleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
     topLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
 
-    bottomLayer.frame =
-            needleLayer.frame =
-                    topLayer.frame = throttlePressureView.bounds;
+    glowLayer.frame =
+            bottomLayer.frame =
+                    needleLayer.frame =
+                            topLayer.frame = throttlePressureView.bounds;
 
 //    bottomLayer.anchorPoint =
 //            needleLayer.anchorPoint =
 //                    topLayer.anchorPoint = throttlePressureView.center;
 
     needleLayer.name = @"NEEDLE";
+    needleLayer.name = @"GLOW";
 
+    [[throttlePressureView layer] addSublayer:glowLayer];
     [[throttlePressureView layer] addSublayer:bottomLayer];
     [[throttlePressureView layer] addSublayer:needleLayer];
     [[throttlePressureView layer] addSublayer:topLayer];
