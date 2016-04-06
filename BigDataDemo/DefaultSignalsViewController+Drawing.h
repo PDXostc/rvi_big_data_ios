@@ -18,6 +18,7 @@
 
 @interface DefaultSignalsViewController (Drawing)
 - (void)drawThrottlePressureView:(UIView *)throttlePressureView;
+- (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total;
 - (void)drawHood:(UIView *)hoodView;
 - (void)drawRightRearDoorView:(UIView *)doorView;
 - (void)drawRightFrontDoorView:(UIView *)doorView;

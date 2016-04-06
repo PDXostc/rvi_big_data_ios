@@ -772,8 +772,14 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
+                                <rect key="frame" x="127" y="202" width="164" height="31"/>
+                                <connections>
+                                    <action selector="onTestSliderValueChanged:" destination="BFV-32-eOf" eventType="valueChanged" id="FQb-dI-Djq"/>
+                                </connections>
+                            </slider>
                         </subviews>
-                        <color key="backgroundColor" red="0.98823529409999999" green="0.54117647059999996" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="KjI-b2-a1b" firstAttribute="width" secondItem="uiu-B0-0jX" secondAttribute="width" id="71D-F7-R4U"/>
                             <constraint firstItem="QU0-Ok-PrZ" firstAttribute="top" secondItem="0sh-vf-yne" secondAttribute="bottom" constant="20" id="7y2-qf-a53"/>

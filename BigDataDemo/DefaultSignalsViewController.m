@@ -89,6 +89,12 @@
     [self unregisterObservers];
 }
 
+- (IBAction)onTestSliderValueChanged:(id)sender
+{
+    DLog(@"Value: %f", ((UISlider *)sender).value);
+    [self animateChangeInThrottlePressure:self.throttlePressureView from:0.0 to:((UISlider *)sender).value total:100.0];
+}
+
 - (NSArray *)signalKeyPathsToObserve
 {
     return @[kVehicleBreakPressureKeyPath,

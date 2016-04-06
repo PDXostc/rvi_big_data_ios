@@ -14,6 +14,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #import "DefaultSignalsViewController+Drawing.h"
+#import "Util.h"
 
 typedef enum
 {
@@ -26,6 +27,10 @@ typedef enum
 
 @implementation DefaultSignalsViewController (Drawing)
 
+#define MINIMUM_TP_NEEDLE_ANGLE 0
+#define MAXIMUM_TP_NEEDLE_ANGLE 270
+#define MINIMUM_TP_GLOW_ALPHA   0.2
+#define MAXIMUM_TP_GLOW_ALPHA   1.0
 - (void)drawThrottlePressureView:(UIView *)throttlePressureView
 {
     CALayer *glowLayer = [CALayer layer];
@@ -48,7 +53,9 @@ typedef enum
 //                    topLayer.anchorPoint = throttlePressureView.center;
 
     needleLayer.name = @"NEEDLE";
-    needleLayer.name = @"GLOW";
+    glowLayer.name = @"GLOW";
+
+    glowLayer.opacity = MINIMUM_TP_GLOW_ALPHA;
 
     [[throttlePressureView layer] addSublayer:glowLayer];
     [[throttlePressureView layer] addSublayer:bottomLayer];
@@ -59,6 +66,50 @@ typedef enum
 - (void)drawSteeringAngleView
 {
 
+}
+
+- (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
+{
+    DLog(@"");
+
+    CALayer *needleLayer = nil;
+    CALayer *glowLayer = nil;
+
+    for (CALayer *layer in throttlePressureView.layer.sublayers) {
+        if ([layer.name isEqualToString:@"NEEDLE"])
+            needleLayer = layer;
+        else if ([layer.name isEqualToString:@"GLOW"])
+            glowLayer = layer;
+    }
+
+    CGFloat newAlpha = (CGFloat)(((to/total) * (MAXIMUM_TP_GLOW_ALPHA - MINIMUM_TP_GLOW_ALPHA)) + MINIMUM_TP_GLOW_ALPHA);
+    CGFloat newAngle = (CGFloat)((((to/total) * (MAXIMUM_TP_NEEDLE_ANGLE - MINIMUM_TP_NEEDLE_ANGLE)) + MINIMUM_TP_NEEDLE_ANGLE) * ((CGFloat)(M_PI) / 180.0));
+
+
+    CABasicAnimation* fadeAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeAnim.fromValue = @(glowLayer.opacity);
+    fadeAnim.toValue = @(newAlpha);
+    fadeAnim.duration = 0.05;
+    [glowLayer addAnimation:fadeAnim forKey:@"opacity"];
+
+    // Change the actual data value in the layer to the final value.
+    glowLayer.opacity = newAlpha;
+
+    CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animateZRotation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(newAngle, 0, 0, 1.0)];
+    animateZRotation.duration = 0.05;
+    [needleLayer addAnimation:animateZRotation forKey:@"rotate"];
+
+    needleLayer.transform = CATransform3DMakeRotation(newAngle, 0, 0, 1.0);
+
+//    [UIView animateWithDuration:0.1
+//                            animations:^{
+//                                    needleLayer.transform = CATransform3DMakeRotation(newAngle, 0.0, 0.0, 1.0);
+//                                    glowLayer.opacity = newAlpha;
+//                            }
+//                            completion:^(BOOL finished){
+//
+//                    }];
 }
 
 - (CGMutablePathRef)roundedRectangleForFrame:(CGRect)frame withRadius:(CGFloat)cornerRadius corners:(RoundedCorners)roundedCorners
