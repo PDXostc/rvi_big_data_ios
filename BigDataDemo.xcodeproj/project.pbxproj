@@ -74,6 +74,8 @@
 		2373A0991CBC746B00AE0AC9 /* RR_seatbelt_on_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0901CBC746B00AE0AC9 /* RR_seatbelt_on_indicator.png */; };
 		2373A09A1CBC746B00AE0AC9 /* vehicle_outline_interior.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0911CBC746B00AE0AC9 /* vehicle_outline_interior.png */; };
 		2373A09C1CBC74BE00AE0AC9 /* steering_wheel_composite.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09B1CBC74BE00AE0AC9 /* steering_wheel_composite.png */; };
+		2373A09F1CBDA02E00AE0AC9 /* high_beams.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09D1CBDA02E00AE0AC9 /* high_beams.png */; };
+		2373A0A01CBDA02E00AE0AC9 /* low_beams.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09E1CBDA02E00AE0AC9 /* low_beams.png */; };
 		23C670A81CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */; };
 		23C670A91CB5B5CA00A51468 /* throttle_pressure_needle.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */; };
 		23C670AA1CB5B5CA00A51468 /* throttle_pressure_top_layer.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A71CB5B5CA00A51468 /* throttle_pressure_top_layer.png */; };
@@ -200,6 +202,8 @@
 		2373A0901CBC746B00AE0AC9 /* RR_seatbelt_on_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_seatbelt_on_indicator.png; path = Resources/Images/RR_seatbelt_on_indicator.png; sourceTree = "<group>"; };
 		2373A0911CBC746B00AE0AC9 /* vehicle_outline_interior.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vehicle_outline_interior.png; path = Resources/Images/vehicle_outline_interior.png; sourceTree = "<group>"; };
 		2373A09B1CBC74BE00AE0AC9 /* steering_wheel_composite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = steering_wheel_composite.png; path = Resources/Images/steering_wheel_composite.png; sourceTree = "<group>"; };
+		2373A09D1CBDA02E00AE0AC9 /* high_beams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = high_beams.png; path = Resources/Images/high_beams.png; sourceTree = "<group>"; };
+		2373A09E1CBDA02E00AE0AC9 /* low_beams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = low_beams.png; path = Resources/Images/low_beams.png; sourceTree = "<group>"; };
 		23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_bottom_layer.png; path = Resources/Images/throttle_pressure_bottom_layer.png; sourceTree = "<group>"; };
 		23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_needle.png; path = Resources/Images/throttle_pressure_needle.png; sourceTree = "<group>"; };
 		23C670A71CB5B5CA00A51468 /* throttle_pressure_top_layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_top_layer.png; path = Resources/Images/throttle_pressure_top_layer.png; sourceTree = "<group>"; };
@@ -457,6 +461,8 @@
 		23C670141CB5A75700A51468 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2373A09D1CBDA02E00AE0AC9 /* high_beams.png */,
+				2373A09E1CBDA02E00AE0AC9 /* low_beams.png */,
 				2373A09B1CBC74BE00AE0AC9 /* steering_wheel_composite.png */,
 				2373A0891CBC746B00AE0AC9 /* LF_seatbelt_off_indicator.png */,
 				2373A08A1CBC746B00AE0AC9 /* LF_seatbelt_on_indicator.png */,
@@ -636,6 +642,7 @@
 				2373A0701CBC6E7500AE0AC9 /* LF_window_up_down_graphic.png in Resources */,
 				2373A0641CBC6E7500AE0AC9 /* LR_window_moving_down_indicator.png in Resources */,
 				2373A0981CBC746B00AE0AC9 /* RR_seatbelt_off_indicator.png in Resources */,
+				2373A09F1CBDA02E00AE0AC9 /* high_beams.png in Resources */,
 				2373A0781CBC6E7500AE0AC9 /* RR_window_up_down_graphic.png in Resources */,
 				2373A0771CBC6E7500AE0AC9 /* RR_window_totally_down_indicator.png in Resources */,
 				2373A0721CBC6E7500AE0AC9 /* LR_window_up_down_graphic.png in Resources */,
@@ -675,6 +682,7 @@
 				2373A0851CBC6E7500AE0AC9 /* trunk_open_indicator.png in Resources */,
 				23C670A81CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png in Resources */,
 				2373A0711CBC6E7500AE0AC9 /* LR_window_dotted_line_graphic.png in Resources */,
+				2373A0A01CBDA02E00AE0AC9 /* low_beams.png in Resources */,
 				2373A07F1CBC6E7500AE0AC9 /* LR_door_open.png in Resources */,
 				2373A0951CBC746B00AE0AC9 /* LR_seatbelt_on_indicator.png in Resources */,
 				2373A06D1CBC6E7500AE0AC9 /* RR_window_totally_up.png in Resources */,

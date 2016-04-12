@@ -24,11 +24,11 @@
 @property (nonatomic, strong) IBOutlet UIView  *throttlePressureView;
 @property (nonatomic, strong) IBOutlet UIView  *steeringAngleView;
 @property (nonatomic, strong) IBOutlet UILabel *testLabel;
-@property (nonatomic, strong) IBOutlet UIView  *hoodView;
-@property (nonatomic, strong) IBOutlet UIView  *leftFrontDoorView;
-@property (nonatomic, strong) IBOutlet UIView  *leftRearDoorView;
-@property (nonatomic, strong) IBOutlet UIView  *rightFrontDoorView;
-@property (nonatomic, strong) IBOutlet UIView  *rightRearDoorView;
+@property (nonatomic, strong) IBOutlet UIView  *compositeCarView;
+//@property (nonatomic, strong) IBOutlet UIView  *leftFrontDoorView;
+//@property (nonatomic, strong) IBOutlet UIView  *leftRearDoorView;
+//@property (nonatomic, strong) IBOutlet UIView  *rightFrontDoorView;
+//@property (nonatomic, strong) IBOutlet UIView  *rightRearDoorView;
 //@property (nonatomic, strong) IBOutlet UIView  *testLabel;
 //@property (nonatomic, strong) IBOutlet UIView  *testLabel;
 //@property (nonatomic, strong) IBOutlet UIView  *testLabel;
@@ -67,6 +67,8 @@
     [super viewDidAppear:animated];
 
     [self drawThrottlePressureView:self.throttlePressureView];
+    [self drawSteeringAngleView:self.steeringAngleView];
+    [self drawCompositeCarView:self.compositeCarView];
 
 //    [self drawHood:self.hoodView];
 //    [self drawLeftFrontDoorView:self.leftFrontDoorView];

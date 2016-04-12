@@ -415,6 +415,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="compositeCarView" destination="0sh-vf-yne" id="DdP-b3-Xjl"/>
+                        <outlet property="steeringAngleView" destination="xtw-YJ-dTF" id="jiU-QV-4td"/>
                         <outlet property="testLabel" destination="jbq-9P-qb8" id="DOs-2r-s8j"/>
                         <outlet property="throttlePressureView" destination="uiu-B0-0jX" id="l6o-fB-78c"/>
                     </connections>

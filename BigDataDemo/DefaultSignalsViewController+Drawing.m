@@ -63,9 +63,121 @@ typedef enum
     [[throttlePressureView layer] addSublayer:topLayer];
 }
 
-- (void)drawSteeringAngleView
+- (void)drawSteeringAngleView:(UIView *)steeringAngleView
 {
 
+}
+
+
+
+- (void)drawCompositeCarView:(UIView *)compositeCarView
+{
+    NSArray *compositeImageNamesAndProperties = @[
+            @{ @"LF_door_closed.png"                   : @"lfDoorClosedImageView"                },
+            @{ @"LF_door_closed_indicator.png"         : @"lfDoorClosedIndicatorImageView"       },
+            @{ @"LF_door_open.png"                     : @"lfDoorOpenImageView"                  },
+            @{ @"LF_seatbelt_off_indicator.png"        : @"lfSeatbeltOffIndicatorImageView"      },
+            @{ @"LF_seatbelt_on_indicator.png"         : @"lfSeatbeltOnIndicatorImageView"       },
+            @{ @"LF_window_dotted_line_graphic.png"    : @"lfWindowDottedLineGraphicImageView"   },
+            @{ @"LF_window_moving_down_indicator.png"  : @"lfWindowMovingDownIndicatorImageView" },
+            @{ @"LF_window_moving_up_indicator.png"    : @"lfWindowMovingUpIndicatorImageView"   },
+            @{ @"LF_window_totally_down_indicator.png" : @"lfWindowTotallyDownIndicatorImageView"},
+            @{ @"LF_window_totally_up_indicator.png"   : @"lfWindowTotallyUpIndicatorImageView"  },
+            @{ @"LF_window_up_down_graphic.png"        : @"lfWindowUpDownGraphicImageView"       },
+            @{ @"LR_door_closed.png"                   : @"lrDoorClosedImageView"                },
+            @{ @"LR_door_closed_indicator.png"         : @"lrDoorClosedIndicatorImageView"       },
+            @{ @"LR_door_open.png"                     : @"lrDoorOpenImageView"                  },
+            @{ @"LR_seatbelt_off_indicator.png"        : @"lrSeatbeltOffIndicatorImageView"      },
+            @{ @"LR_seatbelt_on_indicator.png"         : @"lrSeatbeltOnIndicatorImageView"       },
+            @{ @"LR_window_dotted_line_graphic.png"    : @"lrWindowDottedLineGraphicImageView"   },
+            @{ @"LR_window_moving_down_indicator.png"  : @"lrWindowMovingDownIndicatorImageView" },
+            @{ @"LR_window_moving_up_indicator.png"    : @"lrWindowMovingUpIndicatorImageView"   },
+            @{ @"LR_window_totally_down_indicator.png" : @"lrWindowTotallyDownIndicatorImageView"},
+            @{ @"LR_window_totally_up_indicator.png"   : @"lrWindowTotallyUpIndicatorImageView"  },
+            @{ @"LR_window_up_down_graphic.png"        : @"lrWindowUpDownGraphicImageView"       },
+            @{ @"RF_door_closed.png"                   : @"rfDoorClosedImageView"                },
+            @{ @"RF_door_closed_indicator.png"         : @"rfDoorClosedIndicatorImageView"       },
+            @{ @"RF_door_open.png"                     : @"rfDoorOpenImageView"                  },
+            @{ @"RF_seatbelt_off_indicator.png"        : @"rfSeatbeltOffIndicatorImageView"      },
+            @{ @"RF_seatbelt_on_indicator.png"         : @"rfSeatbeltOnIndicatorImageView"       },
+            @{ @"RF_window_dotted_line_graphic.png"    : @"rfWindowDottedLineGraphicImageView"   },
+            @{ @"RF_window_moving_down_indicator.png"  : @"rfWindowMovingDownIndicatorImageView" },
+            @{ @"RF_window_moving_up_indicator.png"    : @"rfWindowMovingUpIndicatorImageView"   },
+            @{ @"RF_window_totally_down_indicator.png" : @"rfWindowTotallyDownIndicatorImageView"},
+            @{ @"RF_window_totally_up_indicator.png"   : @"rfWindowTotallyUpIndicatorImageView"  },
+            @{ @"RF_window_up_down_graphic.png"        : @"rfWindowUpDownGraphicImageView"       },
+            @{ @"RR_door_closed.png"                   : @"rrDoorClosedImageView"                },
+            @{ @"RR_door_closed_indicator.png"         : @"rrDoorClosedIndicatorImageView"       },
+            @{ @"RR_door_open.png"                     : @"rrDoorOpenImageView"                  },
+            @{ @"RR_seatbelt_off_indicator.png"        : @"rrSeatbeltOffIndicatorImageView"      },
+            @{ @"RR_seatbelt_on_indicator.png"         : @"rrSeatbeltOnIndicatorImageView"       },
+            @{ @"RR_window_dotted_line_graphic.png"    : @"rrWindowDottedLineGraphicImageView"   },
+            @{ @"RR_window_moving_down_indicator.png"  : @"rrWindowMovingDownIndicatorImageView" },
+            @{ @"RR_window_moving_up_indicator.png"    : @"rrWindowMovingUpIndicatorImageView"   },
+            @{ @"RR_window_totally_down_indicator.png" : @"rrWindowTotallyDownIndicatorImageView"},
+            @{ @"RR_window_totally_up.png"             : @"rrWindowTotallyUpImageView"           },
+            @{ @"RR_window_up_down_graphic.png"        : @"rrWindowUpDownGraphicImageView"       },
+            @{ @"high_beams.png"                       : @"highBeamsImageView"                   },
+            @{ @"hood_closed_indicator.png"            : @"hoodClosedIndicatorImageView"         },
+            @{ @"hood_open_indicator.png"              : @"hoodOpenIndicatorImageView"           },
+            @{ @"low_beams.png"                        : @"lowBeamsImageView"                    },
+            @{ @"trunk_closed_indicator.png"           : @"trunkClosedIndicatorImageView"        },
+            @{ @"trunk_open_indicator.png"             : @"trunkOpenIndicatorImageView"          },
+            @{ @"vehicle_outline_exterior.png"         : @"vehicleOutlineExteriorImageView"      },
+            @{ @"vehicle_outline_interior.png"         : @"vehicleOutlineInteriorImageView"      } ];
+
+    for (NSDictionary *dictionary in compositeImageNamesAndProperties)
+    {
+        NSString    *imageName    = dictionary.allKeys[0];
+        NSString    *propertyName = dictionary.allValues[0];
+
+        UIImageView *imageView    = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+
+        [self setValue:imageView forKey:propertyName];
+
+        imageView.frame  = compositeCarView.bounds;
+        //imageView.hidden = YES;
+
+        imageView.contentScaleFactor = UIViewContentModeScaleAspectFit;
+
+        [compositeCarView addSubview:imageView];
+
+
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:compositeCarView
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                              attribute:NSLayoutAttributeLeading
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:compositeCarView
+                                                              attribute:NSLayoutAttributeLeading
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:compositeCarView
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:compositeCarView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+
+    }
+
+    self.vehicleOutlineExteriorImageView.hidden = NO;
 }
 
 - (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
