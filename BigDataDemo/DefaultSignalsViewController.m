@@ -50,7 +50,7 @@ typedef enum
 @property (nonatomic)         NSInteger         previousDoorStatus;
 
 @property (nonatomic, strong) NSMutableSet    *currentSeatBeltIndicatorImages;
-@property (nonatomic, strong) NSMutableSet    *doorTrunkHoodClosedIndicatorImages;
+@property (nonatomic, strong) NSMutableSet    *recentlyClosedIndicatorImages;
 @property (nonatomic, strong) NSMutableSet    *openDoorImages;
 //@property (nonatomic, strong) NSMutableSet    *extendingOutExteriorIndicatorImages;
 
@@ -97,7 +97,7 @@ typedef enum
                                                          self.rrSeatbeltOffIndicatorImageView,
                                                          nil];
 
-    self.doorTrunkHoodClosedIndicatorImages = [NSMutableSet set];
+    self.recentlyClosedIndicatorImages = [NSMutableSet set];
     self.openDoorImages                     = [NSMutableSet set];
 }
 
@@ -142,7 +142,7 @@ typedef enum
 
 - (void)handleBuckleStateChange:(BOOL)value zone:(Zone)zone
 {
-    /* Get the on/off buckle images for this seat using the string zone and key/value encoding */
+    /* Get the on/off buckle images for this seat using the string zone and key/value coding */
     NSString    *stringForZone = [self stringForZone:zone];
     UIImageView *seatbeltOffIndicatorImageView = [self valueForKey:[NSString stringWithFormat:@"%@SeatbeltOffIndicatorImageView", stringForZone]];
     UIImageView *seatbeltOnIndicatorImageView = [self valueForKey:[NSString stringWithFormat:@"%@SeatbeltOnIndicatorImageView", stringForZone]];
@@ -207,6 +207,40 @@ typedef enum
 
 } DoorStatusBitMask;
 
+- (void)handleDoorStatusChangeFrom:(BOOL)wasClosed to:(BOOL)isClosed forZone:(Zone)zone
+{
+    /* Get all of the appropriate images for the given zone using key/value coding */
+    NSString    *stringForZone = [self stringForZone:zone];
+
+    UIImageView *doorOpenImageView               = [self valueForKey:[NSString stringWithFormat:@"%@DoorOpenImageView", stringForZone]];
+    UIImageView *doorClosedImageView             = [self valueForKey:[NSString stringWithFormat:@"%@DoorClosedImageView", stringForZone]];
+    UIImageView *doorClosedIndicatorImageView    = [self valueForKey:[NSString stringWithFormat:@"%@DoorClosedIndicatorImageView", stringForZone]];
+
+    /* If any of the values went from open to closed, briefly display the CLOSED INDICATOR (the green check-mark), then fade them all currently-
+     * being-displayed-closed-indicators out. */
+    if (!wasClosed && isClosed)
+    {
+        [self.recentlyClosedIndicatorImages addObject:doorClosedIndicatorImageView];
+    }
+
+    /* The actual door/hood/trunk OPEN images (the ones w red-Xs) don't fade after so many seconds, and neither do the door-closed images (just
+     * the green indicators), so hide/show those appropriately. */
+    doorOpenImageView.hidden   =  isClosed;
+    doorClosedImageView.hidden = !isClosed;
+
+    /* Also, hold on to any open door images, as we will need to re-show them after they disappear for the display of interior images, and we need
+     * to fade them in/out when displaying the window indicators, and hide any showing closed-door indicators when the door is opened. */
+    if (!isClosed)
+        [self.openDoorImages addObject:doorOpenImageView];
+    else
+        [self.openDoorImages removeObject:doorOpenImageView];
+
+    /* Also, if the door is now open, make sure the door-closed indicator isn't showing. */
+    if (!isClosed)
+        doorClosedIndicatorImageView.hidden = YES;
+}
+
+
 - (void)handleDoorStatusChange:(NSInteger)value
 {
     /* Turn on the interior set of images that might be showing. */
@@ -215,55 +249,43 @@ typedef enum
         imageView.hidden = YES;
     }
 
+    /* Depending on drivers side of car, do all the door image state change stuff for each zone, one by one */
+    [self handleDoorStatusChangeFrom:(BOOL)(self.previousDoorStatus & DF_BIT_MASK)
+                                  to:(BOOL)(value & DF_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_LF : ZONE_RF];
+
+    [self handleDoorStatusChangeFrom:(BOOL)(self.previousDoorStatus & PF_BIT_MASK)
+                                  to:(BOOL)(value & PF_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_RF : ZONE_LF];
+
+    [self handleDoorStatusChangeFrom:(BOOL)(self.previousDoorStatus & DR_BIT_MASK)
+                                  to:(BOOL)(value & DR_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_LR : ZONE_RR];
+
+    [self handleDoorStatusChangeFrom:(BOOL)(self.previousDoorStatus & PR_BIT_MASK)
+                                  to:(BOOL)(value & PR_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_RR : ZONE_LR];
+
     /* If any of the values went from open to closed, briefly display the CLOSED INDICATOR (the green check-mark), then fade them all currently-
      * being-displayed-closed-indicators out. */
-    if ((BOOL)(value & DF_BIT_MASK) && !(BOOL)(self.previousDoorStatus & DF_BIT_MASK))
-    {
-        if (self.driversSide == DRIVER_LEFT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.lfDoorClosedIndicatorImageView];
-        else if (self.driversSide == DRIVER_RIGHT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.rfDoorClosedIndicatorImageView];
-    }
-
-    if ((BOOL)(value & PF_BIT_MASK) && !(BOOL)(self.previousDoorStatus & PF_BIT_MASK))
-    {
-        if (self.driversSide == DRIVER_LEFT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.rfDoorClosedIndicatorImageView];
-        else if (self.driversSide == DRIVER_RIGHT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.lfDoorClosedIndicatorImageView];
-    }
-
-    if ((BOOL)(value & DR_BIT_MASK) && !(BOOL)(self.previousDoorStatus & DR_BIT_MASK))
-    {
-        if (self.driversSide == DRIVER_LEFT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.lrDoorClosedIndicatorImageView];
-        else if (self.driversSide == DRIVER_RIGHT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.rrDoorClosedIndicatorImageView];
-    }
-
-    if ((BOOL)(value & PR_BIT_MASK) && !(BOOL)(self.previousDoorStatus & PR_BIT_MASK))
-    {
-        if (self.driversSide == DRIVER_LEFT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.rrDoorClosedIndicatorImageView];
-        else if (self.driversSide == DRIVER_RIGHT)
-            [self.doorTrunkHoodClosedIndicatorImages addObject:self.lrDoorClosedIndicatorImageView];
-    }
-
     if ((BOOL)(value & HOOD_BIT_MASK) && !(BOOL)(self.previousDoorStatus & HOOD_BIT_MASK))
     {
-        [self.doorTrunkHoodClosedIndicatorImages addObject:self.hoodClosedIndicatorImageView];
+        [self.recentlyClosedIndicatorImages addObject:self.hoodClosedIndicatorImageView];
     }
 
     if ((BOOL)(value & TRUNK_BIT_MASK) && !(BOOL)(self.previousDoorStatus & TRUNK_BIT_MASK))
     {
-        [self.doorTrunkHoodClosedIndicatorImages addObject:self.trunkClosedIndicatorImageView];
+        [self.recentlyClosedIndicatorImages addObject:self.trunkClosedIndicatorImageView];
     }
 
     /* Turn on the "closed-indicator" set of images we want to show. */
-    for (UIImageView *imageView in self.doorTrunkHoodClosedIndicatorImages)
+    for (UIImageView *imageView in self.recentlyClosedIndicatorImages)
     {
         imageView.hidden = NO;
         imageView.alpha  = 1.0;
+
+        /* And turn off any pending animations so that they all fade together. */
+        [imageView.layer removeAllAnimations];
     }
 
     /* After a handful of seconds, fade out the closed-indicator images, and then remove them from the set, since we only really want to display them
@@ -272,86 +294,15 @@ typedef enum
                           delay:FADE_OUT_ANIMATION_DELAY
                         options:nil
                      animations:^{
-                            for (UIImageView *imageView in self.doorTrunkHoodClosedIndicatorImages)
+                            for (UIImageView *imageView in self.recentlyClosedIndicatorImages)
                                 imageView.alpha = 0.0;
                      }
                      completion:^(BOOL finished) {
-                         [self.doorTrunkHoodClosedIndicatorImages removeAllObjects];
+                         [self.recentlyClosedIndicatorImages removeAllObjects];
                      }];
 
     /* The actual door/hood/trunk OPEN images (the ones w red-Xs) don't fade after so many seconds, and neither do the door-closed images (just
      * the green indicators), so hide/show those appropriately. */
-    if (self.driversSide == DRIVER_LEFT)
-    {
-        /* Also, hold on to any open door images, as we will need to re-show them after they disappear for the display of interior images, and we need
-         * to fade them in/out when displaying the window indicators */
-        if (!(BOOL)(value & DF_BIT_MASK))
-            [self.openDoorImages addObject:self.lfDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.lfDoorOpenImageView];
-
-        self.lfDoorOpenImageView.hidden   =  (BOOL)(value & DF_BIT_MASK);
-        self.lfDoorClosedImageView.hidden = !(BOOL)(value & DF_BIT_MASK);
-
-        if (!(BOOL)(value & PF_BIT_MASK))
-            [self.openDoorImages addObject:self.rfDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.rfDoorOpenImageView];
-
-        self.rfDoorOpenImageView.hidden   =  (BOOL)(value & PF_BIT_MASK);
-        self.rfDoorClosedImageView.hidden = !(BOOL)(value & PF_BIT_MASK);
-
-        if (!(BOOL)(value & DR_BIT_MASK))
-            [self.openDoorImages addObject:self.lrDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.lrDoorOpenImageView];
-
-        self.lrDoorOpenImageView.hidden   =  (BOOL)(value & DR_BIT_MASK);
-        self.lrDoorClosedImageView.hidden = !(BOOL)(value & DR_BIT_MASK);
-
-        if (!(BOOL)(value & PR_BIT_MASK))
-            [self.openDoorImages addObject:self.rrDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.rrDoorOpenImageView];
-
-        self.rrDoorOpenImageView.hidden   =  (BOOL)(value & PR_BIT_MASK);
-        self.rrDoorClosedImageView.hidden = !(BOOL)(value & PR_BIT_MASK);
-    }
-    else if (self.driversSide == DRIVER_RIGHT)
-    {
-        if (!(BOOL)(value & DF_BIT_MASK))
-            [self.openDoorImages addObject:self.rfDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.rfDoorOpenImageView];
-
-        self.rfDoorOpenImageView.hidden   =  (BOOL)(value & DF_BIT_MASK);
-        self.rfDoorClosedImageView.hidden = !(BOOL)(value & DF_BIT_MASK);
-
-        if (!(BOOL)(value & PF_BIT_MASK))
-            [self.openDoorImages addObject:self.lfDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.lfDoorOpenImageView];
-
-        self.lfDoorOpenImageView.hidden   =  (BOOL)(value & PF_BIT_MASK);
-        self.lfDoorClosedImageView.hidden = !(BOOL)(value & PF_BIT_MASK);
-
-        if (!(BOOL)(value & DR_BIT_MASK))
-            [self.openDoorImages addObject:self.rrDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.rrDoorOpenImageView];
-
-        self.rrDoorOpenImageView.hidden   =  (BOOL)(value & DR_BIT_MASK);
-        self.rrDoorClosedImageView.hidden = !(BOOL)(value & DR_BIT_MASK);
-
-        if (!(BOOL)(value & PR_BIT_MASK))
-            [self.openDoorImages addObject:self.lrDoorOpenImageView];
-        else
-            [self.openDoorImages removeObject:self.lrDoorOpenImageView];
-
-        self.lrDoorOpenImageView.hidden   =  (BOOL)(value & PR_BIT_MASK);
-        self.lrDoorClosedImageView.hidden = !(BOOL)(value & PR_BIT_MASK);
-    }
-
     self.hoodOpenIndicatorImageView.hidden  = (BOOL)(value & HOOD_BIT_MASK);
     self.trunkOpenIndicatorImageView.hidden = (BOOL)(value & TRUNK_BIT_MASK);
 

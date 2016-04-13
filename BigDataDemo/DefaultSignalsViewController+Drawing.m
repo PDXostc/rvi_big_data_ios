@@ -134,12 +134,14 @@ typedef enum
         [self setValue:imageView forKey:propertyName];
 
         imageView.frame  = compositeCarView.bounds;
-        imageView.hidden = YES;
+
+        /* Hide all but the door closed image views. */
+        if (![propertyName containsString:@"DoorClosedImageView"])
+            imageView.hidden = YES;
 
         imageView.contentScaleFactor = UIViewContentModeScaleAspectFit;
 
         [compositeCarView addSubview:imageView];
-
 
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
                                                               attribute:NSLayoutAttributeTop
