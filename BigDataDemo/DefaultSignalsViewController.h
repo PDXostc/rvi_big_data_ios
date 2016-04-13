@@ -77,5 +77,6 @@
 @property (nonatomic, weak) UIImageView *vehicleOutlineExteriorImageView;
 @property (nonatomic, weak) UIImageView *vehicleOutlineInteriorImageView;
 
-@property (nonatomic, strong) NSMutableSet    *extendingOutExteriorImages;
+@property (nonatomic, strong) NSMutableSet *allSuperWideExteriorImages;
+@property (nonatomic, strong) NSMutableSet *currentlyShowingClosedDoorImages;
 @end

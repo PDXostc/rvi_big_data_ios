@@ -49,11 +49,9 @@ typedef enum
 
 @property (nonatomic)         NSInteger         previousDoorStatus;
 
-@property (nonatomic, strong) NSMutableSet    *currentSeatBeltIndicatorImages;
-@property (nonatomic, strong) NSMutableSet    *recentlyClosedIndicatorImages;
-@property (nonatomic, strong) NSMutableSet    *openDoorImages;
-//@property (nonatomic, strong) NSMutableSet    *extendingOutExteriorImages;
-
+@property (nonatomic, strong) NSMutableSet     *currentSeatBeltIndicatorImages;
+@property (nonatomic, strong) NSMutableSet     *recentlyClosedIndicatorImages;
+@property (nonatomic, strong) NSMutableSet     *currentlyShowingOpenDoorImages;
 @end
 
 @implementation DefaultSignalsViewController
@@ -85,7 +83,10 @@ typedef enum
     DLog(@"");
     [super viewDidAppear:animated];
 
-    self.extendingOutExteriorImages = [NSMutableSet set];
+    self.allSuperWideExteriorImages       = [NSMutableSet set];
+    self.recentlyClosedIndicatorImages    = [NSMutableSet set];
+    self.currentlyShowingOpenDoorImages   = [NSMutableSet set];
+    self.currentlyShowingClosedDoorImages = [NSMutableSet set];
 
     [self drawThrottlePressureView:self.throttlePressureView];
     [self drawSteeringAngleView:self.steeringAngleView];
@@ -98,9 +99,6 @@ typedef enum
                                                          self.lrSeatbeltOffIndicatorImageView,
                                                          self.rrSeatbeltOffIndicatorImageView,
                                                          nil];
-
-    self.recentlyClosedIndicatorImages = [NSMutableSet set];
-    self.openDoorImages                = [NSMutableSet set];
 }
 
 - (NSString *)stringForZone:(Zone)zone
@@ -167,7 +165,7 @@ typedef enum
     }
 
     /* Turn off any exterior images that may be showing. */
-    for (UIImageView *imageView in self.extendingOutExteriorImages)
+    for (UIImageView *imageView in self.allSuperWideExteriorImages)
     {
         imageView.hidden = YES;
     }
@@ -179,8 +177,15 @@ typedef enum
         imageView.alpha  = 1.0;
     }
 
-    /* Get ready to fade any open door exterior images back in */
-    for (UIImageView *imageView in self.openDoorImages)
+    /* Get ready to fade any open door images back in */
+    for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
+    {
+        imageView.alpha  = 0.0;
+        imageView.hidden = NO;
+    }
+
+    /* Get ready to fade any closed door images back in */
+    for (UIImageView *imageView in self.currentlyShowingClosedDoorImages)
     {
         imageView.alpha  = 0.0;
         imageView.hidden = NO;
@@ -193,9 +198,11 @@ typedef enum
                             for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
                                 imageView.alpha = 0.0;
 
-                            for (UIImageView *imageView in self.openDoorImages)
+                            for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
                                 imageView.alpha = 1.0;
 
+                            for (UIImageView *imageView in self.currentlyShowingClosedDoorImages)
+                                imageView.alpha = 1.0;
                      }
                      completion:^(BOOL finished) {
                      }];
@@ -239,16 +246,21 @@ typedef enum
     doorOpenImageView.hidden   =  isClosed;
     doorClosedImageView.hidden = !isClosed;
 
-    /* Also, hold on to any open door images, as we will need to re-show them after they disappear for the display of interior images, and we need
-     * to fade them in/out when displaying the window indicators, and hide any showing closed-door indicators when the door is opened. */
+    /* Also, hold on to any open/closed door images, as we will need to re-show them after they disappear for the display of interior images.
+     * We split this up because we also need to fade open door images in/out when displaying the window indicators. */
     if (!isClosed)
-        [self.openDoorImages addObject:doorOpenImageView];
-    else
-        [self.openDoorImages removeObject:doorOpenImageView];
+    {
+        [self.currentlyShowingOpenDoorImages addObject:doorOpenImageView];
+        [self.currentlyShowingClosedDoorImages removeObject:doorClosedImageView];
 
-    /* Also, if the door is now open, make sure the door-closed indicator isn't showing. */
-    if (!isClosed)
+        /* Also, if the door is now open, make sure the door-closed indicator isn't showing. */
         doorClosedIndicatorImageView.hidden = YES;
+    }
+    else
+    {
+        [self.currentlyShowingOpenDoorImages removeObject:doorOpenImageView];
+        [self.currentlyShowingClosedDoorImages addObject:doorClosedImageView];
+    }
 }
 
 

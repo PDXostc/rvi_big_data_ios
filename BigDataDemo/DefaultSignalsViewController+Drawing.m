@@ -136,9 +136,12 @@ typedef enum
 
         imageView.frame  = compositeCarView.bounds;
 
-        /* Hide all but the door closed image views. */
+        /* Hide all but the door closed image views, as they're default showing... */
         if (![propertyName containsString:@"DoorClosedImageView"])
             imageView.hidden = YES;
+        /* and put them in the currentlyShowingClosedDoorImages set. */
+        else
+            [self.currentlyShowingClosedDoorImages addObject:imageView];
 
         imageView.contentScaleFactor = UIViewContentModeScaleAspectFit;
 
@@ -180,11 +183,11 @@ typedef enum
          * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
          * that should be hidden. */
         if ([propertyName containsString:@"Window"])
-            [self.extendingOutExteriorImages addObject:imageView];
+            [self.allSuperWideExteriorImages addObject:imageView];
         else if ([propertyName containsString:@"DoorOpenImageView"])
-            [self.extendingOutExteriorImages addObject:imageView];
-        else if ([propertyName containsString:@"DoorClosedIndicatorImageView"])
-            [self.extendingOutExteriorImages addObject:imageView];
+            [self.allSuperWideExteriorImages addObject:imageView];
+        else if ([propertyName containsString:@"DoorClosed"])
+            [self.allSuperWideExteriorImages addObject:imageView];
 
     }
 
