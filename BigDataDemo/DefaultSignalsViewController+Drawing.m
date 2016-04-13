@@ -173,6 +173,14 @@ typedef enum
                                                              multiplier:1.0
                                                                constant:0.0]];
 
+        /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
+         * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
+         * that should be hidden. */
+        if ([propertyName containsString:@"Window"])
+            [self.extendingOutExteriorIndicatorImages addObject:imageView];
+        else if ([propertyName containsString:@"DoorOpen"])
+            [self.extendingOutExteriorIndicatorImages addObject:imageView];
+
     }
 
     self.vehicleOutlineExteriorImageView.hidden = NO;

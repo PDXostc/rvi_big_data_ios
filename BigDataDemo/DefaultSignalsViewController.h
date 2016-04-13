@@ -76,4 +76,6 @@
 @property (nonatomic, weak) UIImageView *trunkOpenIndicatorImageView;
 @property (nonatomic, weak) UIImageView *vehicleOutlineExteriorImageView;
 @property (nonatomic, weak) UIImageView *vehicleOutlineInteriorImageView;
+
+@property (nonatomic, strong) NSMutableSet    *extendingOutExteriorIndicatorImages;
 @end
