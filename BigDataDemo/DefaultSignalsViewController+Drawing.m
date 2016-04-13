@@ -72,12 +72,9 @@ typedef enum
 {
     NSArray *compositeImageNamesAndProperties = @[
             @{ @"vehicle_outline_exterior.png"         : @"vehicleOutlineExteriorImageView"      },
-            @{ @"vehicle_outline_interior.png"         : @"vehicleOutlineInteriorImageView"      },
             @{ @"LF_door_closed.png"                   : @"lfDoorClosedImageView"                },
             @{ @"LF_door_closed_indicator.png"         : @"lfDoorClosedIndicatorImageView"       },
             @{ @"LF_door_open.png"                     : @"lfDoorOpenImageView"                  },
-            @{ @"LF_seatbelt_off_indicator.png"        : @"lfSeatbeltOffIndicatorImageView"      },
-            @{ @"LF_seatbelt_on_indicator.png"         : @"lfSeatbeltOnIndicatorImageView"       },
             @{ @"LF_window_dotted_line_graphic.png"    : @"lfWindowDottedLineGraphicImageView"   },
             @{ @"LF_window_up_down_graphic.png"        : @"lfWindowUpDownGraphicImageView"       },
             @{ @"LF_window_moving_down_indicator.png"  : @"lfWindowMovingDownIndicatorImageView" },
@@ -87,8 +84,6 @@ typedef enum
             @{ @"LR_door_closed.png"                   : @"lrDoorClosedImageView"                },
             @{ @"LR_door_closed_indicator.png"         : @"lrDoorClosedIndicatorImageView"       },
             @{ @"LR_door_open.png"                     : @"lrDoorOpenImageView"                  },
-            @{ @"LR_seatbelt_off_indicator.png"        : @"lrSeatbeltOffIndicatorImageView"      },
-            @{ @"LR_seatbelt_on_indicator.png"         : @"lrSeatbeltOnIndicatorImageView"       },
             @{ @"LR_window_dotted_line_graphic.png"    : @"lrWindowDottedLineGraphicImageView"   },
             @{ @"LR_window_up_down_graphic.png"        : @"lrWindowUpDownGraphicImageView"       },
             @{ @"LR_window_moving_down_indicator.png"  : @"lrWindowMovingDownIndicatorImageView" },
@@ -98,8 +93,6 @@ typedef enum
             @{ @"RF_door_closed.png"                   : @"rfDoorClosedImageView"                },
             @{ @"RF_door_closed_indicator.png"         : @"rfDoorClosedIndicatorImageView"       },
             @{ @"RF_door_open.png"                     : @"rfDoorOpenImageView"                  },
-            @{ @"RF_seatbelt_off_indicator.png"        : @"rfSeatbeltOffIndicatorImageView"      },
-            @{ @"RF_seatbelt_on_indicator.png"         : @"rfSeatbeltOnIndicatorImageView"       },
             @{ @"RF_window_dotted_line_graphic.png"    : @"rfWindowDottedLineGraphicImageView"   },
             @{ @"RF_window_up_down_graphic.png"        : @"rfWindowUpDownGraphicImageView"       },
             @{ @"RF_window_moving_down_indicator.png"  : @"rfWindowMovingDownIndicatorImageView" },
@@ -109,8 +102,6 @@ typedef enum
             @{ @"RR_door_closed.png"                   : @"rrDoorClosedImageView"                },
             @{ @"RR_door_closed_indicator.png"         : @"rrDoorClosedIndicatorImageView"       },
             @{ @"RR_door_open.png"                     : @"rrDoorOpenImageView"                  },
-            @{ @"RR_seatbelt_off_indicator.png"        : @"rrSeatbeltOffIndicatorImageView"      },
-            @{ @"RR_seatbelt_on_indicator.png"         : @"rrSeatbeltOnIndicatorImageView"       },
             @{ @"RR_window_dotted_line_graphic.png"    : @"rrWindowDottedLineGraphicImageView"   },
             @{ @"RR_window_up_down_graphic.png"        : @"rrWindowUpDownGraphicImageView"       },
             @{ @"RR_window_moving_down_indicator.png"  : @"rrWindowMovingDownIndicatorImageView" },
@@ -122,7 +113,17 @@ typedef enum
             @{ @"hood_open_indicator.png"              : @"hoodOpenIndicatorImageView"           },
             @{ @"low_beams.png"                        : @"lowBeamsImageView"                    },
             @{ @"trunk_closed_indicator.png"           : @"trunkClosedIndicatorImageView"        },
-            @{ @"trunk_open_indicator.png"             : @"trunkOpenIndicatorImageView"          } ];
+            @{ @"trunk_open_indicator.png"             : @"trunkOpenIndicatorImageView"          },
+            @{ @"vehicle_outline_interior.png"         : @"vehicleOutlineInteriorImageView"      },
+            @{ @"LF_seatbelt_off_indicator.png"        : @"lfSeatbeltOffIndicatorImageView"      },
+            @{ @"LF_seatbelt_on_indicator.png"         : @"lfSeatbeltOnIndicatorImageView"       },
+            @{ @"LR_seatbelt_off_indicator.png"        : @"lrSeatbeltOffIndicatorImageView"      },
+            @{ @"LR_seatbelt_on_indicator.png"         : @"lrSeatbeltOnIndicatorImageView"       },
+            @{ @"RF_seatbelt_off_indicator.png"        : @"rfSeatbeltOffIndicatorImageView"      },
+            @{ @"RF_seatbelt_on_indicator.png"         : @"rfSeatbeltOnIndicatorImageView"       },
+            @{ @"RR_seatbelt_off_indicator.png"        : @"rrSeatbeltOffIndicatorImageView"      },
+            @{ @"RR_seatbelt_on_indicator.png"         : @"rrSeatbeltOnIndicatorImageView"       }
+    ];
 
     for (NSDictionary *dictionary in compositeImageNamesAndProperties)
     {
@@ -179,9 +180,11 @@ typedef enum
          * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
          * that should be hidden. */
         if ([propertyName containsString:@"Window"])
-            [self.extendingOutExteriorIndicatorImages addObject:imageView];
-        else if ([propertyName containsString:@"DoorOpen"])
-            [self.extendingOutExteriorIndicatorImages addObject:imageView];
+            [self.extendingOutExteriorImages addObject:imageView];
+        else if ([propertyName containsString:@"DoorOpenImageView"])
+            [self.extendingOutExteriorImages addObject:imageView];
+        else if ([propertyName containsString:@"DoorClosedIndicatorImageView"])
+            [self.extendingOutExteriorImages addObject:imageView];
 
     }
 

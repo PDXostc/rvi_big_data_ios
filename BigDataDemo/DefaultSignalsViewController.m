@@ -52,7 +52,7 @@ typedef enum
 @property (nonatomic, strong) NSMutableSet    *currentSeatBeltIndicatorImages;
 @property (nonatomic, strong) NSMutableSet    *recentlyClosedIndicatorImages;
 @property (nonatomic, strong) NSMutableSet    *openDoorImages;
-//@property (nonatomic, strong) NSMutableSet    *extendingOutExteriorIndicatorImages;
+//@property (nonatomic, strong) NSMutableSet    *extendingOutExteriorImages;
 
 @end
 
@@ -85,6 +85,8 @@ typedef enum
     DLog(@"");
     [super viewDidAppear:animated];
 
+    self.extendingOutExteriorImages = [NSMutableSet set];
+
     [self drawThrottlePressureView:self.throttlePressureView];
     [self drawSteeringAngleView:self.steeringAngleView];
     [self drawCompositeCarView:self.compositeCarView];
@@ -98,7 +100,7 @@ typedef enum
                                                          nil];
 
     self.recentlyClosedIndicatorImages = [NSMutableSet set];
-    self.openDoorImages                     = [NSMutableSet set];
+    self.openDoorImages                = [NSMutableSet set];
 }
 
 - (NSString *)stringForZone:(Zone)zone
@@ -165,7 +167,7 @@ typedef enum
     }
 
     /* Turn off any exterior images that may be showing. */
-    for (UIImageView *imageView in self.extendingOutExteriorIndicatorImages)
+    for (UIImageView *imageView in self.extendingOutExteriorImages)
     {
         imageView.hidden = YES;
     }
@@ -177,16 +179,25 @@ typedef enum
         imageView.alpha  = 1.0;
     }
 
+    /* Get ready to fade any open door exterior images back in */
+    for (UIImageView *imageView in self.openDoorImages)
+    {
+        imageView.alpha  = 0.0;
+        imageView.hidden = NO;
+    }
+
     [UIView animateWithDuration:FADE_OUT_ANIMATION_DURATION
                           delay:FADE_OUT_ANIMATION_DELAY
                         options:nil
                      animations:^{
                             for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
                                 imageView.alpha = 0.0;
+
+                            for (UIImageView *imageView in self.openDoorImages)
+                                imageView.alpha = 1.0;
+
                      }
                      completion:^(BOOL finished) {
-                         for (UIImageView *imageView in self.openDoorImages)
-                             imageView.hidden = NO;
                      }];
 
 }
