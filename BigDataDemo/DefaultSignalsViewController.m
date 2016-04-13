@@ -19,21 +19,32 @@
 #import "VehicleManager.h"
 #import "DefaultSignalsViewController+Drawing.h"
 
+typedef enum
+{
+    DRIVER_UNKNOWN,
+    DRIVER_LEFT,
+    DRIVER_RIGHT,
+} DriversSide;
+
+typedef enum
+{
+    ZONE_UNKNOWN,
+    ZONE_LF,
+    ZONE_RF,
+    ZONE_LR,
+    ZONE_RR,
+    ZONE_MR,
+} Zone;
+
 @interface DefaultSignalsViewController ()
-@property (nonatomic, weak) Vehicle *vehicle;
+@property (nonatomic, weak)   Vehicle *vehicle;
 @property (nonatomic, strong) IBOutlet UIView  *throttlePressureView;
 @property (nonatomic, strong) IBOutlet UIView  *steeringAngleView;
 @property (nonatomic, strong) IBOutlet UILabel *testLabel;
 @property (nonatomic, strong) IBOutlet UIView  *compositeCarView;
-//@property (nonatomic, strong) IBOutlet UIView  *leftFrontDoorView;
-//@property (nonatomic, strong) IBOutlet UIView  *leftRearDoorView;
-//@property (nonatomic, strong) IBOutlet UIView  *rightFrontDoorView;
-//@property (nonatomic, strong) IBOutlet UIView  *rightRearDoorView;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
-//@property (nonatomic, strong) IBOutlet UIView  *testLabel;
+@property (nonatomic)         DriversSide       driversSide;
 
+@property (nonatomic, strong) NSMutableSet    *currentSeatBeltIndicatorImages;
 
 @end
 
@@ -70,11 +81,31 @@
     [self drawSteeringAngleView:self.steeringAngleView];
     [self drawCompositeCarView:self.compositeCarView];
 
-//    [self drawHood:self.hoodView];
-//    [self drawLeftFrontDoorView:self.leftFrontDoorView];
-//    [self drawRightFrontDoorView:self.rightFrontDoorView];
-//    [self drawLeftRearDoorView:self.leftRearDoorView];
-//    [self drawRightRearDoorView:self.rightRearDoorView];
+    self.currentSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
+                                                         self.vehicleOutlineInteriorImageView,
+                                                         self.lfSeatbeltOffIndicatorImageView,
+                                                         self.rfSeatbeltOffIndicatorImageView,
+                                                         self.lrSeatbeltOffIndicatorImageView,
+                                                         self.rrSeatbeltOffIndicatorImageView,
+                                                         nil];
+}
+
+- (NSString *)stringForZone:(Zone)zone
+{
+    switch(zone) {
+        case ZONE_UNKNOWN:
+            return @"unknown";
+        case ZONE_LF:
+            return @"lf";
+        case ZONE_RF:
+            return @"rf";
+        case ZONE_LR:
+            return @"lr";
+        case ZONE_RR:
+            return @"rr";
+        case ZONE_MR:
+            return @"mr";
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -97,15 +128,95 @@
     [self animateChangeInThrottlePressure:self.throttlePressureView from:0.0 to:((UISlider *)sender).value total:100.0];
 }
 
+
+- (void)handleBuckleStateChange:(BOOL)value zone:(Zone)zone
+{
+    /* Get the on/off buckle images for this seat using the string zone and key/value encoding */
+    NSString    *stringForZone = [self stringForZone:zone];
+    UIImageView *seatbeltOffIndicatorImageView = [self valueForKey:[NSString stringWithFormat:@"%@SeatbeltOffIndicatorImageView", stringForZone]];
+    UIImageView *seatbeltOnIndicatorImageView = [self valueForKey:[NSString stringWithFormat:@"%@SeatbeltOnIndicatorImageView", stringForZone]];
+
+    if (value) /* The person in the seat is buckled */
+    {
+        [self.currentSeatBeltIndicatorImages addObject:seatbeltOnIndicatorImageView];
+        [self.currentSeatBeltIndicatorImages removeObject:seatbeltOffIndicatorImageView];
+
+        seatbeltOffIndicatorImageView.hidden = YES;
+    }
+    else
+    {
+        [self.currentSeatBeltIndicatorImages addObject:seatbeltOffIndicatorImageView];
+        [self.currentSeatBeltIndicatorImages removeObject:seatbeltOnIndicatorImageView];
+
+        seatbeltOnIndicatorImageView.hidden = YES;
+    }
+
+    for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
+    {
+        imageView.hidden = NO;
+        imageView.alpha  = 1.0;
+    }
+
+
+    [UIView animateWithDuration:1.5
+                          delay:10.0
+                        options:nil
+                     animations:^{
+                            for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
+                                imageView.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished) {
+                         //for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
+                             //imageView.hidden = YES;
+                     }];
+
+}
+
+- (void)showImagesInSet:(NSMutableSet *)set
+{
+
+}
+
+- (void)handleWindowPositionChange:(NSInteger)newPosition maxValue:(NSInteger)maxPosition zone:(Zone)zone
+{
+
+}
+
+- (void)handleDoorStatusChange:(NSInteger)value
+{
+
+}
+
+- (void)handleHighBeamChange:(BOOL)value
+{
+
+}
+
+- (void)handleLowBeamChange:(BOOL)value
+{
+
+}
+
+- (IBAction)resetInCaseOfFunnyState:(id)sender
+{
+    // TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+}
+
 - (NSArray *)signalKeyPathsToObserve
 {
     return @[kVehicleBreakPressureKeyPath,
              kVehicleThrottlePressureKeyPath,
-             kVehicleLeftFrontKeyPath,
-             kVehicleRightFrontKeyPath,
-             kVehicleLeftRearKeyPath,
-             kVehicleMiddleRearKeyPath,
-             kVehicleRightRearKeyPath];
+             kVehicleDoorStatusKeyPath,
+             kVehicleDriverWindowPositionKeyPath,
+             kVehiclePassengerWindowPositionKeyPath,
+             kVehicleRearDriverWindowPositionKeyPath,
+             kVehicleRearPassengerWindowPositionKeyPath,
+             kVehicleDriverSeatBeltBuckleStateKeyPath,
+             kVehiclePassengerSeatBeltBuckleStateKeyPath,
+             kVehicleBeltReminderSensorLRKeyPath,
+             kVehicleBeltReminderSensorRRKeyPath,
+             kVehicleLowBeamIndicationKeyPath,
+             kVehicleMainBeamIndicationKeyPath];
 }
 
 - (void)registerObservers
@@ -234,17 +345,82 @@
     }
     else if ([keyPath isEqualToString:kVehicleDriverSideKeyPath])
     {
-
+        NSString *value = change[NSKeyValueChangeNewKey];
+        if ([value isEqualToString:@"LEFT"])       self.driversSide = DRIVER_LEFT;
+        else if ([value isEqualToString:@"RIGHT"]) self.driversSide = DRIVER_RIGHT;
+        else                                       self.driversSide = DRIVER_UNKNOWN; // TODO: MUST TEST THIS!!!!!!
     }
     else if ([keyPath isEqualToString:kVehicleSignalCurrentValueKeyPath])
     {
+        if (change[NSKeyValueChangeNewKey] == [NSNull null]) return;
+
         if (object == self.vehicle.throttlePressure)
         {
             self.testLabel.text = [NSString stringWithFormat:@"%d", [change[NSKeyValueChangeNewKey] integerValue]];
             // TODO: Update pressure
         }
-
+        else if (object == self.vehicle.doorStatus)
+        {
+            [self handleDoorStatusChange:[change[NSKeyValueChangeNewKey] integerValue]];
+        }
+        else if (object == self.vehicle.driverWindowPosition)
+        {
+            if (self.driversSide == DRIVER_LEFT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LF];
+            else if (self.driversSide == DRIVER_RIGHT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RF];
+        }
+        else if (object == self.vehicle.passengerWindowPosition)
+        {
+            if (self.driversSide == DRIVER_LEFT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RF];
+            else if (self.driversSide == DRIVER_RIGHT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LF];
+        }
+        else if (object == self.vehicle.rearDriverWindowPosition)
+        {
+            if (self.driversSide == DRIVER_LEFT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LR];
+            else if (self.driversSide == DRIVER_RIGHT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RR];
+        }
+        else if (object == self.vehicle.rearPassengerWindowPosition)
+        {
+            if (self.driversSide == DRIVER_LEFT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RR];
+            else if (self.driversSide == DRIVER_RIGHT)
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LR];
+        }
+        else if (object == self.vehicle.driverSeatBeltBuckleState)
+        {
+            if (self.driversSide == DRIVER_LEFT)
+                [self handleBuckleStateChange:[change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_LF];
+            else if (self.driversSide == DRIVER_RIGHT)
+                [self handleBuckleStateChange:[change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_RF];
+        }
+        else if (object == self.vehicle.passengerSeatBeltBuckleState)
+        {
+            if (self.driversSide == DRIVER_LEFT)
+                [self handleBuckleStateChange:[change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_RF];
+            else if (self.driversSide == DRIVER_RIGHT)
+                [self handleBuckleStateChange:[change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_LF];
+        }
+        else if (object == self.vehicle.beltReminderSensorLR)
+        {
+            [self handleBuckleStateChange:![change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_LR];
+        }
+        else if (object == self.vehicle.beltReminderSensorRR)
+        {
+            [self handleBuckleStateChange:![change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_RR];
+        }
+        else if (object == self.vehicle.lowBeamIndication)
+        {
+            [self handleLowBeamChange:[change[NSKeyValueChangeNewKey] boolValue]];
+        }
+        else if (object == self.vehicle.mainBeamIndication)
+        {
+            [self handleHighBeamChange:[change[NSKeyValueChangeNewKey] boolValue]];
+        }
     }
 }
-
 @end

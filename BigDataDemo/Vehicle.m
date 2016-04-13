@@ -42,20 +42,20 @@
 @property (nonatomic, strong) Signal       *lowBeamIndication;
 @property (nonatomic, strong) Signal       *mainBeamIndication;
 
-@property (nonatomic, strong) Signal       *speedCachedAttribute;
-@property (nonatomic, strong) Signal       *engineRPMsCachedAttribute;
-@property (nonatomic, strong) Signal       *throttlePositionCachedAttribute;
-@property (nonatomic, strong) Signal       *doorStatusMSCachedAttribute;
-@property (nonatomic, strong) Signal       *passWindowPositionCachedAttribute;
-@property (nonatomic, strong) Signal       *rearPassWindowPosCachedAttribute;
-@property (nonatomic, strong) Signal       *rearDriverWindowPosCachedAttribute;
-@property (nonatomic, strong) Signal       *driverWindowPositionCachedAttribute;
-@property (nonatomic, strong) Signal       *drivSeatBeltBcklStateCachedAttribute;
-@property (nonatomic, strong) Signal       *passSeatBeltBcklStateCachedAttribute;
-@property (nonatomic, strong) Signal       *beltReminderSensorRLCachedAttribute;
-@property (nonatomic, strong) Signal       *beltReminderSensorRRCachedAttribute;
-@property (nonatomic, strong) Signal       *lowBeamIndicationCachedAttribute;
-@property (nonatomic, strong) Signal       *mainBeamIndicationCachedAttribute;
+@property (nonatomic, strong) Signal       *speedCachedAttributes;
+@property (nonatomic, strong) Signal       *engineRPMsCachedAttributes;
+@property (nonatomic, strong) Signal       *throttlePositionCachedAttributes;
+@property (nonatomic, strong) Signal       *doorStatusCachedAttributes;
+@property (nonatomic, strong) Signal       *driverWindowPositionCachedAttributes;
+@property (nonatomic, strong) Signal       *passengerWindowPositionCachedAttributes;
+@property (nonatomic, strong) Signal       *rearDriverWindowPositionCachedAttributes;
+@property (nonatomic, strong) Signal       *rearPassengerWindowPositionCachedAttributes;
+@property (nonatomic, strong) Signal       *driverSeatBeltBuckleStateCachedAttributes;
+@property (nonatomic, strong) Signal       *passengerSeatBeltBuckleStateCachedAttributes;
+@property (nonatomic, strong) Signal       *beltReminderSensorLRCachedAttributes;
+@property (nonatomic, strong) Signal       *beltReminderSensorRRCachedAttributes;
+@property (nonatomic, strong) Signal       *lowBeamIndicationCachedAttributes;
+@property (nonatomic, strong) Signal       *mainBeamIndicationCachedAttributes;
 @end
 
 @implementation Vehicle
@@ -68,14 +68,14 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
     dictionary[@"ThrottlePosition_MS"     ] = @"throttlePosition";
-    dictionary[@"DoorStatusMS_MS"         ] = @"doorStatusMS";
-    dictionary[@"PassWindowPosition_MS"   ] = @"passWindowPosition";
-    dictionary[@"RearPassWindowPos_MS"    ] = @"rearPassWindowPos";
-    dictionary[@"RearDriverWindowPos_MS"  ] = @"rearDriverWindowPos";
+    dictionary[@"DoorStatusMS_MS"         ] = @"doorStatus";
     dictionary[@"DriverWindowPosition_MS" ] = @"driverWindowPosition";
-    dictionary[@"DrivSeatBeltBcklState_MS"] = @"drivSeatBeltBcklState";
-    dictionary[@"PassSeatBeltBcklState_MS"] = @"passSeatBeltBcklState";
-    dictionary[@"BeltReminderSensorRL_MS" ] = @"beltReminderSensorRL";
+    dictionary[@"PassWindowPosition_MS"   ] = @"passengerWindowPosition";
+    dictionary[@"RearDriverWindowPos_MS"  ] = @"rearDriverWindowPosition";
+    dictionary[@"RearPassWindowPos_MS"    ] = @"rearPassengerWindowPosition";
+    dictionary[@"DrivSeatBeltBcklState_MS"] = @"driverSeatBeltBuckleState";
+    dictionary[@"PassSeatBeltBcklState_MS"] = @"passengerSeatBeltBuckleState";
+    dictionary[@"BeltReminderSensorRL_MS" ] = @"beltReminderSensorLR";
     dictionary[@"BeltReminderSensorRR_MS" ] = @"beltReminderSensorRR";
     dictionary[@"LowBeamIndication_MS"    ] = @"lowBeamIndication";
     dictionary[@"MainBeamIndication_MS"   ] = @"mainBeamIndication";

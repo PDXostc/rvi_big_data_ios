@@ -321,7 +321,7 @@
                             </slider>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sh-vf-yne" userLabel="View - Vehicle Composite Image Container">
                                 <rect key="frame" x="121" y="52" width="359" height="508"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0sh-vf-yne" secondAttribute="height" multiplier="359:508" id="daK-aM-ZFd"/>
                                 </constraints>

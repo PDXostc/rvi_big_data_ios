@@ -68,8 +68,6 @@ typedef enum
 
 }
 
-
-
 - (void)drawCompositeCarView:(UIView *)compositeCarView
 {
     NSArray *compositeImageNamesAndProperties = @[
@@ -136,7 +134,7 @@ typedef enum
         [self setValue:imageView forKey:propertyName];
 
         imageView.frame  = compositeCarView.bounds;
-        //imageView.hidden = YES;
+        imageView.hidden = YES;
 
         imageView.contentScaleFactor = UIViewContentModeScaleAspectFit;
 
@@ -197,7 +195,6 @@ typedef enum
     CGFloat newAlpha = (CGFloat)(((to/total) * (MAXIMUM_TP_GLOW_ALPHA - MINIMUM_TP_GLOW_ALPHA)) + MINIMUM_TP_GLOW_ALPHA);
     CGFloat newAngle = (CGFloat)((((to/total) * (MAXIMUM_TP_NEEDLE_ANGLE - MINIMUM_TP_NEEDLE_ANGLE)) + MINIMUM_TP_NEEDLE_ANGLE) * ((CGFloat)(M_PI) / 180.0));
 
-
     CABasicAnimation* fadeAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
     fadeAnim.fromValue = @(glowLayer.opacity);
     fadeAnim.toValue = @(newAlpha);
@@ -223,151 +220,4 @@ typedef enum
 //
 //                    }];
 }
-
-- (CGMutablePathRef)roundedRectangleForFrame:(CGRect)frame withRadius:(CGFloat)cornerRadius corners:(RoundedCorners)roundedCorners
-{
-    CGMutablePathRef path = CGPathCreateMutable();
-
-    CGFloat bottomLeftCornerRadius  = roundedCorners & BOTTOM_LEFT  ? cornerRadius : 0;
-    CGFloat bottomRightCornerRadius = roundedCorners & BOTTOM_RIGHT ? cornerRadius : 0;
-    CGFloat topLeftCornerRadius     = roundedCorners & TOP_LEFT     ? cornerRadius : 0;
-    CGFloat topRightCornerRadius    = roundedCorners & TOP_RIGHT    ? cornerRadius : 0;
-
-    CGPathMoveToPoint(path, NULL, 0, frame.size.height - bottomLeftCornerRadius);
-    CGPathAddLineToPoint(path, NULL, 0, topLeftCornerRadius);
-    CGPathAddArc(path, NULL, topLeftCornerRadius, topLeftCornerRadius, topLeftCornerRadius, M_PI, -M_PI_2, NO);
-    CGPathAddLineToPoint(path, NULL, frame.size.width - topRightCornerRadius, 0);
-    CGPathAddArc(path, NULL, frame.size.width - topRightCornerRadius, topRightCornerRadius, topRightCornerRadius, -M_PI_2, 0, NO);
-    CGPathAddLineToPoint(path, NULL, frame.size.width, frame.size.height - bottomRightCornerRadius);
-    CGPathAddArc(path, NULL, frame.size.width - bottomRightCornerRadius, frame.size.height - bottomRightCornerRadius, bottomRightCornerRadius, 0, M_PI_2, NO);
-    CGPathAddLineToPoint(path, NULL, bottomLeftCornerRadius, frame.size.height);
-    CGPathAddArc(path, NULL, (bottomLeftCornerRadius), frame.size.height - bottomLeftCornerRadius, bottomLeftCornerRadius, M_PI_2, M_PI, NO);
-
-    return path;
-}
-
-- (void)drawHood:(UIView *)hoodView
-{
-    CGFloat cornerRadius = 10;
-    CGRect frame = hoodView.bounds;
-
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-
-//    shapeLayer.path = [self roundedRectangleForFrame:frame withRadius:cornerRadius corners:TOP_LEFT | TOP_RIGHT];
-//
-//    shapeLayer.backgroundColor = [[UIColor clearColor] CGColor];
-//    shapeLayer.frame           = frame;
-//    shapeLayer.masksToBounds   = NO;
-//    shapeLayer.fillColor       = [[UIColor grayColor] CGColor];
-//    shapeLayer.strokeColor     = [[UIColor clearColor] CGColor];
-//    shapeLayer.lineWidth       = 0;
-//    shapeLayer.lineCap         = kCALineCapRound;
-//
-//    [hoodView.layer addSublayer:shapeLayer];
-}
-
-- (CAShapeLayer *)shapeLayerForDoorWithFrame:(CGRect)frame corners:(RoundedCorners)roundedCorners
-{
-    CGFloat cornerRadius = 5;
-
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-
-    shapeLayer.path = [self roundedRectangleForFrame:frame withRadius:cornerRadius corners:roundedCorners];
-
-    shapeLayer.backgroundColor = [[UIColor clearColor] CGColor];
-    shapeLayer.frame           = frame;
-    shapeLayer.masksToBounds   = NO;
-    shapeLayer.fillColor       = [[UIColor grayColor] CGColor];
-    shapeLayer.strokeColor     = [[UIColor clearColor] CGColor];
-    shapeLayer.lineWidth       = 0;
-    shapeLayer.lineCap         = kCALineCapRound;
-
-    return shapeLayer;
-}
-
-#define DOOR_WIDTH 10
-- (void)drawLeftFrontDoorView:(UIView *)doorView
-{
-    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(doorView.frame.size.width - DOOR_WIDTH, 0, DOOR_WIDTH, doorView.frame.size.height)
-                                                         corners:TOP_LEFT]];
-}
-
-- (void)drawLeftRearDoorView:(UIView *)doorView
-{
-    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(doorView.frame.size.width - DOOR_WIDTH, 0, DOOR_WIDTH, doorView.frame.size.height)
-                                                         corners:BOTTOM_LEFT]];
-}
-
-- (void)drawRightFrontDoorView:(UIView *)doorView
-{
-    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(0, 0, DOOR_WIDTH, doorView.frame.size.height)
-                                                         corners:TOP_RIGHT]];
-}
-
-- (void)drawRightRearDoorView:(UIView *)doorView
-{
-    [doorView.layer addSublayer:[self shapeLayerForDoorWithFrame:CGRectMake(0, 0, DOOR_WIDTH, doorView.frame.size.height)
-                                                         corners:BOTTOM_RIGHT]];
-}
-
-- (void)drawTrunk:(UIView *)trunkView
-{
-
-}
-
-
-
-//- (void)updateTemperatureBars
-//{
-//    [self drawTemperateBar:self.tempBarLeft
-//                     value:[self.pickerLeft selectedRowInComponent:0]];
-//    [self drawTemperateBar:self.tempBarRight
-//                     value:[self.pickerRight selectedRowInComponent:0]];
-//
-//}
-//
-//- (void)makeGradientForBar:(UIView *)tempBar
-//{
-//    CAGradientLayer *gradient = [CAGradientLayer layer];
-//    gradient.frame = tempBar.bounds;
-//
-//    gradient.anchorPoint = CGPointMake(0, 0);
-//    gradient.position    = CGPointMake(0, 0);
-//    gradient.startPoint  = CGPointMake(0.5, GRADIENT_UNIT_HEIGHT);
-//    gradient.endPoint    = CGPointMake(0.5, 0.0);
-//
-//    gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(252.0 / 255.0)
-//                                                      green:(CGFloat)(138.0 / 255.0)
-//                                                       blue:(CGFloat)(10.0  / 255.0)
-//                                                      alpha:1.0] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
-//
-//    [tempBar.layer insertSublayer:gradient atIndex:0];
-//}
-//
-//- (void)makeGradientForPicker:(UIView *)picker
-//{
-//    CAGradientLayer *gradient = [CAGradientLayer layer];
-//    gradient.frame = picker.bounds;
-//
-//    gradient.anchorPoint = CGPointMake(0, 0);
-//    gradient.position    = CGPointMake(0, 0);
-//
-//    gradient.locations   = @[@(0.0),
-//                             @(GRADIENT_UNIT_HEIGHT * 2.0),
-//                             @(1.0 - GRADIENT_UNIT_HEIGHT * 2.0),
-//                             @(1.0)];
-//
-//    gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(142.0 / 255.0)
-//                                                      green:(CGFloat)(205.0 / 255.0)
-//                                                       blue:(CGFloat)(223.0 / 255.0)
-//                                                      alpha:0.8] CGColor],
-//                        (__bridge id)[[UIColor clearColor] CGColor],
-//                        (__bridge id)[[UIColor clearColor] CGColor],
-//                        (__bridge id)[[UIColor colorWithRed:(CGFloat)(142.0 / 255.0)
-//                                                      green:(CGFloat)(205.0 / 255.0)
-//                                                       blue:(CGFloat)(223.0 / 255.0)
-//                                                      alpha:0.8] CGColor]];
-//
-//    [picker.layer insertSublayer:gradient atIndex:0];
-//}
 @end
