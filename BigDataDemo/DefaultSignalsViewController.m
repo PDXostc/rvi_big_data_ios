@@ -237,12 +237,26 @@ typedef enum
     /* Fade any open door images */
     for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
     {
+        [imageView.layer removeAllAnimations];
+
         imageView.alpha = 0.2;
     }
 
-    /* Show the (hidden) closed versions of any open doors so that we can have the dotted line come from the window */
+    /* Show (dimly) the hidden closed versions of any open doors so that we can have the dotted line come from the window */
     for (UIImageView *imageView in self.currentlyHiddenClosedDoorImages)
     {
+        [imageView.layer removeAllAnimations];
+
+        imageView.alpha  = 0.5;
+        imageView.hidden = NO;
+    }
+
+    /* Show (dimly) not-hidden closed door images (which would be hidden if the interior view is showing) */
+    for (UIImageView *imageView in self.currentlyShowingClosedDoorImages)
+    {
+        [imageView.layer removeAllAnimations];
+
+        imageView.alpha  = 0.5;
         imageView.hidden = NO;
     }
 
@@ -300,6 +314,9 @@ typedef enum
                             for (UIImageView *imageView in self.currentlyHiddenClosedDoorImages)
                                 imageView.alpha = 0.0;
 
+                            for (UIImageView *imageView in self.currentlyShowingClosedDoorImages)
+                                imageView.alpha = 1.0;
+
                             for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
                                 imageView.alpha = 1.0;
                      }
@@ -348,18 +365,27 @@ typedef enum
     if (!isClosed)
     {
         [self.currentlyShowingOpenDoorImages addObject:doorOpenImageView];
-        [self.currentlyShowingClosedDoorImages removeObject:doorClosedImageView];
         [self.currentlyHiddenClosedDoorImages addObject:doorClosedImageView];
+        [self.currentlyShowingClosedDoorImages removeObject:doorClosedImageView];
+
+        [doorClosedImageView.layer removeAllAnimations];
 
         /* Also, if the door is now open, make sure the door-closed indicator isn't showing and removed from recentlyClosedIndicatorImages. */
         doorClosedIndicatorImageView.hidden = YES;
         [self.recentlyClosedIndicatorImages removeObject:doorClosedIndicatorImageView];
+
+        [doorClosedIndicatorImageView.layer removeAllAnimations];
     }
     else
     {
-        [self.currentlyShowingOpenDoorImages removeObject:doorOpenImageView];
         [self.currentlyShowingClosedDoorImages addObject:doorClosedImageView];
+        [self.currentlyShowingOpenDoorImages removeObject:doorOpenImageView];
         [self.currentlyHiddenClosedDoorImages removeObject:doorClosedImageView];
+
+        [doorOpenImageView.layer removeAllAnimations];
+        [doorClosedImageView.layer removeAllAnimations];
+
+        doorClosedImageView.alpha = 1.0;
     }
 }
 
@@ -369,12 +395,14 @@ typedef enum
     for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
     {
         imageView.hidden = YES;
+        [imageView.layer removeAllAnimations];
     }
 
     /* Turn off the window indicator set of images that might be showing. */
     for (UIImageView *imageView in self.currentlyShowingWindowImages)
     {
         imageView.hidden = YES;
+        [imageView.layer removeAllAnimations];
     }
 
     /* Turn back on any door open/door closed images that could have been hidden by the seatbelt view */
