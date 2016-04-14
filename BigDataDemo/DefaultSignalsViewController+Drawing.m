@@ -185,7 +185,19 @@ typedef enum
 
         /* Turn this into a masking layer */
         if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"]) {
-            [self morphAnimatedWindowGradientView:imageView];
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
+            imageView.hidden = NO;
+        }
+        if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"]) {
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
+            imageView.hidden = NO;
+        }
+        if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"]) {
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
+            imageView.hidden = NO;
+        }
+        if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"]) {
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
             imageView.hidden = NO;
         }
 
@@ -204,7 +216,7 @@ typedef enum
     self.vehicleOutlineExteriorImageView.hidden = NO;
 }
 
-- (void)morphAnimatedWindowGradientView:(UIImageView *)maskImageView
+- (void)morphAnimatedWindowGradientView:(UIImageView *)maskImageView withGradientStartPoint:(CGPoint)startPoint stopPoint:(CGPoint)stopPoint
 {
     CALayer *maskLayer    = [CALayer layer];
     UIImage *mask         = maskImageView.image;
@@ -223,8 +235,20 @@ typedef enum
 
     gradient.anchorPoint = CGPointMake(0, 0);
     gradient.position    = CGPointMake(0, 0);
-    gradient.startPoint  = CGPointMake(0.314, 0.69);
-    gradient.endPoint    = CGPointMake(0.35, 0.51);
+
+    /* LF */
+//    gradient.startPoint  = CGPointMake(0.314, 0.69);
+//    gradient.endPoint    = CGPointMake(0.35, 0.51);
+
+    /* RF */
+//    gradient.startPoint  = CGPointMake(0.686, 0.69);
+//    gradient.endPoint    = CGPointMake(0.65, 0.51);
+
+//    gradient.startPoint  = CGPointMake(0.318, 0.8);
+//    gradient.endPoint    = CGPointMake(0.25, 0.653);
+
+    gradient.startPoint  = startPoint;
+    gradient.endPoint    = stopPoint;
 
     gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(255.0 / 255.0)
                                                       green:(CGFloat)(255.0 / 255.0)
