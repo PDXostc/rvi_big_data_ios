@@ -107,7 +107,7 @@ typedef enum
             @{ @"RR_window_moving_down_indicator.png"  : @"rrWindowMovingDownIndicatorImageView" },
             @{ @"RR_window_moving_up_indicator.png"    : @"rrWindowMovingUpIndicatorImageView"   },
             @{ @"RR_window_totally_down_indicator.png" : @"rrWindowTotallyDownIndicatorImageView"},
-            @{ @"RR_window_totally_up.png"             : @"rrWindowTotallyUpImageView"           },
+            @{ @"RR_window_totally_up_indicator.png"   : @"rrWindowTotallyUpIndicatorImageView"  },
             @{ @"high_beams.png"                       : @"highBeamsImageView"                   },
             @{ @"hood_closed_indicator.png"            : @"hoodClosedIndicatorImageView"         },
             @{ @"hood_open_indicator.png"              : @"hoodOpenIndicatorImageView"           },

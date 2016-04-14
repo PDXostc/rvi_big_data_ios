@@ -61,7 +61,7 @@
 @property (nonatomic, weak) UIImageView *rrWindowMovingDownIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rrWindowMovingUpIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rrWindowTotallyDownIndicatorImageView;
-@property (nonatomic, weak) UIImageView *rrWindowTotallyUpImageView;
+@property (nonatomic, weak) UIImageView *rrWindowTotallyUpIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rrWindowUpDownGraphicImageView;
 @property (nonatomic, weak) UIImageView *highBeamsImageView;
 @property (nonatomic, weak) UIImageView *hoodClosedIndicatorImageView;

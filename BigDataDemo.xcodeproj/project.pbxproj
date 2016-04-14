@@ -36,7 +36,6 @@
 		2373A06A1CBC6E7500AE0AC9 /* RF_window_totally_down_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0411CBC6E7500AE0AC9 /* RF_window_totally_down_indicator.png */; };
 		2373A06B1CBC6E7500AE0AC9 /* RF_window_totally_up_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0421CBC6E7500AE0AC9 /* RF_window_totally_up_indicator.png */; };
 		2373A06C1CBC6E7500AE0AC9 /* RR_window_moving_up_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0431CBC6E7500AE0AC9 /* RR_window_moving_up_indicator.png */; };
-		2373A06D1CBC6E7500AE0AC9 /* RR_window_totally_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0441CBC6E7500AE0AC9 /* RR_window_totally_up.png */; };
 		2373A06E1CBC6E7500AE0AC9 /* hood_closed_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0451CBC6E7500AE0AC9 /* hood_closed_indicator.png */; };
 		2373A06F1CBC6E7500AE0AC9 /* LF_window_dotted_line_graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0461CBC6E7500AE0AC9 /* LF_window_dotted_line_graphic.png */; };
 		2373A0701CBC6E7500AE0AC9 /* LF_window_up_down_graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0471CBC6E7500AE0AC9 /* LF_window_up_down_graphic.png */; };
@@ -76,6 +75,7 @@
 		2373A09C1CBC74BE00AE0AC9 /* steering_wheel_composite.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09B1CBC74BE00AE0AC9 /* steering_wheel_composite.png */; };
 		2373A09F1CBDA02E00AE0AC9 /* high_beams.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09D1CBDA02E00AE0AC9 /* high_beams.png */; };
 		2373A0A01CBDA02E00AE0AC9 /* low_beams.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09E1CBDA02E00AE0AC9 /* low_beams.png */; };
+		2373A0A21CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0A11CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png */; };
 		23C670A81CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */; };
 		23C670A91CB5B5CA00A51468 /* throttle_pressure_needle.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */; };
 		23C670AA1CB5B5CA00A51468 /* throttle_pressure_top_layer.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A71CB5B5CA00A51468 /* throttle_pressure_top_layer.png */; };
@@ -164,7 +164,6 @@
 		2373A0411CBC6E7500AE0AC9 /* RF_window_totally_down_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_window_totally_down_indicator.png; path = Resources/Images/RF_window_totally_down_indicator.png; sourceTree = "<group>"; };
 		2373A0421CBC6E7500AE0AC9 /* RF_window_totally_up_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_window_totally_up_indicator.png; path = Resources/Images/RF_window_totally_up_indicator.png; sourceTree = "<group>"; };
 		2373A0431CBC6E7500AE0AC9 /* RR_window_moving_up_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_window_moving_up_indicator.png; path = Resources/Images/RR_window_moving_up_indicator.png; sourceTree = "<group>"; };
-		2373A0441CBC6E7500AE0AC9 /* RR_window_totally_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_window_totally_up.png; path = Resources/Images/RR_window_totally_up.png; sourceTree = "<group>"; };
 		2373A0451CBC6E7500AE0AC9 /* hood_closed_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hood_closed_indicator.png; path = Resources/Images/hood_closed_indicator.png; sourceTree = "<group>"; };
 		2373A0461CBC6E7500AE0AC9 /* LF_window_dotted_line_graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_window_dotted_line_graphic.png; path = Resources/Images/LF_window_dotted_line_graphic.png; sourceTree = "<group>"; };
 		2373A0471CBC6E7500AE0AC9 /* LF_window_up_down_graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_window_up_down_graphic.png; path = Resources/Images/LF_window_up_down_graphic.png; sourceTree = "<group>"; };
@@ -204,6 +203,7 @@
 		2373A09B1CBC74BE00AE0AC9 /* steering_wheel_composite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = steering_wheel_composite.png; path = Resources/Images/steering_wheel_composite.png; sourceTree = "<group>"; };
 		2373A09D1CBDA02E00AE0AC9 /* high_beams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = high_beams.png; path = Resources/Images/high_beams.png; sourceTree = "<group>"; };
 		2373A09E1CBDA02E00AE0AC9 /* low_beams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = low_beams.png; path = Resources/Images/low_beams.png; sourceTree = "<group>"; };
+		2373A0A11CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_window_totally_up_indicator.png; path = Resources/Images/RR_window_totally_up_indicator.png; sourceTree = "<group>"; };
 		23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_bottom_layer.png; path = Resources/Images/throttle_pressure_bottom_layer.png; sourceTree = "<group>"; };
 		23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_needle.png; path = Resources/Images/throttle_pressure_needle.png; sourceTree = "<group>"; };
 		23C670A71CB5B5CA00A51468 /* throttle_pressure_top_layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_top_layer.png; path = Resources/Images/throttle_pressure_top_layer.png; sourceTree = "<group>"; };
@@ -461,6 +461,7 @@
 		23C670141CB5A75700A51468 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2373A0A11CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png */,
 				2373A09D1CBDA02E00AE0AC9 /* high_beams.png */,
 				2373A09E1CBDA02E00AE0AC9 /* low_beams.png */,
 				2373A09B1CBC74BE00AE0AC9 /* steering_wheel_composite.png */,
@@ -486,7 +487,6 @@
 				2373A0411CBC6E7500AE0AC9 /* RF_window_totally_down_indicator.png */,
 				2373A0421CBC6E7500AE0AC9 /* RF_window_totally_up_indicator.png */,
 				2373A0431CBC6E7500AE0AC9 /* RR_window_moving_up_indicator.png */,
-				2373A0441CBC6E7500AE0AC9 /* RR_window_totally_up.png */,
 				2373A0451CBC6E7500AE0AC9 /* hood_closed_indicator.png */,
 				2373A0461CBC6E7500AE0AC9 /* LF_window_dotted_line_graphic.png */,
 				2373A0471CBC6E7500AE0AC9 /* LF_window_up_down_graphic.png */,
@@ -649,6 +649,7 @@
 				2373A0961CBC746B00AE0AC9 /* RF_seatbelt_off_indicator.png in Resources */,
 				2373A0671CBC6E7500AE0AC9 /* LR_window_totally_up_indicator.png in Resources */,
 				2373A0861CBC6E7500AE0AC9 /* LR_door_closed.png in Resources */,
+				2373A0A21CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png in Resources */,
 				2373A0601CBC6E7500AE0AC9 /* LF_window_moving_down_indicator.png in Resources */,
 				2373A07D1CBC6E7500AE0AC9 /* LF_door_open.png in Resources */,
 				2373A0621CBC6E7500AE0AC9 /* LF_window_totally_up_indicator.png in Resources */,
@@ -685,7 +686,6 @@
 				2373A0A01CBDA02E00AE0AC9 /* low_beams.png in Resources */,
 				2373A07F1CBC6E7500AE0AC9 /* LR_door_open.png in Resources */,
 				2373A0951CBC746B00AE0AC9 /* LR_seatbelt_on_indicator.png in Resources */,
-				2373A06D1CBC6E7500AE0AC9 /* RR_window_totally_up.png in Resources */,
 				2373A0801CBC6E7500AE0AC9 /* RF_door_closed_indicator.png in Resources */,
 				2335C7C61C7D0D2400BE6E80 /* Main.storyboard in Resources */,
 				62348DAC6693103FA31DF277 /* throttle_pressure_glow_layer.png in Resources */,

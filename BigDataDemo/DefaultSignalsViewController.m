@@ -425,7 +425,7 @@ typedef enum
         imageView.hidden = NO;
         imageView.alpha  = 1.0;
 
-        /* And turn off any pending animations so that they all fade together. */
+        /* And turn off any pending animations so that they all fade together - Doesn't seem to be working. */
         [imageView.layer removeAllAnimations];
     }
 
