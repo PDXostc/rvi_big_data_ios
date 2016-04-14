@@ -375,6 +375,21 @@ typedef enum
         imageView.hidden = YES;
     }
 
+    /* Turn back on any door open/door closed images that could have been hidden by the seatbelt view */
+    for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
+    {
+        imageView.alpha = 1.0;
+
+        [imageView.layer removeAllAnimations];
+    }
+
+    for (UIImageView *imageView in self.currentlyShowingClosedDoorImages)
+    {
+        imageView.alpha = 1.0;
+
+        [imageView.layer removeAllAnimations];
+    }
+
     /* Depending on drivers side of car, do all the door image state change stuff for each zone, one by one */
     [self handleDoorStatusChangeFrom:(BOOL)(self.previousDoorStatus & DF_BIT_MASK)
                                   to:(BOOL)(value & DF_BIT_MASK)
