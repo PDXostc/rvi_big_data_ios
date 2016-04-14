@@ -184,7 +184,7 @@ typedef enum
                                                                constant:0.0]];
 
         /* Turn this into a masking layer */
-        if ([propertyName containsString:@"WindowAnimatedGradientImageView"]) {
+        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"]) {
             [self morphAnimatedWindowGradientView:imageView];
             imageView.hidden = NO;
         }
@@ -215,13 +215,23 @@ typedef enum
     maskLayer.contents    = (id)mask.CGImage;
     maskLayer.frame       = maskImageView.layer.bounds;
 
-    maskImageView.layer.backgroundColor = [UIColor redColor].CGColor;
+//    maskImageView.layer.backgroundColor = [UIColor redColor].CGColor;
     maskImageView.layer.mask            = maskLayer;
 
-    //maskImageView.needsUpdate = NO;
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = maskImageView.bounds;
 
+    gradient.anchorPoint = CGPointMake(0, 0);
+    gradient.position    = CGPointMake(0, 0);
+    gradient.startPoint  = CGPointMake(0.314, 0.69);
+    gradient.endPoint    = CGPointMake(0.35, 0.51);
 
+    gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(255.0 / 255.0)
+                                                      green:(CGFloat)(255.0 / 255.0)
+                                                       blue:(CGFloat)(255.0 / 255.0)
+                                                      alpha:0.5] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
 
+    [maskImageView.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
