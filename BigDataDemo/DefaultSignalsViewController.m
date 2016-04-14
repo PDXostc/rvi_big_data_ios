@@ -251,6 +251,18 @@ typedef enum
 
     NSInteger previousPosition = [self.previousWindowPositionForZone[zone] integerValue];
 
+    /* First, just hide all the indicators for that side and remove them from our currentlyShowingWindowImage set until we
+     * figure out which one we want to show */
+    windowTotallyDownIndicatorImageView.hidden = YES;
+    windowMovingDownIndicatorImageView.hidden  = YES;
+    windowMovingUpIndicatorImageView.hidden    = YES;
+    windowTotallyUpIndicatorImageView.hidden   = YES;
+
+    [self.currentlyShowingWindowImages removeObject:windowTotallyDownIndicatorImageView];
+    [self.currentlyShowingWindowImages removeObject:windowMovingDownIndicatorImageView];
+    [self.currentlyShowingWindowImages removeObject:windowMovingUpIndicatorImageView];
+    [self.currentlyShowingWindowImages removeObject:windowTotallyUpIndicatorImageView];
+
     /* Show the appropriate up/down indicators to the set of window images that we will fade later */
     if (newPosition == 1)
         [self.currentlyShowingWindowImages addObject:windowTotallyUpIndicatorImageView];
