@@ -227,6 +227,7 @@ typedef enum
     UIImageView *windowTotallyUpIndicatorImageView      = [self valueForKey:[NSString stringWithFormat:@"%@WindowTotallyUpIndicatorImageView"  , stringForZone]];
     UIImageView *windowTotallyDownIndicatorImageView    = [self valueForKey:[NSString stringWithFormat:@"%@WindowTotallyDownIndicatorImageView", stringForZone]];
 
+
     /* Turn off the interior view */
     for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
     {
@@ -245,11 +246,11 @@ typedef enum
         imageView.hidden = NO;
     }
 
+
     /* Add the background images to the set of window images that we will fade later */
     [self.currentlyShowingWindowImages addObject:windowDottedLineGraphicImageView];
     [self.currentlyShowingWindowImages addObject:windowUpDownGraphicImageView];
 
-    NSInteger previousPosition = [self.previousWindowPositionForZone[zone] integerValue];
 
     /* First, just hide all the indicators for that side and remove them from our currentlyShowingWindowImage set until we
      * figure out which one we want to show */
@@ -263,7 +264,10 @@ typedef enum
     [self.currentlyShowingWindowImages removeObject:windowMovingUpIndicatorImageView];
     [self.currentlyShowingWindowImages removeObject:windowTotallyUpIndicatorImageView];
 
+
     /* Show the appropriate up/down indicators to the set of window images that we will fade later */
+    NSInteger previousPosition = [self.previousWindowPositionForZone[zone] integerValue];
+
     if (newPosition == 1)
         [self.currentlyShowingWindowImages addObject:windowTotallyUpIndicatorImageView];
     else if (newPosition == 5)
@@ -292,7 +296,7 @@ typedef enum
                                 imageView.alpha = 0.0;
 
                             for (UIImageView *imageView in self.currentlyHiddenClosedDoorImages)
-                                imageView.alpha = 1.0;
+                                imageView.alpha = 0.0;
 
                             for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
                                 imageView.alpha = 1.0;
@@ -320,9 +324,9 @@ typedef enum
     /* Get all of the appropriate images for the given zone using key/value coding */
     NSString    *stringForZone = [self stringForZone:zone];
 
-    UIImageView *doorOpenImageView               = [self valueForKey:[NSString stringWithFormat:@"%@DoorOpenImageView", stringForZone]];
-    UIImageView *doorClosedImageView             = [self valueForKey:[NSString stringWithFormat:@"%@DoorClosedImageView", stringForZone]];
-    UIImageView *doorClosedIndicatorImageView    = [self valueForKey:[NSString stringWithFormat:@"%@DoorClosedIndicatorImageView", stringForZone]];
+    UIImageView *doorOpenImageView            = [self valueForKey:[NSString stringWithFormat:@"%@DoorOpenImageView", stringForZone]];
+    UIImageView *doorClosedImageView          = [self valueForKey:[NSString stringWithFormat:@"%@DoorClosedImageView", stringForZone]];
+    UIImageView *doorClosedIndicatorImageView = [self valueForKey:[NSString stringWithFormat:@"%@DoorClosedIndicatorImageView", stringForZone]];
 
     /* If any of the values went from open to closed, briefly display the CLOSED INDICATOR (the green check-mark), then fade them all currently-
      * being-displayed-closed-indicators out. */
@@ -345,8 +349,9 @@ typedef enum
         [self.currentlyShowingClosedDoorImages removeObject:doorClosedImageView];
         [self.currentlyHiddenClosedDoorImages addObject:doorClosedImageView];
 
-        /* Also, if the door is now open, make sure the door-closed indicator isn't showing. */
+        /* Also, if the door is now open, make sure the door-closed indicator isn't showing and removed from recentlyClosedIndicatorImages. */
         doorClosedIndicatorImageView.hidden = YES;
+        [self.recentlyClosedIndicatorImages removeObject:doorClosedIndicatorImageView];
     }
     else
     {
@@ -358,8 +363,14 @@ typedef enum
 
 - (void)handleDoorStatusChange:(NSInteger)value
 {
-    /* Turn on the interior set of images that might be showing. */
+    /* Turn off the interior set of images that might be showing. */
     for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
+    {
+        imageView.hidden = YES;
+    }
+
+    /* Turn off the window indicator set of images that might be showing. */
+    for (UIImageView *imageView in self.currentlyShowingWindowImages)
     {
         imageView.hidden = YES;
     }
