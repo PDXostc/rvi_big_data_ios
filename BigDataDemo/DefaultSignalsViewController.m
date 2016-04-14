@@ -48,10 +48,13 @@ typedef enum
 @property (nonatomic)         DriversSide       driversSide;
 
 @property (nonatomic)         NSInteger         previousDoorStatus;
+@property (nonatomic)         NSMutableArray   *previousWindowPositionForZone;
 
-@property (nonatomic, strong) NSMutableSet     *currentSeatBeltIndicatorImages;
+@property (nonatomic, strong) NSMutableSet     *currentlyShowingSeatBeltIndicatorImages;
+@property (nonatomic, strong) NSMutableSet     *currentlyShowingWindowImages;
 @property (nonatomic, strong) NSMutableSet     *recentlyClosedIndicatorImages;
 @property (nonatomic, strong) NSMutableSet     *currentlyShowingOpenDoorImages;
+@property (nonatomic, strong) NSMutableSet     *currentlyHiddenClosedDoorImages;
 @end
 
 @implementation DefaultSignalsViewController
@@ -87,18 +90,22 @@ typedef enum
     self.recentlyClosedIndicatorImages    = [NSMutableSet set];
     self.currentlyShowingOpenDoorImages   = [NSMutableSet set];
     self.currentlyShowingClosedDoorImages = [NSMutableSet set];
+    self.currentlyHiddenClosedDoorImages  = [NSMutableSet set];
+    self.currentlyShowingWindowImages     = [NSMutableSet set];
 
     [self drawThrottlePressureView:self.throttlePressureView];
     [self drawSteeringAngleView:self.steeringAngleView];
     [self drawCompositeCarView:self.compositeCarView];
 
-    self.currentSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
+    self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
                                                          self.vehicleOutlineInteriorImageView,
                                                          self.lfSeatbeltOffIndicatorImageView,
                                                          self.rfSeatbeltOffIndicatorImageView,
                                                          self.lrSeatbeltOffIndicatorImageView,
                                                          self.rrSeatbeltOffIndicatorImageView,
                                                          nil];
+
+    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0)] mutableCopy];
 }
 
 - (NSString *)stringForZone:(Zone)zone
@@ -139,7 +146,6 @@ typedef enum
     [self animateChangeInThrottlePressure:self.throttlePressureView from:0.0 to:((UISlider *)sender).value total:100.0];
 }
 
-
 - (void)handleBuckleStateChange:(BOOL)value zone:(Zone)zone
 {
     /* Get the on/off buckle images for this seat using the string zone and key/value coding */
@@ -151,15 +157,15 @@ typedef enum
      * to the set of interior images. That way it will fade out/get hidden when the interior images need to be. */
     if (value) /* The person in the seat is buckled */
     {
-        [self.currentSeatBeltIndicatorImages addObject:seatbeltOnIndicatorImageView];
-        [self.currentSeatBeltIndicatorImages removeObject:seatbeltOffIndicatorImageView];
+        [self.currentlyShowingSeatBeltIndicatorImages addObject:seatbeltOnIndicatorImageView];
+        [self.currentlyShowingSeatBeltIndicatorImages removeObject:seatbeltOffIndicatorImageView];
 
         seatbeltOffIndicatorImageView.hidden = YES;
     }
     else
     {
-        [self.currentSeatBeltIndicatorImages addObject:seatbeltOffIndicatorImageView];
-        [self.currentSeatBeltIndicatorImages removeObject:seatbeltOnIndicatorImageView];
+        [self.currentlyShowingSeatBeltIndicatorImages addObject:seatbeltOffIndicatorImageView];
+        [self.currentlyShowingSeatBeltIndicatorImages removeObject:seatbeltOnIndicatorImageView];
 
         seatbeltOnIndicatorImageView.hidden = YES;
     }
@@ -171,7 +177,7 @@ typedef enum
     }
 
     /* Turn on the interior set of images we want to show. */
-    for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
+    for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
     {
         imageView.hidden = NO;
         imageView.alpha  = 1.0;
@@ -195,7 +201,7 @@ typedef enum
                           delay:FADE_OUT_ANIMATION_DELAY
                         options:nil
                      animations:^{
-                            for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
+                            for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
                                 imageView.alpha = 0.0;
 
                             for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
@@ -209,9 +215,81 @@ typedef enum
 
 }
 
-- (void)handleWindowPositionChange:(NSInteger)newPosition maxValue:(NSInteger)maxPosition zone:(Zone)zone
+- (void)handleWindowPositionChange:(NSInteger)newPosition zone:(Zone)zone
 {
+    /* Get all of the appropriate images for the given zone using key/value coding */
+    NSString    *stringForZone = [self stringForZone:zone];
 
+    UIImageView *windowDottedLineGraphicImageView       = [self valueForKey:[NSString stringWithFormat:@"%@WindowDottedLineGraphicImageView"   , stringForZone]];
+    UIImageView *windowUpDownGraphicImageView           = [self valueForKey:[NSString stringWithFormat:@"%@WindowUpDownGraphicImageView"       , stringForZone]];
+    UIImageView *windowMovingDownIndicatorImageView     = [self valueForKey:[NSString stringWithFormat:@"%@WindowMovingDownIndicatorImageView" , stringForZone]];
+    UIImageView *windowMovingUpIndicatorImageView       = [self valueForKey:[NSString stringWithFormat:@"%@WindowMovingUpIndicatorImageView"   , stringForZone]];
+    UIImageView *windowTotallyUpIndicatorImageView      = [self valueForKey:[NSString stringWithFormat:@"%@WindowTotallyUpIndicatorImageView"  , stringForZone]];
+    UIImageView *windowTotallyDownIndicatorImageView    = [self valueForKey:[NSString stringWithFormat:@"%@WindowTotallyDownIndicatorImageView", stringForZone]];
+
+    /* Turn off the interior view */
+    for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
+    {
+        imageView.hidden = YES;
+    }
+
+    /* Fade any open door images */
+    for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
+    {
+        imageView.alpha = 0.2;
+    }
+
+    /* Show the (hidden) closed versions of any open doors so that we can have the dotted line come from the window */
+    for (UIImageView *imageView in self.currentlyHiddenClosedDoorImages)
+    {
+        imageView.hidden = NO;
+    }
+
+    /* Add the background images to the set of window images that we will fade later */
+    [self.currentlyShowingWindowImages addObject:windowDottedLineGraphicImageView];
+    [self.currentlyShowingWindowImages addObject:windowUpDownGraphicImageView];
+
+    NSInteger previousPosition = [self.previousWindowPositionForZone[zone] integerValue];
+
+    /* Show the appropriate up/down indicators to the set of window images that we will fade later */
+    if (newPosition == 1)
+        [self.currentlyShowingWindowImages addObject:windowTotallyUpIndicatorImageView];
+    else if (newPosition == 5)
+        [self.currentlyShowingWindowImages addObject:windowTotallyDownIndicatorImageView];
+    else if (!previousPosition) /* We really didn't have any data before to compare to, so don't do anything */
+        ;
+    else if (newPosition < previousPosition)
+        [self.currentlyShowingWindowImages addObject:windowMovingUpIndicatorImageView];
+    else if (newPosition > previousPosition)
+        [self.currentlyShowingWindowImages addObject:windowMovingDownIndicatorImageView];
+
+
+    /* Show the window indicators that we added to the set, and prepare them for the fade */
+    for (UIImageView *imageView in self.currentlyShowingWindowImages)
+    {
+        imageView.hidden = NO;
+        imageView.alpha  = 1.0;
+    }
+
+    /* Fade them out and put our doors back to normal */
+    [UIView animateWithDuration:FADE_OUT_ANIMATION_DURATION
+                          delay:FADE_OUT_ANIMATION_DELAY
+                        options:nil
+                     animations:^{
+                            for (UIImageView *imageView in self.currentlyShowingWindowImages)
+                                imageView.alpha = 0.0;
+
+                            for (UIImageView *imageView in self.currentlyHiddenClosedDoorImages)
+                                imageView.alpha = 1.0;
+
+                            for (UIImageView *imageView in self.currentlyShowingOpenDoorImages)
+                                imageView.alpha = 1.0;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.currentlyShowingWindowImages removeAllObjects];
+                     }];
+
+    self.previousWindowPositionForZone[zone] = @(newPosition);
 }
 
 typedef enum
@@ -247,11 +325,13 @@ typedef enum
     doorClosedImageView.hidden = !isClosed;
 
     /* Also, hold on to any open/closed door images, as we will need to re-show them after they disappear for the display of interior images.
-     * We split this up because we also need to fade open door images in/out when displaying the window indicators. */
+     * We split this up because we also need to fade open door images in/out when displaying the window indicators. We also need to hold on to
+     * which closed door images aren't being showed, so we can show them during window operations. */
     if (!isClosed)
     {
         [self.currentlyShowingOpenDoorImages addObject:doorOpenImageView];
         [self.currentlyShowingClosedDoorImages removeObject:doorClosedImageView];
+        [self.currentlyHiddenClosedDoorImages addObject:doorClosedImageView];
 
         /* Also, if the door is now open, make sure the door-closed indicator isn't showing. */
         doorClosedIndicatorImageView.hidden = YES;
@@ -260,14 +340,14 @@ typedef enum
     {
         [self.currentlyShowingOpenDoorImages removeObject:doorOpenImageView];
         [self.currentlyShowingClosedDoorImages addObject:doorClosedImageView];
+        [self.currentlyHiddenClosedDoorImages removeObject:doorClosedImageView];
     }
 }
-
 
 - (void)handleDoorStatusChange:(NSInteger)value
 {
     /* Turn on the interior set of images that might be showing. */
-    for (UIImageView *imageView in self.currentSeatBeltIndicatorImages)
+    for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
     {
         imageView.hidden = YES;
     }
@@ -511,30 +591,30 @@ typedef enum
         else if (object == self.vehicle.driverWindowPosition)
         {
             if (self.driversSide == DRIVER_LEFT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LF];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_LF];
             else if (self.driversSide == DRIVER_RIGHT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RF];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_RF];
         }
         else if (object == self.vehicle.passengerWindowPosition)
         {
             if (self.driversSide == DRIVER_LEFT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RF];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_RF];
             else if (self.driversSide == DRIVER_RIGHT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LF];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_LF];
         }
         else if (object == self.vehicle.rearDriverWindowPosition)
         {
             if (self.driversSide == DRIVER_LEFT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LR];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_LR];
             else if (self.driversSide == DRIVER_RIGHT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RR];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_RR];
         }
         else if (object == self.vehicle.rearPassengerWindowPosition)
         {
             if (self.driversSide == DRIVER_LEFT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_RR];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_RR];
             else if (self.driversSide == DRIVER_RIGHT)
-                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] maxValue:((Signal *)object).highVal zone:ZONE_LR];
+                [self handleWindowPositionChange:[change[NSKeyValueChangeNewKey] integerValue] zone:ZONE_LR];
         }
         else if (object == self.vehicle.driverSeatBeltBuckleState)
         {
