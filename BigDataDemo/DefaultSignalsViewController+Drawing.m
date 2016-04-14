@@ -184,22 +184,15 @@ typedef enum
                                                                constant:0.0]];
 
         /* Turn this into a masking layer */
-        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"]) {
+        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])
             [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
-            imageView.hidden = NO;
-        }
-        if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"]) {
+        else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"])
             [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
-            imageView.hidden = NO;
-        }
-        if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"]) {
+        else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"])
             [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
-            imageView.hidden = NO;
-        }
-        if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"]) {
+        else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"])
             [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
-            imageView.hidden = NO;
-        }
+
 
         /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
          * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
@@ -227,7 +220,6 @@ typedef enum
     maskLayer.contents    = (id)mask.CGImage;
     maskLayer.frame       = maskImageView.layer.bounds;
 
-//    maskImageView.layer.backgroundColor = [UIColor redColor].CGColor;
     maskImageView.layer.mask            = maskLayer;
 
     CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -235,17 +227,6 @@ typedef enum
 
     gradient.anchorPoint = CGPointMake(0, 0);
     gradient.position    = CGPointMake(0, 0);
-
-    /* LF */
-//    gradient.startPoint  = CGPointMake(0.314, 0.69);
-//    gradient.endPoint    = CGPointMake(0.35, 0.51);
-
-    /* RF */
-//    gradient.startPoint  = CGPointMake(0.686, 0.69);
-//    gradient.endPoint    = CGPointMake(0.65, 0.51);
-
-//    gradient.startPoint  = CGPointMake(0.318, 0.8);
-//    gradient.endPoint    = CGPointMake(0.25, 0.653);
 
     gradient.startPoint  = startPoint;
     gradient.endPoint    = stopPoint;
@@ -257,6 +238,22 @@ typedef enum
 
     [maskImageView.layer insertSublayer:gradient atIndex:0];
 }
+
+- (void)animateGradientView:(UIImageView *)gradientView from:(NSInteger)from to:(NSInteger)to
+{
+    CALayer *layer = [gradientView.layer sublayers][0];
+
+    NSInteger inverseValue = to;//5 - to;
+
+    CGPoint newPosition = CGPointMake(0.0, (CGFloat)(20 * inverseValue));
+
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.fromValue = [layer valueForKey:@"position"];
+    animation.toValue = [NSValue valueWithCGPoint:newPosition];
+    layer.position = newPosition;
+    [layer addAnimation:animation forKey:@"position"];
+}
+
 
 - (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
 {

@@ -222,6 +222,7 @@ typedef enum
 
     UIImageView *windowDottedLineGraphicImageView       = [self valueForKey:[NSString stringWithFormat:@"%@WindowDottedLineGraphicImageView"   , stringForZone]];
     UIImageView *windowUpDownGraphicImageView           = [self valueForKey:[NSString stringWithFormat:@"%@WindowUpDownGraphicImageView"       , stringForZone]];
+    UIImageView *windowAnimatedGradientImageView        = [self valueForKey:[NSString stringWithFormat:@"%@WindowAnimatedGradientImageView"    , stringForZone]];
     UIImageView *windowMovingDownIndicatorImageView     = [self valueForKey:[NSString stringWithFormat:@"%@WindowMovingDownIndicatorImageView" , stringForZone]];
     UIImageView *windowMovingUpIndicatorImageView       = [self valueForKey:[NSString stringWithFormat:@"%@WindowMovingUpIndicatorImageView"   , stringForZone]];
     UIImageView *windowTotallyUpIndicatorImageView      = [self valueForKey:[NSString stringWithFormat:@"%@WindowTotallyUpIndicatorImageView"  , stringForZone]];
@@ -263,6 +264,7 @@ typedef enum
 
     /* Add the background images to the set of window images that we will fade later */
     [self.currentlyShowingWindowImages addObject:windowDottedLineGraphicImageView];
+    [self.currentlyShowingWindowImages addObject:windowAnimatedGradientImageView];
     [self.currentlyShowingWindowImages addObject:windowUpDownGraphicImageView];
 
 
@@ -302,6 +304,8 @@ typedef enum
         imageView.hidden = NO;
         imageView.alpha  = 1.0;
     }
+
+    [self animateGradientView:windowAnimatedGradientImageView from:previousPosition to:newPosition];
 
     /* Fade them out and put our doors back to normal */
     [UIView animateWithDuration:FADE_OUT_ANIMATION_DURATION

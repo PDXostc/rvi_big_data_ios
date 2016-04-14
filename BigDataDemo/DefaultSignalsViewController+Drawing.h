@@ -21,6 +21,7 @@
 - (void)drawSteeringAngleView:(UIView *)steeringAngleView;
 - (void)drawCompositeCarView:(UIView *)compositeCarView;
 - (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total;
+- (void)animateGradientView:(UIImageView *)gradientView from:(NSInteger)from to:(NSInteger)to;
 //- (void)drawHood:(UIView *)hoodView;
 //- (void)drawRightRearDoorView:(UIView *)doorView;
 //- (void)drawRightFrontDoorView:(UIView *)doorView;
