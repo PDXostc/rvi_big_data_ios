@@ -105,7 +105,7 @@ typedef enum
                                                          self.rrSeatbeltOffIndicatorImageView,
                                                          nil];
 
-    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0)] mutableCopy];
+    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0), @(0)] mutableCopy];
 }
 
 - (NSString *)stringForZone:(Zone)zone
@@ -273,6 +273,8 @@ typedef enum
     else if (newPosition == 5)
         [self.currentlyShowingWindowImages addObject:windowTotallyDownIndicatorImageView];
     else if (!previousPosition) /* We really didn't have any data before to compare to, so don't do anything */
+        ;
+    else if (newPosition < 1 || newPosition > 5) /* Unknown/undefined, so ignore */
         ;
     else if (newPosition < previousPosition)
         [self.currentlyShowingWindowImages addObject:windowMovingUpIndicatorImageView];
