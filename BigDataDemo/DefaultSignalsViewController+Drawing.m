@@ -75,6 +75,7 @@ typedef enum
             @{ @"LF_door_closed.png"                   : @"lfDoorClosedImageView"                },
             @{ @"LF_door_closed_indicator.png"         : @"lfDoorClosedIndicatorImageView"       },
             @{ @"LF_door_open.png"                     : @"lfDoorOpenImageView"                  },
+            @{ @"LF_window_animated_gradient.png"      : @"lfWindowAnimatedGradientImageView"    },
             @{ @"LF_window_dotted_line_graphic.png"    : @"lfWindowDottedLineGraphicImageView"   },
             @{ @"LF_window_up_down_graphic.png"        : @"lfWindowUpDownGraphicImageView"       },
             @{ @"LF_window_moving_down_indicator.png"  : @"lfWindowMovingDownIndicatorImageView" },
@@ -84,6 +85,7 @@ typedef enum
             @{ @"LR_door_closed.png"                   : @"lrDoorClosedImageView"                },
             @{ @"LR_door_closed_indicator.png"         : @"lrDoorClosedIndicatorImageView"       },
             @{ @"LR_door_open.png"                     : @"lrDoorOpenImageView"                  },
+            @{ @"LR_window_animated_gradient.png"      : @"lrWindowAnimatedGradientImageView"    },
             @{ @"LR_window_dotted_line_graphic.png"    : @"lrWindowDottedLineGraphicImageView"   },
             @{ @"LR_window_up_down_graphic.png"        : @"lrWindowUpDownGraphicImageView"       },
             @{ @"LR_window_moving_down_indicator.png"  : @"lrWindowMovingDownIndicatorImageView" },
@@ -93,6 +95,7 @@ typedef enum
             @{ @"RF_door_closed.png"                   : @"rfDoorClosedImageView"                },
             @{ @"RF_door_closed_indicator.png"         : @"rfDoorClosedIndicatorImageView"       },
             @{ @"RF_door_open.png"                     : @"rfDoorOpenImageView"                  },
+            @{ @"RF_window_animated_gradient.png"      : @"rfWindowAnimatedGradientImageView"    },
             @{ @"RF_window_dotted_line_graphic.png"    : @"rfWindowDottedLineGraphicImageView"   },
             @{ @"RF_window_up_down_graphic.png"        : @"rfWindowUpDownGraphicImageView"       },
             @{ @"RF_window_moving_down_indicator.png"  : @"rfWindowMovingDownIndicatorImageView" },
@@ -102,6 +105,7 @@ typedef enum
             @{ @"RR_door_closed.png"                   : @"rrDoorClosedImageView"                },
             @{ @"RR_door_closed_indicator.png"         : @"rrDoorClosedIndicatorImageView"       },
             @{ @"RR_door_open.png"                     : @"rrDoorOpenImageView"                  },
+            @{ @"RR_window_animated_gradient.png"      : @"rrWindowAnimatedGradientImageView"    },
             @{ @"RR_window_dotted_line_graphic.png"    : @"rrWindowDottedLineGraphicImageView"   },
             @{ @"RR_window_up_down_graphic.png"        : @"rrWindowUpDownGraphicImageView"       },
             @{ @"RR_window_moving_down_indicator.png"  : @"rrWindowMovingDownIndicatorImageView" },
@@ -179,6 +183,12 @@ typedef enum
                                                              multiplier:1.0
                                                                constant:0.0]];
 
+        /* Turn this into a masking layer */
+        if ([propertyName containsString:@"WindowAnimatedGradientImageView"]) {
+            [self morphAnimatedWindowGradientView:imageView];
+            imageView.hidden = NO;
+        }
+
         /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
          * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
          * that should be hidden. */
@@ -192,6 +202,26 @@ typedef enum
     }
 
     self.vehicleOutlineExteriorImageView.hidden = NO;
+}
+
+- (void)morphAnimatedWindowGradientView:(UIImageView *)maskImageView
+{
+    CALayer *maskLayer    = [CALayer layer];
+    UIImage *mask         = maskImageView.image;
+
+    maskImageView.image   = nil;
+
+    DLog(@"%g %g", mask.size.width, mask.size.height);
+    maskLayer.contents    = (id)mask.CGImage;
+    maskLayer.frame       = maskImageView.layer.bounds;
+
+    maskImageView.layer.backgroundColor = [UIColor redColor].CGColor;
+    maskImageView.layer.mask            = maskLayer;
+
+    //maskImageView.needsUpdate = NO;
+
+
+
 }
 
 - (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total

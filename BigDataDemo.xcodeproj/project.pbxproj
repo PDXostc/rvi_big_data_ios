@@ -76,6 +76,10 @@
 		2373A09F1CBDA02E00AE0AC9 /* high_beams.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09D1CBDA02E00AE0AC9 /* high_beams.png */; };
 		2373A0A01CBDA02E00AE0AC9 /* low_beams.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A09E1CBDA02E00AE0AC9 /* low_beams.png */; };
 		2373A0A21CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0A11CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png */; };
+		2373A0A71CC0415E00AE0AC9 /* LF_window_animated_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0A31CC0415E00AE0AC9 /* LF_window_animated_gradient.png */; };
+		2373A0A81CC0415E00AE0AC9 /* LR_window_animated_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0A41CC0415E00AE0AC9 /* LR_window_animated_gradient.png */; };
+		2373A0A91CC0415E00AE0AC9 /* RF_window_animated_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0A51CC0415E00AE0AC9 /* RF_window_animated_gradient.png */; };
+		2373A0AA1CC0415E00AE0AC9 /* RR_window_animated_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0A61CC0415E00AE0AC9 /* RR_window_animated_gradient.png */; };
 		23C670A81CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */; };
 		23C670A91CB5B5CA00A51468 /* throttle_pressure_needle.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */; };
 		23C670AA1CB5B5CA00A51468 /* throttle_pressure_top_layer.png in Resources */ = {isa = PBXBuildFile; fileRef = 23C670A71CB5B5CA00A51468 /* throttle_pressure_top_layer.png */; };
@@ -204,6 +208,10 @@
 		2373A09D1CBDA02E00AE0AC9 /* high_beams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = high_beams.png; path = Resources/Images/high_beams.png; sourceTree = "<group>"; };
 		2373A09E1CBDA02E00AE0AC9 /* low_beams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = low_beams.png; path = Resources/Images/low_beams.png; sourceTree = "<group>"; };
 		2373A0A11CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_window_totally_up_indicator.png; path = Resources/Images/RR_window_totally_up_indicator.png; sourceTree = "<group>"; };
+		2373A0A31CC0415E00AE0AC9 /* LF_window_animated_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_window_animated_gradient.png; path = Resources/Images/LF_window_animated_gradient.png; sourceTree = "<group>"; };
+		2373A0A41CC0415E00AE0AC9 /* LR_window_animated_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LR_window_animated_gradient.png; path = Resources/Images/LR_window_animated_gradient.png; sourceTree = "<group>"; };
+		2373A0A51CC0415E00AE0AC9 /* RF_window_animated_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_window_animated_gradient.png; path = Resources/Images/RF_window_animated_gradient.png; sourceTree = "<group>"; };
+		2373A0A61CC0415E00AE0AC9 /* RR_window_animated_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_window_animated_gradient.png; path = Resources/Images/RR_window_animated_gradient.png; sourceTree = "<group>"; };
 		23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_bottom_layer.png; path = Resources/Images/throttle_pressure_bottom_layer.png; sourceTree = "<group>"; };
 		23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_needle.png; path = Resources/Images/throttle_pressure_needle.png; sourceTree = "<group>"; };
 		23C670A71CB5B5CA00A51468 /* throttle_pressure_top_layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = throttle_pressure_top_layer.png; path = Resources/Images/throttle_pressure_top_layer.png; sourceTree = "<group>"; };
@@ -461,6 +469,10 @@
 		23C670141CB5A75700A51468 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2373A0A31CC0415E00AE0AC9 /* LF_window_animated_gradient.png */,
+				2373A0A41CC0415E00AE0AC9 /* LR_window_animated_gradient.png */,
+				2373A0A51CC0415E00AE0AC9 /* RF_window_animated_gradient.png */,
+				2373A0A61CC0415E00AE0AC9 /* RR_window_animated_gradient.png */,
 				2373A0A11CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png */,
 				2373A09D1CBDA02E00AE0AC9 /* high_beams.png */,
 				2373A09E1CBDA02E00AE0AC9 /* low_beams.png */,
@@ -637,6 +649,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2373A0A81CC0415E00AE0AC9 /* LR_window_animated_gradient.png in Resources */,
 				2373A0971CBC746B00AE0AC9 /* RF_seatbelt_on_indicator.png in Resources */,
 				2335C7CB1C7D0D2400BE6E80 /* LaunchScreen.storyboard in Resources */,
 				2373A0701CBC6E7500AE0AC9 /* LF_window_up_down_graphic.png in Resources */,
@@ -657,6 +670,7 @@
 				2373A06C1CBC6E7500AE0AC9 /* RR_window_moving_up_indicator.png in Resources */,
 				2373A0691CBC6E7500AE0AC9 /* RF_window_moving_up_indicator.png in Resources */,
 				2335C7C81C7D0D2400BE6E80 /* Assets.xcassets in Resources */,
+				2373A0A91CC0415E00AE0AC9 /* RF_window_animated_gradient.png in Resources */,
 				2373A0881CBC6E7500AE0AC9 /* vehicle_outline_exterior.png in Resources */,
 				2373A0871CBC6E7500AE0AC9 /* RR_door_closed.png in Resources */,
 				2373A06E1CBC6E7500AE0AC9 /* hood_closed_indicator.png in Resources */,
@@ -680,6 +694,7 @@
 				2373A0831CBC6E7500AE0AC9 /* RR_door_closed_indicator.png in Resources */,
 				2373A0611CBC6E7500AE0AC9 /* LF_window_moving_up_indicator.png in Resources */,
 				2373A0921CBC746B00AE0AC9 /* LF_seatbelt_off_indicator.png in Resources */,
+				2373A0A71CC0415E00AE0AC9 /* LF_window_animated_gradient.png in Resources */,
 				2373A0851CBC6E7500AE0AC9 /* trunk_open_indicator.png in Resources */,
 				23C670A81CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png in Resources */,
 				2373A0711CBC6E7500AE0AC9 /* LR_window_dotted_line_graphic.png in Resources */,
@@ -694,6 +709,7 @@
 				2373A0761CBC6E7500AE0AC9 /* RR_window_moving_down_indicator.png in Resources */,
 				2373A0731CBC6E7500AE0AC9 /* RF_window_dotted_line_graphic.png in Resources */,
 				2373A0631CBC6E7500AE0AC9 /* LF_window_totally_down_indicator.png in Resources */,
+				2373A0AA1CC0415E00AE0AC9 /* RR_window_animated_gradient.png in Resources */,
 				2373A0661CBC6E7500AE0AC9 /* LR_window_totally_down_indicator.png in Resources */,
 				2373A0931CBC746B00AE0AC9 /* LF_seatbelt_on_indicator.png in Resources */,
 				2373A0681CBC6E7500AE0AC9 /* RF_window_moving_down_indicator.png in Resources */,

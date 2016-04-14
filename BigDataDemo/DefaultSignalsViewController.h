@@ -25,6 +25,7 @@
 @property (nonatomic, weak) UIImageView *lfSeatbeltOffIndicatorImageView;
 @property (nonatomic, weak) UIImageView *lfSeatbeltOnIndicatorImageView;
 @property (nonatomic, weak) UIImageView *lfWindowDottedLineGraphicImageView;
+@property (nonatomic, weak) UIImageView *lfWindowAnimatedGradientImageView;
 @property (nonatomic, weak) UIImageView *lfWindowMovingDownIndicatorImageView;
 @property (nonatomic, weak) UIImageView *lfWindowMovingUpIndicatorImageView;
 @property (nonatomic, weak) UIImageView *lfWindowTotallyDownIndicatorImageView;
@@ -35,6 +36,7 @@
 @property (nonatomic, weak) UIImageView *lrDoorOpenImageView;
 @property (nonatomic, weak) UIImageView *lrSeatbeltOffIndicatorImageView;
 @property (nonatomic, weak) UIImageView *lrSeatbeltOnIndicatorImageView;
+@property (nonatomic, weak) UIImageView *lrWindowAnimatedGradientImageView;
 @property (nonatomic, weak) UIImageView *lrWindowDottedLineGraphicImageView;
 @property (nonatomic, weak) UIImageView *lrWindowMovingDownIndicatorImageView;
 @property (nonatomic, weak) UIImageView *lrWindowMovingUpIndicatorImageView;
@@ -46,6 +48,7 @@
 @property (nonatomic, weak) UIImageView *rfDoorOpenImageView;
 @property (nonatomic, weak) UIImageView *rfSeatbeltOffIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rfSeatbeltOnIndicatorImageView;
+@property (nonatomic, weak) UIImageView *rfWindowAnimatedGradientImageView;
 @property (nonatomic, weak) UIImageView *rfWindowDottedLineGraphicImageView;
 @property (nonatomic, weak) UIImageView *rfWindowMovingDownIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rfWindowMovingUpIndicatorImageView;
@@ -57,6 +60,7 @@
 @property (nonatomic, weak) UIImageView *rrDoorOpenImageView;
 @property (nonatomic, weak) UIImageView *rrSeatbeltOffIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rrSeatbeltOnIndicatorImageView;
+@property (nonatomic, weak) UIImageView *rrWindowAnimatedGradientImageView;
 @property (nonatomic, weak) UIImageView *rrWindowDottedLineGraphicImageView;
 @property (nonatomic, weak) UIImageView *rrWindowMovingDownIndicatorImageView;
 @property (nonatomic, weak) UIImageView *rrWindowMovingUpIndicatorImageView;
