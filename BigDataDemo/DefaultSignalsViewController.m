@@ -148,11 +148,16 @@ typedef enum
     [self animateChangeInThrottlePosition:self.throttlePositionView from:0.0 to:value total:200.0];
 }
 
-
 - (IBAction)onTestSliderValueChanged:(id)sender
 {
     DLog(@"Value: %f", ((UISlider *)sender).value);
     [self handleThrottlePositionChange:(NSInteger)((UISlider *)sender).value];
+}
+
+- (void)handleSteeringWheelAngleChange:(NSInteger)value
+{
+    self.throttlePressureLabel.text = [NSString stringWithFormat:@"%d", value];
+    [self animateChangeInSteeringAngle:self.steeringAngleView from:0.0 to:value total:15601];
 }
 
 - (void)handleBuckleStateChange:(BOOL)value zone:(Zone)zone
@@ -665,6 +670,10 @@ typedef enum
         if (object == self.vehicle.throttlePosition)
         {
             [self handleThrottlePositionChange:[change[NSKeyValueChangeNewKey] integerValue]];
+        }
+        else if (object == self.vehicle.steeringWheelAngle)
+        {
+            [self handleSteeringWheelAngleChange:[change[NSKeyValueChangeNewKey] integerValue]];
         }
         else if (object == self.vehicle.doorStatus)
         {
