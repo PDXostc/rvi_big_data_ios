@@ -723,11 +723,11 @@ typedef enum
         }
         else if (object == self.vehicle.beltReminderSensorLR)
         {
-            [self handleBuckleStateChange:![change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_LR];
+            [self handleBuckleStateChange:[change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_LR];
         }
         else if (object == self.vehicle.beltReminderSensorRR)
         {
-            [self handleBuckleStateChange:![change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_RR];
+            [self handleBuckleStateChange:[change[NSKeyValueChangeNewKey] boolValue] zone:ZONE_RR];
         }
         else if (object == self.vehicle.lowBeamIndication)
         {
