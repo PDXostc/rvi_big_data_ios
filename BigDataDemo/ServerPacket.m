@@ -53,7 +53,7 @@ Command commandForString(NSString * string)
 
 - (id)initWithCommand:(Command)command vehicleId:(NSString *)vehicleId
 {
-    if (command == NONE || vehicleId == nil || [vehicleId isEqualToString:@""])
+    if (command == NONE || vehicleId == nil || vehicleId == (id)[NSNull null] || [vehicleId isEqualToString:@""])
         return nil;
 
     if ((self = [super init]))

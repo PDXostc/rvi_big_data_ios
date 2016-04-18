@@ -116,7 +116,7 @@
 
 + (void)subscribeToSignal:(NSString *)signal forVehicle:(NSString *)vehicleId
 {
-    DLog(@"");
+    DLog(@"Subscribing to %@ on vehicle %@", signal, vehicleId);
 
     [BackendServerManager sendPacket:[SubscribePacket packetWithSignals:@[signal]
                                                               vehicleId:vehicleId]];
@@ -124,7 +124,7 @@
 
 + (void)unsubscribeFromSignal:(NSString *)signal forVehicle:(NSString *)vehicleId
 {
-    DLog(@"");
+    DLog(@"Unsubscribing from %@ on vehicle %@", signal, vehicleId);
 
     [BackendServerManager sendPacket:[UnsubscribePacket packetWithSignals:@[signal]
                                                                 vehicleId:vehicleId]];
@@ -132,7 +132,7 @@
 
 + (void)getAllSignalsForVehicle:(NSString *)vehicleId
 {
-    DLog(@"");
+    DLog(@"Getting all signals for vehicle %@", vehicleId);
 
     [BackendServerManager sendPacket:[AllSignalsPacket packetWithVehicleId:vehicleId]];
 }
