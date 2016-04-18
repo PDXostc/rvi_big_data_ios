@@ -324,9 +324,9 @@
                                 <rect key="frame" x="20" y="66" width="150" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbq-9P-qb8">
-                                        <rect key="frame" x="54" y="64" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="8" y="53" width="134" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -350,13 +350,16 @@
                                     <constraint firstAttribute="height" priority="250" constant="150" id="kif-ZH-5zR"/>
                                 </constraints>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
-                                <rect key="frame" x="128" y="202" width="345" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
+                                <rect key="frame" x="128" y="285" width="345" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="341" id="TNp-yp-9Hg"/>
+                                </constraints>
                                 <connections>
                                     <action selector="onTestSliderValueChanged:" destination="BFV-32-eOf" eventType="valueChanged" id="FQb-dI-Djq"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjI-b2-a1b">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Throttle Pressure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjI-b2-a1b">
                                 <rect key="frame" x="20" y="224" width="150" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="4kF-IL-pBG"/>
@@ -368,7 +371,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znc-Ph-nHE">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steering Angle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znc-Ph-nHE">
                                 <rect key="frame" x="430" y="224" width="150" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="21" id="aEN-Ww-8UK"/>
@@ -393,6 +396,7 @@
                             <constraint firstItem="xtw-YJ-dTF" firstAttribute="height" secondItem="uiu-B0-0jX" secondAttribute="height" id="KJd-tp-NLC"/>
                             <constraint firstItem="znc-Ph-nHE" firstAttribute="width" secondItem="KjI-b2-a1b" secondAttribute="width" id="KR0-49-xBZ"/>
                             <constraint firstItem="0sh-vf-yne" firstAttribute="leading" secondItem="v2X-JS-hiq" secondAttribute="leadingMargin" priority="250" constant="101" id="MRb-RU-Wpm"/>
+                            <constraint firstItem="g0V-8X-5Jc" firstAttribute="centerX" secondItem="v2X-JS-hiq" secondAttribute="centerX" id="OmJ-Us-oB9"/>
                             <constraint firstItem="KjI-b2-a1b" firstAttribute="width" secondItem="uiu-B0-0jX" secondAttribute="width" id="PXV-yo-qNF"/>
                             <constraint firstAttribute="leadingMargin" secondItem="uiu-B0-0jX" secondAttribute="leading" id="RML-lf-ihK"/>
                             <constraint firstItem="0sh-vf-yne" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mVV-ps-7eW" secondAttribute="bottom" constant="32" id="RNo-oG-aCX"/>
@@ -407,6 +411,7 @@
                             <constraint firstItem="xtw-YJ-dTF" firstAttribute="width" secondItem="uiu-B0-0jX" secondAttribute="width" id="aS6-wb-Y01"/>
                             <constraint firstItem="uiu-B0-0jX" firstAttribute="top" secondItem="mVV-ps-7eW" secondAttribute="bottom" constant="46" id="bpg-FI-RC5"/>
                             <constraint firstItem="xtw-YJ-dTF" firstAttribute="top" secondItem="mVV-ps-7eW" secondAttribute="bottom" constant="46" id="chK-ab-Mpj"/>
+                            <constraint firstItem="g0V-8X-5Jc" firstAttribute="centerY" secondItem="v2X-JS-hiq" secondAttribute="centerY" id="dDv-4R-s04"/>
                             <constraint firstItem="KjI-b2-a1b" firstAttribute="leading" secondItem="uiu-B0-0jX" secondAttribute="leading" id="dXS-DM-QDZ"/>
                             <constraint firstItem="KjI-b2-a1b" firstAttribute="trailing" secondItem="uiu-B0-0jX" secondAttribute="trailing" id="gxn-Ce-f1V"/>
                             <constraint firstItem="0sh-vf-yne" firstAttribute="centerX" secondItem="v2X-JS-hiq" secondAttribute="centerX" id="iiz-7g-gLC"/>
@@ -417,7 +422,7 @@
                     <connections>
                         <outlet property="compositeCarView" destination="0sh-vf-yne" id="DdP-b3-Xjl"/>
                         <outlet property="steeringAngleView" destination="xtw-YJ-dTF" id="jiU-QV-4td"/>
-                        <outlet property="testLabel" destination="jbq-9P-qb8" id="DOs-2r-s8j"/>
+                        <outlet property="throttlePressureLabel" destination="jbq-9P-qb8" id="JFJ-Ho-SMP"/>
                         <outlet property="throttlePressureView" destination="uiu-B0-0jX" id="l6o-fB-78c"/>
                     </connections>
                 </viewController>

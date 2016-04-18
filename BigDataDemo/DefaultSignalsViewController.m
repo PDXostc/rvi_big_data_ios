@@ -43,7 +43,7 @@ typedef enum
 @property (nonatomic, weak)   Vehicle *vehicle;
 @property (nonatomic, strong) IBOutlet UIView  *throttlePressureView;
 @property (nonatomic, strong) IBOutlet UIView  *steeringAngleView;
-@property (nonatomic, strong) IBOutlet UILabel *testLabel;
+@property (nonatomic, strong) IBOutlet UILabel *throttlePressureLabel;
 @property (nonatomic, strong) IBOutlet UIView  *compositeCarView;
 @property (nonatomic)         DriversSide       driversSide;
 
@@ -140,10 +140,19 @@ typedef enum
     [self unregisterObservers];
 }
 
+- (void)handleThrottlePressureChange:(NSInteger)value
+{
+    if (value > 200) return; /* Error */
+
+    self.throttlePressureLabel.text = [NSString stringWithFormat:@"%d", value];
+    [self animateChangeInThrottlePressure:self.throttlePressureView from:0.0 to:value total:200.0];
+}
+
+
 - (IBAction)onTestSliderValueChanged:(id)sender
 {
     DLog(@"Value: %f", ((UISlider *)sender).value);
-    [self animateChangeInThrottlePressure:self.throttlePressureView from:0.0 to:((UISlider *)sender).value total:100.0];
+    [self handleThrottlePressureChange:(NSInteger)((UISlider *)sender).value];
 }
 
 - (void)handleBuckleStateChange:(BOOL)value zone:(Zone)zone
@@ -655,8 +664,7 @@ typedef enum
 
         if (object == self.vehicle.throttlePressure)
         {
-            self.testLabel.text = [NSString stringWithFormat:@"%d", [change[NSKeyValueChangeNewKey] integerValue]];
-            // TODO: Update pressure
+            [self handleThrottlePressureChange:[change[NSKeyValueChangeNewKey] integerValue]];
         }
         else if (object == self.vehicle.doorStatus)
         {

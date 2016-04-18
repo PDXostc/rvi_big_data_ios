@@ -167,10 +167,10 @@ typedef enum
     self.vehicleOutlineExteriorImageView.hidden = NO;
 }
 
-#define WINDOW_VIEW_ANCHOR_H_POSITION        0.5
-#define WINDOW_VIEW_ANCHOR_V_POSITION        0.65
-#define WINDOW_VIEW_PERCENTAGE_BIGGER_H      0.04
-#define WINDOW_VIEW_PERCENTAGE_BIGGER_V      0.057
+#define WINDOW_VIEW_ANCHOR_H_POSITION   0.5
+#define WINDOW_VIEW_ANCHOR_V_POSITION   0.65
+#define WINDOW_VIEW_PERCENTAGE_BIGGER_H 0.04
+#define WINDOW_VIEW_PERCENTAGE_BIGGER_V 0.057
 
 - (void)morphAnimatedWindowGradientView:(UIImageView *)maskImageView withGradientStartPoint:(CGPoint)startPoint stopPoint:(CGPoint)stopPoint
 {
@@ -217,18 +217,18 @@ typedef enum
 #define MAXIMUM_TP_GLOW_ALPHA   1.0
 - (void)drawThrottlePressureView:(UIView *)throttlePressureView
 {
-    CALayer *backgroundLayer = [CALayer layer];
+    CALayer *backgroundLayer     = [CALayer layer];
     CALayer *backgroundMaskLayer = [CALayer layer];
-    CALayer *glowLayer   = [CALayer layer];
-    CALayer *middleLayer = [CALayer layer];
-    CALayer *needleLayer = [CALayer layer];
-    CALayer *topLayer    = [CALayer layer];
+    CALayer *glowLayer           = [CALayer layer];
+    CALayer *middleLayer         = [CALayer layer];
+    CALayer *needleLayer         = [CALayer layer];
+    CALayer *topLayer            = [CALayer layer];
 
     backgroundMaskLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
-    glowLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
-    middleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
-    needleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
-    topLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
+    glowLayer.contents           = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
+    middleLayer.contents         = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
+    needleLayer.contents         = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
+    topLayer.contents            = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
 
     backgroundLayer.frame =
             backgroundMaskLayer.frame =
@@ -254,6 +254,9 @@ typedef enum
     [[throttlePressureView layer] addSublayer:middleLayer];
     [[throttlePressureView layer] addSublayer:needleLayer];
     [[throttlePressureView layer] addSublayer:topLayer];
+
+    CALayer *throttlePressureLabel = throttlePressureView.layer.sublayers[0];
+    throttlePressureLabel.zPosition = 6;
 }
 
 - (void)drawSteeringAngleView:(UIView *)steeringAngleView
