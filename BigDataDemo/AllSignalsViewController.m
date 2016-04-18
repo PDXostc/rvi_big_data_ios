@@ -19,6 +19,7 @@
 #import "Signal.h"
 #import "ServerPacket.h"
 #import "AllSignalsViewController+CellDrawing.h"
+#import "VehicleManager.h"
 
 #define key(vehicleId, signalName) [NSString stringWithFormat:@"%@:%@", vehicleId, signalName]
 #define MAX_CACHED 7
@@ -194,7 +195,7 @@
     for (NSString *key in self.cachedSignalData.allKeys)
     {
         NSArray *keyParts = [key componentsSeparatedByString:@":"];
-        if (keyParts.count == 2) [SignalManager unsubscribeFromSignal:keyParts[1] forVehicle:keyParts[0]];
+        if (keyParts.count == 2 && ![[VehicleManager vehicle] isSignalDefault:keyParts[1]]) [SignalManager unsubscribeFromSignal:keyParts[1] forVehicle:keyParts[0]];
     }
 
     [SignalManager setDelegate:nil];
@@ -239,7 +240,6 @@
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.selectedRow inSection:0]]
                               withRowAnimation:UITableViewRowAnimationNone];
 }
-
 
 - (void)signalManagerDidReceiveSignalDescriptorForVehicle:(NSString *)vehicleId signal:(Signal *)signal signalName:(NSString *)signalName
 {
