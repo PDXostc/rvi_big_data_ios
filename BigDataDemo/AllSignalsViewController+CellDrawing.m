@@ -95,7 +95,13 @@
     textLabel.numberOfLines = signal.allValuePairs.count;
 
     NSMutableString *text = [NSMutableString string];
-    for (NSNumber *value in signal.allEnumKeys)
+    for (NSNumber *value in [signal.allEnumKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                                                                     if ([obj1 intValue] > [obj2 intValue])
+                                                                                         return NSOrderedDescending;
+                                                                                     else if ([obj1 intValue] < [obj2 intValue])
+                                                                                         return NSOrderedAscending;
+                                                                                     return NSOrderedSame;
+                                                                                }])
     {
         [text appendString:[NSString stringWithFormat:@"%@: %@", value, [signal stringDescriptionForValue:value]]];
         [text appendString:@"\n"];

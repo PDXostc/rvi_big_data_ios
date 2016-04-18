@@ -59,6 +59,6 @@ typedef enum
 - (BOOL)valueWithinRange:(NSNumber *)value;
 
 - (NSString *)stringDescriptionForCurrentValue;
-- (NSString *)stringDescriptionForValue:(NSString *)value;
+- (NSString *)stringDescriptionForValue:(id)value;
 
 @end
