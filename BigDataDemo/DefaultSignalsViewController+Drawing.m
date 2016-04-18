@@ -184,14 +184,14 @@ typedef enum
                                                                constant:0.0]];
 
         /* Turn this into a masking layer and draw the gradient */
-        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])      /* (389, 1210) and (434, 895) when composite view is (1240, 1754) but then we add another 5.7% to the bottom so it doesn't cut off when animated */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.314, 0.653) stopPoint:CGPointMake(0.35, 0.483)];//(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
+        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])      /* (389, 1210) and (434, 895) when composite view is (1240, 1754) but then we add another 5.7% to the bottom and 8% to each side so it doesn't cut off when animated making it (1340, 1854) */
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.328, 0.653) stopPoint:CGPointMake(0.354, 0.483)];//(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
         else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"]) /* (851, 1210) and (806, 895) when composite view is (1240, 1754) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.686, 0.653) stopPoint:CGPointMake(0.65, 0.483)];//(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.672, 0.653) stopPoint:CGPointMake(0.639, 0.483)];//(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
         else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"]) /* (394, 1403) and (310, 1145) when composite view is (1240, 1754) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.318, 0.757) stopPoint:CGPointMake(0.25, 0.618)];//(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.331, 0.757) stopPoint:CGPointMake(0.269, 0.618)];//(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
         else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"]) /* (846, 1403) and (930, 1145) when composite view is (1240, 1754) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.682, 0.757) stopPoint:CGPointMake(0.75, 0.618)];//(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.669, 0.757) stopPoint:CGPointMake(0.731, 0.618)];//(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
 
         if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])
             imageView.hidden = NO;
@@ -219,6 +219,11 @@ typedef enum
     self.vehicleOutlineExteriorImageView.hidden = NO;
 }
 
+#define WINDOW_VIEW_ANCHOR_H_POSITION        0.5
+#define WINDOW_VIEW_ANCHOR_V_POSITION        0.65
+#define WINDOW_VIEW_PERCENTAGE_BIGGER_H      0.04
+#define WINDOW_VIEW_PERCENTAGE_BIGGER_V      0.057
+
 - (void)morphAnimatedWindowGradientView:(UIImageView *)maskImageView withGradientStartPoint:(CGPoint)startPoint stopPoint:(CGPoint)stopPoint
 {
     CALayer *maskLayer    = [CALayer layer];
@@ -230,17 +235,22 @@ typedef enum
     maskLayer.contents    = (id)mask.CGImage;
     maskLayer.frame       = maskImageView.layer.bounds;
 
-    maskImageView.layer.mask            = maskLayer;
+    maskImageView.layer.mask = maskLayer;
+
+    CGRect frame = maskImageView.bounds;
 
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = maskImageView.bounds;
-    gradient.frame = CGRectMake(0, 0, maskImageView.bounds.size.width, (CGFloat)(maskImageView.bounds.size.height + 0.057 * maskImageView.bounds.size.height));
+    gradient.frame = frame;
+    gradient.frame = CGRectMake(0, 0,
+                                (CGFloat)(frame.size.width + (2.0 * WINDOW_VIEW_PERCENTAGE_BIGGER_H * frame.size.width)),
+                                (CGFloat)(frame.size.height + (WINDOW_VIEW_PERCENTAGE_BIGGER_V * frame.size.height)));
 
 //    gradient.borderWidth = 2.0;
 //    gradient.borderColor = [UIColor redColor].CGColor;
 
-    //gradient.anchorPoint = CGPointMake(0, 0);
-    gradient.position    = CGPointMake((CGFloat)(maskImageView.bounds.size.width * 0.5), (CGFloat)((maskImageView.bounds.size.height + 0.057 * maskImageView.bounds.size.height) * 0.5 ));
+    gradient.anchorPoint = CGPointMake(WINDOW_VIEW_ANCHOR_H_POSITION, WINDOW_VIEW_ANCHOR_V_POSITION);
+    gradient.position    = CGPointMake((CGFloat)((maskImageView.bounds.size.width) * WINDOW_VIEW_ANCHOR_H_POSITION),
+                                       (CGFloat)((maskImageView.bounds.size.height + (WINDOW_VIEW_PERCENTAGE_BIGGER_V * frame.size.height)) * WINDOW_VIEW_ANCHOR_V_POSITION));
 
     gradient.startPoint  = startPoint;
     gradient.endPoint    = stopPoint;

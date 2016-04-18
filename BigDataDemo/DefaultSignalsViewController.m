@@ -305,7 +305,7 @@ typedef enum
         imageView.alpha  = 1.0;
     }
 
-    CGFloat windowAngle = (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 5.0 : 1.4) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+    CGFloat windowAngle = (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 4.7 : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
 
     [self animateGradientView:windowAnimatedGradientImageView to:newPosition byAngle:windowAngle];
 
