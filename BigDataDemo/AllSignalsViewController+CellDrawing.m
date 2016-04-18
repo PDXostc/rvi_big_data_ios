@@ -15,6 +15,7 @@
 
 #import "AllSignalsViewController+CellDrawing.h"
 #import "Signal.h"
+#import "Util.h"
 
 @interface  SelectedCellData (CellDrawing)
 - (NSInteger)heightForDescriptorData;
@@ -262,6 +263,8 @@
 
 - (UITableViewCell *)drawCell:(UITableViewCell *)cell forSelectedCellData:(SelectedCellData *)selectedCellData
 {
+    DLog(@"");
+
     UIActivityIndicatorView *activityIndicatorView = [cell.contentView viewWithTag:TAG_CELL_ACTIVITY_INDICATOR];
 
     UIView  *oldDescriptorDataView                 = [cell.contentView viewWithTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];

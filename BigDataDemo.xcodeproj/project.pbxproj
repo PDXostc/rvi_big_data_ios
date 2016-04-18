@@ -50,18 +50,18 @@
 		2373A0791CBC6E7500AE0AC9 /* trunk_closed_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0501CBC6E7500AE0AC9 /* trunk_closed_indicator.png */; };
 		2373A07A1CBC6E7500AE0AC9 /* hood_open_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0511CBC6E7500AE0AC9 /* hood_open_indicator.png */; };
 		2373A07B1CBC6E7500AE0AC9 /* LF_door_closed_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0521CBC6E7500AE0AC9 /* LF_door_closed_indicator.png */; };
-		2373A07C1CBC6E7500AE0AC9 /* LF_door_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0531CBC6E7500AE0AC9 /* LF_door_closed.png */; };
-		2373A07D1CBC6E7500AE0AC9 /* LF_door_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0541CBC6E7500AE0AC9 /* LF_door_open.png */; };
+		2373A07C1CBC6E7500AE0AC9 /* LF_door_CLOSED.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0531CBC6E7500AE0AC9 /* LF_door_CLOSED.png */; };
+		2373A07D1CBC6E7500AE0AC9 /* LF_door_OPEN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0541CBC6E7500AE0AC9 /* LF_door_OPEN.png */; };
 		2373A07E1CBC6E7500AE0AC9 /* LR_door_closed_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0551CBC6E7500AE0AC9 /* LR_door_closed_indicator.png */; };
-		2373A07F1CBC6E7500AE0AC9 /* LR_door_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0561CBC6E7500AE0AC9 /* LR_door_open.png */; };
+		2373A07F1CBC6E7500AE0AC9 /* LR_door_OPEN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0561CBC6E7500AE0AC9 /* LR_door_OPEN.png */; };
 		2373A0801CBC6E7500AE0AC9 /* RF_door_closed_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0571CBC6E7500AE0AC9 /* RF_door_closed_indicator.png */; };
-		2373A0811CBC6E7500AE0AC9 /* RF_door_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0581CBC6E7500AE0AC9 /* RF_door_closed.png */; };
-		2373A0821CBC6E7500AE0AC9 /* RF_door_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0591CBC6E7500AE0AC9 /* RF_door_open.png */; };
+		2373A0811CBC6E7500AE0AC9 /* RF_door_CLOSED.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0581CBC6E7500AE0AC9 /* RF_door_CLOSED.png */; };
+		2373A0821CBC6E7500AE0AC9 /* RF_door_OPEN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0591CBC6E7500AE0AC9 /* RF_door_OPEN.png */; };
 		2373A0831CBC6E7500AE0AC9 /* RR_door_closed_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05A1CBC6E7500AE0AC9 /* RR_door_closed_indicator.png */; };
-		2373A0841CBC6E7500AE0AC9 /* RR_door_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05B1CBC6E7500AE0AC9 /* RR_door_open.png */; };
+		2373A0841CBC6E7500AE0AC9 /* RR_door_OPEN.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05B1CBC6E7500AE0AC9 /* RR_door_OPEN.png */; };
 		2373A0851CBC6E7500AE0AC9 /* trunk_open_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05C1CBC6E7500AE0AC9 /* trunk_open_indicator.png */; };
-		2373A0861CBC6E7500AE0AC9 /* LR_door_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05D1CBC6E7500AE0AC9 /* LR_door_closed.png */; };
-		2373A0871CBC6E7500AE0AC9 /* RR_door_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05E1CBC6E7500AE0AC9 /* RR_door_closed.png */; };
+		2373A0861CBC6E7500AE0AC9 /* LR_door_CLOSED.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05D1CBC6E7500AE0AC9 /* LR_door_CLOSED.png */; };
+		2373A0871CBC6E7500AE0AC9 /* RR_door_CLOSED.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05E1CBC6E7500AE0AC9 /* RR_door_CLOSED.png */; };
 		2373A0881CBC6E7500AE0AC9 /* vehicle_outline_exterior.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A05F1CBC6E7500AE0AC9 /* vehicle_outline_exterior.png */; };
 		2373A0921CBC746B00AE0AC9 /* LF_seatbelt_off_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A0891CBC746B00AE0AC9 /* LF_seatbelt_off_indicator.png */; };
 		2373A0931CBC746B00AE0AC9 /* LF_seatbelt_on_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2373A08A1CBC746B00AE0AC9 /* LF_seatbelt_on_indicator.png */; };
@@ -182,18 +182,18 @@
 		2373A0501CBC6E7500AE0AC9 /* trunk_closed_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trunk_closed_indicator.png; path = Resources/Images/trunk_closed_indicator.png; sourceTree = "<group>"; };
 		2373A0511CBC6E7500AE0AC9 /* hood_open_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hood_open_indicator.png; path = Resources/Images/hood_open_indicator.png; sourceTree = "<group>"; };
 		2373A0521CBC6E7500AE0AC9 /* LF_door_closed_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_door_closed_indicator.png; path = Resources/Images/LF_door_closed_indicator.png; sourceTree = "<group>"; };
-		2373A0531CBC6E7500AE0AC9 /* LF_door_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_door_closed.png; path = Resources/Images/LF_door_closed.png; sourceTree = "<group>"; };
-		2373A0541CBC6E7500AE0AC9 /* LF_door_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_door_open.png; path = Resources/Images/LF_door_open.png; sourceTree = "<group>"; };
+		2373A0531CBC6E7500AE0AC9 /* LF_door_CLOSED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_door_CLOSED.png; path = Resources/Images/LF_door_CLOSED.png; sourceTree = "<group>"; };
+		2373A0541CBC6E7500AE0AC9 /* LF_door_OPEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_door_OPEN.png; path = Resources/Images/LF_door_OPEN.png; sourceTree = "<group>"; };
 		2373A0551CBC6E7500AE0AC9 /* LR_door_closed_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LR_door_closed_indicator.png; path = Resources/Images/LR_door_closed_indicator.png; sourceTree = "<group>"; };
-		2373A0561CBC6E7500AE0AC9 /* LR_door_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LR_door_open.png; path = Resources/Images/LR_door_open.png; sourceTree = "<group>"; };
+		2373A0561CBC6E7500AE0AC9 /* LR_door_OPEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LR_door_OPEN.png; path = Resources/Images/LR_door_OPEN.png; sourceTree = "<group>"; };
 		2373A0571CBC6E7500AE0AC9 /* RF_door_closed_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_door_closed_indicator.png; path = Resources/Images/RF_door_closed_indicator.png; sourceTree = "<group>"; };
-		2373A0581CBC6E7500AE0AC9 /* RF_door_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_door_closed.png; path = Resources/Images/RF_door_closed.png; sourceTree = "<group>"; };
-		2373A0591CBC6E7500AE0AC9 /* RF_door_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_door_open.png; path = Resources/Images/RF_door_open.png; sourceTree = "<group>"; };
+		2373A0581CBC6E7500AE0AC9 /* RF_door_CLOSED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_door_CLOSED.png; path = Resources/Images/RF_door_CLOSED.png; sourceTree = "<group>"; };
+		2373A0591CBC6E7500AE0AC9 /* RF_door_OPEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RF_door_OPEN.png; path = Resources/Images/RF_door_OPEN.png; sourceTree = "<group>"; };
 		2373A05A1CBC6E7500AE0AC9 /* RR_door_closed_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_door_closed_indicator.png; path = Resources/Images/RR_door_closed_indicator.png; sourceTree = "<group>"; };
-		2373A05B1CBC6E7500AE0AC9 /* RR_door_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_door_open.png; path = Resources/Images/RR_door_open.png; sourceTree = "<group>"; };
+		2373A05B1CBC6E7500AE0AC9 /* RR_door_OPEN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_door_OPEN.png; path = Resources/Images/RR_door_OPEN.png; sourceTree = "<group>"; };
 		2373A05C1CBC6E7500AE0AC9 /* trunk_open_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trunk_open_indicator.png; path = Resources/Images/trunk_open_indicator.png; sourceTree = "<group>"; };
-		2373A05D1CBC6E7500AE0AC9 /* LR_door_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LR_door_closed.png; path = Resources/Images/LR_door_closed.png; sourceTree = "<group>"; };
-		2373A05E1CBC6E7500AE0AC9 /* RR_door_closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_door_closed.png; path = Resources/Images/RR_door_closed.png; sourceTree = "<group>"; };
+		2373A05D1CBC6E7500AE0AC9 /* LR_door_CLOSED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LR_door_CLOSED.png; path = Resources/Images/LR_door_CLOSED.png; sourceTree = "<group>"; };
+		2373A05E1CBC6E7500AE0AC9 /* RR_door_CLOSED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RR_door_CLOSED.png; path = Resources/Images/RR_door_CLOSED.png; sourceTree = "<group>"; };
 		2373A05F1CBC6E7500AE0AC9 /* vehicle_outline_exterior.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vehicle_outline_exterior.png; path = Resources/Images/vehicle_outline_exterior.png; sourceTree = "<group>"; };
 		2373A0891CBC746B00AE0AC9 /* LF_seatbelt_off_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_seatbelt_off_indicator.png; path = Resources/Images/LF_seatbelt_off_indicator.png; sourceTree = "<group>"; };
 		2373A08A1CBC746B00AE0AC9 /* LF_seatbelt_on_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LF_seatbelt_on_indicator.png; path = Resources/Images/LF_seatbelt_on_indicator.png; sourceTree = "<group>"; };
@@ -513,18 +513,18 @@
 				2373A0501CBC6E7500AE0AC9 /* trunk_closed_indicator.png */,
 				2373A0511CBC6E7500AE0AC9 /* hood_open_indicator.png */,
 				2373A0521CBC6E7500AE0AC9 /* LF_door_closed_indicator.png */,
-				2373A0531CBC6E7500AE0AC9 /* LF_door_closed.png */,
-				2373A0541CBC6E7500AE0AC9 /* LF_door_open.png */,
+				2373A0531CBC6E7500AE0AC9 /* LF_door_CLOSED.png */,
+				2373A0541CBC6E7500AE0AC9 /* LF_door_OPEN.png */,
 				2373A0551CBC6E7500AE0AC9 /* LR_door_closed_indicator.png */,
-				2373A0561CBC6E7500AE0AC9 /* LR_door_open.png */,
+				2373A0561CBC6E7500AE0AC9 /* LR_door_OPEN.png */,
 				2373A0571CBC6E7500AE0AC9 /* RF_door_closed_indicator.png */,
-				2373A0581CBC6E7500AE0AC9 /* RF_door_closed.png */,
-				2373A0591CBC6E7500AE0AC9 /* RF_door_open.png */,
+				2373A0581CBC6E7500AE0AC9 /* RF_door_CLOSED.png */,
+				2373A0591CBC6E7500AE0AC9 /* RF_door_OPEN.png */,
 				2373A05A1CBC6E7500AE0AC9 /* RR_door_closed_indicator.png */,
-				2373A05B1CBC6E7500AE0AC9 /* RR_door_open.png */,
+				2373A05B1CBC6E7500AE0AC9 /* RR_door_OPEN.png */,
 				2373A05C1CBC6E7500AE0AC9 /* trunk_open_indicator.png */,
-				2373A05D1CBC6E7500AE0AC9 /* LR_door_closed.png */,
-				2373A05E1CBC6E7500AE0AC9 /* RR_door_closed.png */,
+				2373A05D1CBC6E7500AE0AC9 /* LR_door_CLOSED.png */,
+				2373A05E1CBC6E7500AE0AC9 /* RR_door_CLOSED.png */,
 				2373A05F1CBC6E7500AE0AC9 /* vehicle_outline_exterior.png */,
 				23C670A51CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png */,
 				23C670A61CB5B5CA00A51468 /* throttle_pressure_needle.png */,
@@ -661,10 +661,10 @@
 				2373A0721CBC6E7500AE0AC9 /* LR_window_up_down_graphic.png in Resources */,
 				2373A0961CBC746B00AE0AC9 /* RF_seatbelt_off_indicator.png in Resources */,
 				2373A0671CBC6E7500AE0AC9 /* LR_window_totally_up_indicator.png in Resources */,
-				2373A0861CBC6E7500AE0AC9 /* LR_door_closed.png in Resources */,
+				2373A0861CBC6E7500AE0AC9 /* LR_door_CLOSED.png in Resources */,
 				2373A0A21CC02D4300AE0AC9 /* RR_window_totally_up_indicator.png in Resources */,
 				2373A0601CBC6E7500AE0AC9 /* LF_window_moving_down_indicator.png in Resources */,
-				2373A07D1CBC6E7500AE0AC9 /* LF_door_open.png in Resources */,
+				2373A07D1CBC6E7500AE0AC9 /* LF_door_OPEN.png in Resources */,
 				2373A0621CBC6E7500AE0AC9 /* LF_window_totally_up_indicator.png in Resources */,
 				23C670AA1CB5B5CA00A51468 /* throttle_pressure_top_layer.png in Resources */,
 				2373A06C1CBC6E7500AE0AC9 /* RR_window_moving_up_indicator.png in Resources */,
@@ -672,25 +672,25 @@
 				2335C7C81C7D0D2400BE6E80 /* Assets.xcassets in Resources */,
 				2373A0A91CC0415E00AE0AC9 /* RF_window_animated_gradient.png in Resources */,
 				2373A0881CBC6E7500AE0AC9 /* vehicle_outline_exterior.png in Resources */,
-				2373A0871CBC6E7500AE0AC9 /* RR_door_closed.png in Resources */,
+				2373A0871CBC6E7500AE0AC9 /* RR_door_CLOSED.png in Resources */,
 				2373A06E1CBC6E7500AE0AC9 /* hood_closed_indicator.png in Resources */,
-				2373A0821CBC6E7500AE0AC9 /* RF_door_open.png in Resources */,
+				2373A0821CBC6E7500AE0AC9 /* RF_door_OPEN.png in Resources */,
 				2373A09C1CBC74BE00AE0AC9 /* steering_wheel_composite.png in Resources */,
 				2373A0991CBC746B00AE0AC9 /* RR_seatbelt_on_indicator.png in Resources */,
 				2373A07E1CBC6E7500AE0AC9 /* LR_door_closed_indicator.png in Resources */,
-				2373A0811CBC6E7500AE0AC9 /* RF_door_closed.png in Resources */,
+				2373A0811CBC6E7500AE0AC9 /* RF_door_CLOSED.png in Resources */,
 				2373A0791CBC6E7500AE0AC9 /* trunk_closed_indicator.png in Resources */,
 				2373A07A1CBC6E7500AE0AC9 /* hood_open_indicator.png in Resources */,
 				2373A0651CBC6E7500AE0AC9 /* LR_window_moving_up_indicator.png in Resources */,
 				2373A0751CBC6E7500AE0AC9 /* RR_window_dotted_line_graphic.png in Resources */,
 				2373A06A1CBC6E7500AE0AC9 /* RF_window_totally_down_indicator.png in Resources */,
-				2373A0841CBC6E7500AE0AC9 /* RR_door_open.png in Resources */,
+				2373A0841CBC6E7500AE0AC9 /* RR_door_OPEN.png in Resources */,
 				2373A06B1CBC6E7500AE0AC9 /* RF_window_totally_up_indicator.png in Resources */,
 				23C670A91CB5B5CA00A51468 /* throttle_pressure_needle.png in Resources */,
 				2373A07B1CBC6E7500AE0AC9 /* LF_door_closed_indicator.png in Resources */,
 				2373A06F1CBC6E7500AE0AC9 /* LF_window_dotted_line_graphic.png in Resources */,
 				2373A0941CBC746B00AE0AC9 /* LR_seatbelt_off_indicator.png in Resources */,
-				2373A07C1CBC6E7500AE0AC9 /* LF_door_closed.png in Resources */,
+				2373A07C1CBC6E7500AE0AC9 /* LF_door_CLOSED.png in Resources */,
 				2373A0831CBC6E7500AE0AC9 /* RR_door_closed_indicator.png in Resources */,
 				2373A0611CBC6E7500AE0AC9 /* LF_window_moving_up_indicator.png in Resources */,
 				2373A0921CBC746B00AE0AC9 /* LF_seatbelt_off_indicator.png in Resources */,
@@ -699,7 +699,7 @@
 				23C670A81CB5B5CA00A51468 /* throttle_pressure_bottom_layer.png in Resources */,
 				2373A0711CBC6E7500AE0AC9 /* LR_window_dotted_line_graphic.png in Resources */,
 				2373A0A01CBDA02E00AE0AC9 /* low_beams.png in Resources */,
-				2373A07F1CBC6E7500AE0AC9 /* LR_door_open.png in Resources */,
+				2373A07F1CBC6E7500AE0AC9 /* LR_door_OPEN.png in Resources */,
 				2373A0951CBC746B00AE0AC9 /* LR_seatbelt_on_indicator.png in Resources */,
 				2373A0801CBC6E7500AE0AC9 /* RF_door_closed_indicator.png in Resources */,
 				2335C7C61C7D0D2400BE6E80 /* Main.storyboard in Resources */,

@@ -25,13 +25,13 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/DefaultSignalsViewController+Drawing.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/SignalManager.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/ErrorPacket.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RR_door_open.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RR_door_OPEN.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/vehicle_outline_interior.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_door_closed_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/vehicle_outline_exterior.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_door_closed_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_window_moving_down_indicator.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_door_closed.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_door_CLOSED.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/hood_open_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/throttle_pressure_glow_layer.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_seatbelt_on_indicator.png" isTestSource="false" />
@@ -62,15 +62,15 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_window_totally_up_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_seatbelt_off_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_window_dotted_line_graphic.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_door_closed.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_door_CLOSED.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_window_dotted_line_graphic.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_door_open.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_door_open.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_door_OPEN.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_door_OPEN.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_window_moving_up_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_window_totally_down_indicator.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_door_open.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_door_OPEN.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_seatbelt_on_indicator.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_door_closed.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_door_CLOSED.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_window_totally_down_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_door_closed_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RR_seatbelt_off_indicator.png" isTestSource="false" />
@@ -82,7 +82,7 @@
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/high_beams.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_window_moving_down_indicator.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LF_window_totally_up_indicator.png" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RR_door_closed.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RR_door_CLOSED.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/throttle_pressure_needle.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/RF_window_animated_gradient.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BigDataDemo/Resources/Images/LR_window_animated_gradient.png" isTestSource="false" />

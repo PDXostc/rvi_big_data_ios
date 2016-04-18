@@ -185,8 +185,9 @@
 
     if (callbackBlock) /* If there was a callback block, call it... */
         callbackBlock(signalName, vehicleId, signal);
-    else /* ...otherwise post to delegate. */
-        [self.delegate signalManagerDidReceiveSignalDescriptorForVehicle:vehicleId signal:signal signalName:signalName];
+    //else AND post to the delete /* ...otherwise post to delegate. */
+
+    [self.delegate signalManagerDidReceiveSignalDescriptorForVehicle:vehicleId signal:signal signalName:signalName];
 
     [self.ongoingSignalDescriptorRequests removeObjectForKey:signalName];
 }
