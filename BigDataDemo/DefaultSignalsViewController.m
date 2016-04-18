@@ -93,9 +93,9 @@ typedef enum
     self.currentlyHiddenClosedDoorImages  = [NSMutableSet set];
     self.currentlyShowingWindowImages     = [NSMutableSet set];
 
-    [self drawThrottlePressureView:self.throttlePressureView];
-    [self drawSteeringAngleView:self.steeringAngleView];
     [self drawCompositeCarView:self.compositeCarView];
+    [self drawSteeringAngleView:self.steeringAngleView];
+    [self drawThrottlePressureView:self.throttlePressureView];
 
     self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
                                                          self.vehicleOutlineInteriorImageView,

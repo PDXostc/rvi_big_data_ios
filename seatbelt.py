@@ -14,7 +14,9 @@ choices = {
     "BeltRmderSensorRow3L_MS": 0,
     "BeltRmderSensorRow3R_MS": 0,
     "DrivSeatBeltBcklState_MS": 0,
-    "PassSeatBeltBcklState_MS": 0
+    "PassSeatBeltBcklState_MS": 0,
+    "LowBeamIndication_MS": 0,
+    "MainBeamIndication_MS": 0
 }
 
 payload = {

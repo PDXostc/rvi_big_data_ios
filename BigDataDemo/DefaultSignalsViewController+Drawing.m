@@ -27,47 +27,6 @@ typedef enum
 
 @implementation DefaultSignalsViewController (Drawing)
 
-#define MINIMUM_TP_NEEDLE_ANGLE 0
-#define MAXIMUM_TP_NEEDLE_ANGLE 270
-#define MINIMUM_TP_GLOW_ALPHA   0.2
-#define MAXIMUM_TP_GLOW_ALPHA   1.0
-- (void)drawThrottlePressureView:(UIView *)throttlePressureView
-{
-    CALayer *glowLayer = [CALayer layer];
-    CALayer *bottomLayer = [CALayer layer];
-    CALayer *needleLayer = [CALayer layer];
-    CALayer *topLayer    = [CALayer layer];
-
-    glowLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
-    bottomLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
-    needleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
-    topLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
-
-    glowLayer.frame =
-            bottomLayer.frame =
-                    needleLayer.frame =
-                            topLayer.frame = throttlePressureView.bounds;
-
-//    bottomLayer.anchorPoint =
-//            needleLayer.anchorPoint =
-//                    topLayer.anchorPoint = throttlePressureView.center;
-
-    needleLayer.name = @"NEEDLE";
-    glowLayer.name = @"GLOW";
-
-    glowLayer.opacity = MINIMUM_TP_GLOW_ALPHA;
-
-    [[throttlePressureView layer] addSublayer:glowLayer];
-    [[throttlePressureView layer] addSublayer:bottomLayer];
-    [[throttlePressureView layer] addSublayer:needleLayer];
-    [[throttlePressureView layer] addSublayer:topLayer];
-}
-
-- (void)drawSteeringAngleView:(UIView *)steeringAngleView
-{
-
-}
-
 - (void)drawCompositeCarView:(UIView *)compositeCarView
 {
     NSArray *compositeImageNamesAndProperties = @[
@@ -193,17 +152,6 @@ typedef enum
         else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"]) /* (846, 1403) and (930, 1145) when composite view is (1240, 1754) */
             [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.669, 0.757) stopPoint:CGPointMake(0.731, 0.618)];//(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
 
-        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])
-            imageView.hidden = NO;
-        else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"])
-            imageView.hidden = NO;
-        else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"])
-            imageView.hidden = NO;
-        else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"])
-            imageView.hidden = NO;
-
-
-
         /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
          * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
          * that should be hidden. */
@@ -261,6 +209,56 @@ typedef enum
                                                       alpha:0.5] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
 
     [maskImageView.layer insertSublayer:gradient atIndex:0];
+}
+
+#define MINIMUM_TP_NEEDLE_ANGLE 0
+#define MAXIMUM_TP_NEEDLE_ANGLE 270
+#define MINIMUM_TP_GLOW_ALPHA   0.2
+#define MAXIMUM_TP_GLOW_ALPHA   1.0
+- (void)drawThrottlePressureView:(UIView *)throttlePressureView
+{
+    CALayer *backgroundLayer = [CALayer layer];
+    CALayer *backgroundMaskLayer = [CALayer layer];
+    CALayer *glowLayer   = [CALayer layer];
+    CALayer *middleLayer = [CALayer layer];
+    CALayer *needleLayer = [CALayer layer];
+    CALayer *topLayer    = [CALayer layer];
+
+    backgroundMaskLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
+    glowLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
+    middleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
+    needleLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
+    topLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
+
+    backgroundLayer.frame =
+            backgroundMaskLayer.frame =
+                    middleLayer.frame =
+                            glowLayer.frame =
+                                    needleLayer.frame =
+                                            topLayer.frame = throttlePressureView.bounds;
+
+    backgroundLayer.backgroundColor = [UIColor grayColor].CGColor;
+    backgroundLayer.mask = backgroundMaskLayer;
+
+//    middleLayer.anchorPoint =
+//            needleLayer.anchorPoint =
+//                    topLayer.anchorPoint = throttlePressureView.center;
+
+    needleLayer.name = @"NEEDLE";
+    glowLayer.name = @"GLOW";
+
+    glowLayer.opacity = MINIMUM_TP_GLOW_ALPHA;
+
+    [[throttlePressureView layer] addSublayer:backgroundLayer];
+    [[throttlePressureView layer] addSublayer:glowLayer];
+    [[throttlePressureView layer] addSublayer:middleLayer];
+    [[throttlePressureView layer] addSublayer:needleLayer];
+    [[throttlePressureView layer] addSublayer:topLayer];
+}
+
+- (void)drawSteeringAngleView:(UIView *)steeringAngleView
+{
+
 }
 
 - (void)animateGradientView:(UIImageView *)gradientView to:(NSInteger)to byAngle:(CGFloat)angle
