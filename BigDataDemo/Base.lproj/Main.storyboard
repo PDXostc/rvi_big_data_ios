@@ -341,7 +341,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtw-YJ-dTF" userLabel="Steering Angle View">
                                 <rect key="frame" x="430" y="66" width="150" height="150"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="FvN-mU-1Ra"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="VkM-Ig-rRk"/>
@@ -422,8 +422,8 @@
                     <connections>
                         <outlet property="compositeCarView" destination="0sh-vf-yne" id="DdP-b3-Xjl"/>
                         <outlet property="steeringAngleView" destination="xtw-YJ-dTF" id="jiU-QV-4td"/>
+                        <outlet property="throttlePositionView" destination="uiu-B0-0jX" id="l6o-fB-78c"/>
                         <outlet property="throttlePressureLabel" destination="jbq-9P-qb8" id="JFJ-Ho-SMP"/>
-                        <outlet property="throttlePressureView" destination="uiu-B0-0jX" id="l6o-fB-78c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kTU-5F-MFh" userLabel="First Responder" sceneMemberID="firstResponder"/>

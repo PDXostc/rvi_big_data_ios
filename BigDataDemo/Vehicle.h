@@ -18,8 +18,8 @@
 
 #define kVehicleSpeedKeyPath                        @"speed"
 #define kVehicleEngineRPMsKeyPath                   @"engineRPMs"
-#define kVehicleThrottlePressureKeyPath             @"throttlePressure"
-#define kVehicleBreakPressureKeyPath                @"breakPressure"
+#define kVehicleThrottlePositionKeyPath             @"throttlePosition"
+#define kVehicleSteeringWheelAngleKeyPath           @"steeringWheelAngle"
 #define kVehicleBearingKeyPath                      @"bearing"
 #define kVehicleLocationKeyPath                     @"location"
 #define kVehicleDoorStatusKeyPath                   @"doorStatus"
@@ -53,8 +53,8 @@ typedef enum
 @property (nonatomic, strong, readonly) NSString  *vehicleId;
 @property (nonatomic, strong, readonly) Signal    *speed;
 @property (nonatomic, strong, readonly) Signal    *engineRPMs;
-@property (nonatomic, strong, readonly) Signal    *throttlePressure;
-@property (nonatomic, strong, readonly) Signal    *breakPressure;
+@property (nonatomic, strong, readonly) Signal    *throttlePosition;
+@property (nonatomic, strong, readonly) Signal    *steeringWheelAngle;
 @property (nonatomic, strong, readonly) Signal    *bearing;
 @property (nonatomic, strong, readonly) Signal    *location;
 

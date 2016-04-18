@@ -41,7 +41,7 @@ typedef enum
 
 @interface DefaultSignalsViewController ()
 @property (nonatomic, weak)   Vehicle *vehicle;
-@property (nonatomic, strong) IBOutlet UIView  *throttlePressureView;
+@property (nonatomic, strong) IBOutlet UIView  *throttlePositionView;
 @property (nonatomic, strong) IBOutlet UIView  *steeringAngleView;
 @property (nonatomic, strong) IBOutlet UILabel *throttlePressureLabel;
 @property (nonatomic, strong) IBOutlet UIView  *compositeCarView;
@@ -95,7 +95,7 @@ typedef enum
 
     [self drawCompositeCarView:self.compositeCarView];
     [self drawSteeringAngleView:self.steeringAngleView];
-    [self drawThrottlePressureView:self.throttlePressureView];
+    [self drawThrottlePositionView:self.throttlePositionView];
 
     self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
                                                          self.vehicleOutlineInteriorImageView,
@@ -140,19 +140,19 @@ typedef enum
     [self unregisterObservers];
 }
 
-- (void)handleThrottlePressureChange:(NSInteger)value
+- (void)handleThrottlePositionChange:(NSInteger)value
 {
     if (value > 200) return; /* Error */
 
     self.throttlePressureLabel.text = [NSString stringWithFormat:@"%d", value];
-    [self animateChangeInThrottlePressure:self.throttlePressureView from:0.0 to:value total:200.0];
+    [self animateChangeInThrottlePosition:self.throttlePositionView from:0.0 to:value total:200.0];
 }
 
 
 - (IBAction)onTestSliderValueChanged:(id)sender
 {
     DLog(@"Value: %f", ((UISlider *)sender).value);
-    [self handleThrottlePressureChange:(NSInteger)((UISlider *)sender).value];
+    [self handleThrottlePositionChange:(NSInteger)((UISlider *)sender).value];
 }
 
 - (void)handleBuckleStateChange:(BOOL)value zone:(Zone)zone
@@ -512,8 +512,8 @@ typedef enum
 
 - (NSArray *)signalKeyPathsToObserve
 {
-    return @[kVehicleBreakPressureKeyPath,
-             kVehicleThrottlePressureKeyPath,
+    return @[kVehicleSteeringWheelAngleKeyPath,
+             kVehicleThrottlePositionKeyPath,
              kVehicleDoorStatusKeyPath,
              kVehicleDriverWindowPositionKeyPath,
              kVehiclePassengerWindowPositionKeyPath,
@@ -662,9 +662,9 @@ typedef enum
     {
         if (change[NSKeyValueChangeNewKey] == [NSNull null]) return;
 
-        if (object == self.vehicle.throttlePressure)
+        if (object == self.vehicle.throttlePosition)
         {
-            [self handleThrottlePressureChange:[change[NSKeyValueChangeNewKey] integerValue]];
+            [self handleThrottlePositionChange:[change[NSKeyValueChangeNewKey] integerValue]];
         }
         else if (object == self.vehicle.doorStatus)
         {

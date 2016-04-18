@@ -30,6 +30,7 @@
 @property (nonatomic, strong) Signal       *speed;
 @property (nonatomic, strong) Signal       *engineRPMs;
 @property (nonatomic, strong) Signal       *throttlePosition;
+@property (nonatomic, strong) Signal       *steeringWheelAngle;
 @property (nonatomic, strong) Signal       *doorStatusMS;
 @property (nonatomic, strong) Signal       *passWindowPosition;
 @property (nonatomic, strong) Signal       *rearPassWindowPos;
@@ -45,6 +46,7 @@
 @property (nonatomic, strong) Signal       *speedCachedAttributes;
 @property (nonatomic, strong) Signal       *engineRPMsCachedAttributes;
 @property (nonatomic, strong) Signal       *throttlePositionCachedAttributes;
+@property (nonatomic, strong) Signal       *steeringWheelAngleCachedAttributes;
 @property (nonatomic, strong) Signal       *doorStatusCachedAttributes;
 @property (nonatomic, strong) Signal       *driverWindowPositionCachedAttributes;
 @property (nonatomic, strong) Signal       *passengerWindowPositionCachedAttributes;
@@ -68,6 +70,7 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
     dictionary[@"ThrottlePosition_MS"     ] = @"throttlePosition";
+    dictionary[@"SteeringWheelAngle_MS"   ] = @"steeringWheelAngle";
     dictionary[@"DoorStatusMS_MS"         ] = @"doorStatus";
     dictionary[@"DriverWindowPosition_MS" ] = @"driverWindowPosition";
     dictionary[@"PassWindowPosition_MS"   ] = @"passengerWindowPosition";

@@ -17,10 +17,10 @@
 #import "DefaultSignalsViewController.h"
 
 @interface DefaultSignalsViewController (Drawing)
-- (void)drawThrottlePressureView:(UIView *)throttlePressureView;
+- (void)drawThrottlePositionView:(UIView *)throttlePressureView;
 - (void)drawSteeringAngleView:(UIView *)steeringAngleView;
 - (void)drawCompositeCarView:(UIView *)compositeCarView;
-- (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total;
+- (void)animateChangeInThrottlePosition:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total;
 - (void)animateGradientView:(UIImageView *)gradientView to:(NSInteger)to byAngle:(CGFloat)angle;
 //- (void)drawHood:(UIView *)hoodView;
 //- (void)drawRightRearDoorView:(UIView *)doorView;

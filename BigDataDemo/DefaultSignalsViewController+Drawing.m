@@ -215,7 +215,7 @@ typedef enum
 #define MAXIMUM_TP_NEEDLE_ANGLE 270
 #define MINIMUM_TP_GLOW_ALPHA   0.2
 #define MAXIMUM_TP_GLOW_ALPHA   1.0
-- (void)drawThrottlePressureView:(UIView *)throttlePressureView
+- (void)drawThrottlePositionView:(UIView *)throttlePressureView
 {
     CALayer *backgroundLayer     = [CALayer layer];
     CALayer *backgroundMaskLayer = [CALayer layer];
@@ -242,7 +242,7 @@ typedef enum
 
 //    middleLayer.anchorPoint =
 //            needleLayer.anchorPoint =
-//                    topLayer.anchorPoint = throttlePressureView.center;
+//                    topLayer.anchorPoint = throttlePositionView.center;
 
     needleLayer.name = @"NEEDLE";
     glowLayer.name = @"GLOW";
@@ -261,18 +261,20 @@ typedef enum
 
 - (void)drawSteeringAngleView:(UIView *)steeringAngleView
 {
+    CALayer *steeringLayer = [CALayer layer];
 
+    steeringLayer.contents = (id)[UIImage imageNamed:@"steering_wheel_composite.png"].CGImage;
+    steeringLayer.frame    = steeringAngleView.bounds;
+
+    [[steeringAngleView layer] addSublayer:steeringLayer];
 }
 
 - (void)animateGradientView:(UIImageView *)gradientView to:(NSInteger)to byAngle:(CGFloat)angle
 {
     CALayer *layer = [gradientView.layer sublayers][0];
 
-    //layer.anchorPoint = CGPointMake(0.5, 0.5);
-
     NSInteger inverseValue = 5 - to;
 
-    CGPoint newPosition = CGPointMake(0.0, (CGFloat)((0.0 * inverseValue) * -1.0));
     CGFloat newAngle = (CGFloat)(inverseValue * angle * ((CGFloat)(M_PI) / 180.0));
 
     CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
@@ -281,16 +283,9 @@ typedef enum
     [layer addAnimation:animateZRotation forKey:@"rotate"];
 
     layer.transform = CATransform3DMakeRotation(newAngle, 0, 0, 1.0);
-
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-//    animation.fromValue = [layer valueForKey:@"position"];
-//    animation.toValue = [NSValue valueWithCGPoint:newPosition];
-//    [layer addAnimation:animation forKey:@"position"];
-//
-//    layer.position = newPosition;
 }
 
-- (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
+- (void)animateChangeInThrottlePosition:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
 {
     DLog(@"");
 
@@ -322,14 +317,21 @@ typedef enum
     [needleLayer addAnimation:animateZRotation forKey:@"rotate"];
 
     needleLayer.transform = CATransform3DMakeRotation(newAngle, 0, 0, 1.0);
+}
 
-//    [UIView animateWithDuration:0.1
-//                            animations:^{
-//                                    needleLayer.transform = CATransform3DMakeRotation(newAngle, 0.0, 0.0, 1.0);
-//                                    glowLayer.opacity = newAlpha;
-//                            }
-//                            completion:^(BOOL finished){
-//
-//                    }];
+- (void)animateChangeInSteeringAngle:(UIView *)steeringAngleView from:(float)from to:(float)to total:(float)total
+{
+    DLog(@"");
+
+    CALayer *layer = [steeringAngleView.layer sublayers][0];;
+
+    CGFloat newAngle = (CGFloat)((((to/total) * (MAXIMUM_TP_NEEDLE_ANGLE - MINIMUM_TP_NEEDLE_ANGLE)) + MINIMUM_TP_NEEDLE_ANGLE) * ((CGFloat)(M_PI) / 180.0));
+
+    CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animateZRotation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(newAngle, 0, 0, 1.0)];
+    animateZRotation.duration = 0.05;
+    [layer addAnimation:animateZRotation forKey:@"rotate"];
+
+    layer.transform = CATransform3DMakeRotation(newAngle, 0, 0, 1.0);
 }
 @end
