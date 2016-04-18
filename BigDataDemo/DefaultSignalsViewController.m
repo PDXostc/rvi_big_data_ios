@@ -305,7 +305,9 @@ typedef enum
         imageView.alpha  = 1.0;
     }
 
-    [self animateGradientView:windowAnimatedGradientImageView from:previousPosition to:newPosition];
+    CGFloat windowAngle = (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 5.0 : 1.4) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+
+    [self animateGradientView:windowAnimatedGradientImageView to:newPosition byAngle:windowAngle];
 
     /* Fade them out and put our doors back to normal */
     [UIView animateWithDuration:FADE_OUT_ANIMATION_DURATION

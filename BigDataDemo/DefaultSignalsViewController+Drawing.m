@@ -183,15 +183,25 @@ typedef enum
                                                              multiplier:1.0
                                                                constant:0.0]];
 
-        /* Turn this into a masking layer */
+        /* Turn this into a masking layer and draw the gradient */
+        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])      /* (389, 1210) and (434, 895) when composite view is (1240, 1754) but then we add another 5.7% to the bottom so it doesn't cut off when animated */
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.314, 0.653) stopPoint:CGPointMake(0.35, 0.483)];//(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
+        else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"]) /* (851, 1210) and (806, 895) when composite view is (1240, 1754) */
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.686, 0.653) stopPoint:CGPointMake(0.65, 0.483)];//(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
+        else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"]) /* (394, 1403) and (310, 1145) when composite view is (1240, 1754) */
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.318, 0.757) stopPoint:CGPointMake(0.25, 0.618)];//(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
+        else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"]) /* (846, 1403) and (930, 1145) when composite view is (1240, 1754) */
+            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.682, 0.757) stopPoint:CGPointMake(0.75, 0.618)];//(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
+
         if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
+            imageView.hidden = NO;
         else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"])
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
+            imageView.hidden = NO;
         else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"])
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
+            imageView.hidden = NO;
         else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"])
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
+            imageView.hidden = NO;
+
 
 
         /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
@@ -224,9 +234,13 @@ typedef enum
 
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = maskImageView.bounds;
+    gradient.frame = CGRectMake(0, 0, maskImageView.bounds.size.width, (CGFloat)(maskImageView.bounds.size.height + 0.057 * maskImageView.bounds.size.height));
 
-    gradient.anchorPoint = CGPointMake(0, 0);
-    gradient.position    = CGPointMake(0, 0);
+//    gradient.borderWidth = 2.0;
+//    gradient.borderColor = [UIColor redColor].CGColor;
+
+    //gradient.anchorPoint = CGPointMake(0, 0);
+    gradient.position    = CGPointMake((CGFloat)(maskImageView.bounds.size.width * 0.5), (CGFloat)((maskImageView.bounds.size.height + 0.057 * maskImageView.bounds.size.height) * 0.5 ));
 
     gradient.startPoint  = startPoint;
     gradient.endPoint    = stopPoint;
@@ -239,21 +253,31 @@ typedef enum
     [maskImageView.layer insertSublayer:gradient atIndex:0];
 }
 
-- (void)animateGradientView:(UIImageView *)gradientView from:(NSInteger)from to:(NSInteger)to
+- (void)animateGradientView:(UIImageView *)gradientView to:(NSInteger)to byAngle:(CGFloat)angle
 {
     CALayer *layer = [gradientView.layer sublayers][0];
 
-    NSInteger inverseValue = to;//5 - to;
+    //layer.anchorPoint = CGPointMake(0.5, 0.5);
 
-    CGPoint newPosition = CGPointMake(0.0, (CGFloat)(20 * inverseValue));
+    NSInteger inverseValue = 5 - to;
 
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.fromValue = [layer valueForKey:@"position"];
-    animation.toValue = [NSValue valueWithCGPoint:newPosition];
-    layer.position = newPosition;
-    [layer addAnimation:animation forKey:@"position"];
+    CGPoint newPosition = CGPointMake(0.0, (CGFloat)((0.0 * inverseValue) * -1.0));
+    CGFloat newAngle = (CGFloat)(inverseValue * angle * ((CGFloat)(M_PI) / 180.0));
+
+    CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animateZRotation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(newAngle, 0, 0, 1.0)];
+    animateZRotation.duration = 0.05;
+    [layer addAnimation:animateZRotation forKey:@"rotate"];
+
+    layer.transform = CATransform3DMakeRotation(newAngle, 0, 0, 1.0);
+
+//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+//    animation.fromValue = [layer valueForKey:@"position"];
+//    animation.toValue = [NSValue valueWithCGPoint:newPosition];
+//    [layer addAnimation:animation forKey:@"position"];
+//
+//    layer.position = newPosition;
 }
-
 
 - (void)animateChangeInThrottlePressure:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total
 {
