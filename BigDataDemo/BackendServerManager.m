@@ -216,6 +216,7 @@ NSString *const kBackendServerNotificationErrorKey             = @"backend_serve
 
     // TODO: Do I get this when the socket closes??? Set isConnected to false!!
 
+    self.isConnected = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:kBackendServerDidFailToConnectNotification
                                                         object:[BackendServerManager class]
                                                       userInfo:error ? @{ kBackendServerNotificationErrorKey : error } : nil];

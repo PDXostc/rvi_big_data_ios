@@ -126,7 +126,7 @@
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(backendServerDidConnect:)
+                                             selector:@selector(backendServerDidDisconnect:)
                                                  name:kBackendServerDidFailToConnectNotification
                                                object:nil];
 
