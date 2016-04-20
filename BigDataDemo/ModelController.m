@@ -31,7 +31,7 @@
     if (self) {
         // Create the data model.
         //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        _pageData = @[@"ConfigurationViewController", @"MapDisplayViewController", @"DefaultSignalsViewController", @"AllSignalsViewController"];//[[dateFormatter monthSymbols] copy];
+        _pageData = @[@"ConfigurationViewController", /*@"MapDisplayViewController",*/ @"DefaultSignalsViewController", @"AllSignalsViewController"];//[[dateFormatter monthSymbols] copy];
     }
     return self;
 }
