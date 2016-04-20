@@ -533,6 +533,8 @@ typedef enum
     [self.currentlyShowingWindowImages     removeAllObjects];
     [self.currentlyShowingOpenDoorImages   removeAllObjects];
 
+    self.previousDoorStatus = [self.vehicle.doorStatus.currentValue integerValue];
+
     /* Depending on drivers side of car, do all the door image state change stuff for each zone, one by one */
     [self handleDoorStatusChangeFrom:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & DF_BIT_MASK)
                                   to:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & DF_BIT_MASK)
