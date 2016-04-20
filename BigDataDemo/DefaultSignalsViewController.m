@@ -40,7 +40,7 @@ typedef enum
 } Zone;
 
 @interface DefaultSignalsViewController ()
-@property (nonatomic, weak)   Vehicle *vehicle;
+@property (nonatomic, weak)   Vehicle          *vehicle;
 @property (nonatomic, strong) IBOutlet UIView  *throttlePositionView;
 @property (nonatomic, strong) IBOutlet UIView  *steeringAngleView;
 @property (nonatomic, strong) IBOutlet UILabel *throttlePressureLabel;
@@ -71,20 +71,6 @@ typedef enum
 {
     DLog(@"");
     [super viewDidLoad];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    DLog(@"");
-    [super viewWillAppear:animated];
-
-    [self registerObservers];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    DLog(@"");
-    [super viewDidAppear:animated];
 
     self.allSuperWideExteriorImages       = [NSMutableSet set];
     self.recentlyClosedIndicatorImages    = [NSMutableSet set];
@@ -106,6 +92,24 @@ typedef enum
                                                          nil];
 
     self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0), @(0)] mutableCopy];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    DLog(@"");
+    [super viewWillAppear:animated];
+
+    [self registerObservers];
+
+    self.driversSide = [self.vehicle.driverSide isEqualToString:@"LEFT"] ? DRIVER_LEFT : DRIVER_RIGHT;
+
+    [self resetView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    DLog(@"");
+    [super viewDidAppear:animated];
 }
 
 - (NSString *)stringForZone:(Zone)zone
@@ -231,6 +235,8 @@ typedef enum
 
 - (void)handleWindowPositionChange:(NSInteger)newPosition zone:(Zone)zone
 {
+    DLog(@"");
+
     /* Get all of the appropriate images for the given zone using key/value coding */
     NSString    *stringForZone = [self stringForZone:zone];
 
@@ -509,6 +515,52 @@ typedef enum
 {
     self.lowBeamsImageView.hidden = !value;
 }
+
+- (void)resetView
+{
+    for (UIImageView *imageView in self.currentlyShowingSeatBeltIndicatorImages)
+    {
+        imageView.hidden = YES;
+    }
+
+    for (UIImageView *imageView in self.allSuperWideExteriorImages)
+    {
+        imageView.hidden = YES;
+    }
+
+    [self.currentlyShowingClosedDoorImages removeAllObjects];
+    [self.currentlyHiddenClosedDoorImages  removeAllObjects];
+    [self.currentlyShowingWindowImages     removeAllObjects];
+    [self.currentlyShowingOpenDoorImages   removeAllObjects];
+
+    /* Depending on drivers side of car, do all the door image state change stuff for each zone, one by one */
+    [self handleDoorStatusChangeFrom:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & DF_BIT_MASK)
+                                  to:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & DF_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_LF : ZONE_RF];
+
+    [self handleDoorStatusChangeFrom:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & PF_BIT_MASK)
+                                  to:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & PF_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_RF : ZONE_LF];
+
+    [self handleDoorStatusChangeFrom:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & DR_BIT_MASK)
+                                  to:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & DR_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_LR : ZONE_RR];
+
+    [self handleDoorStatusChangeFrom:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & PR_BIT_MASK)
+                                  to:(BOOL)([self.vehicle.doorStatus.currentValue integerValue] & PR_BIT_MASK)
+                             forZone:self.driversSide == DRIVER_LEFT ? ZONE_RR : ZONE_LR];
+
+    /* The actual door/hood/trunk OPEN images (the ones w red-Xs) don't fade after so many seconds, and neither do the door-closed images (just
+     * the green indicators), so hide/show those appropriately. */
+    self.hoodOpenIndicatorImageView.hidden  = (BOOL)([self.vehicle.doorStatus.currentValue integerValue] & HOOD_BIT_MASK);
+    self.trunkOpenIndicatorImageView.hidden = (BOOL)([self.vehicle.doorStatus.currentValue integerValue] & TRUNK_BIT_MASK);
+
+    [self.recentlyClosedIndicatorImages removeAllObjects];
+
+    [self handleHighBeamChange:[self.vehicle.mainBeamIndication.currentValue boolValue]];
+    [self handleLowBeamChange:[self.vehicle.lowBeamIndication.currentValue boolValue]];
+}
+
 
 - (IBAction)resetInCaseOfFunnyState:(id)sender
 {
