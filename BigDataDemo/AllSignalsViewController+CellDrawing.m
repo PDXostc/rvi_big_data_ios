@@ -15,6 +15,7 @@
 
 #import "AllSignalsViewController+CellDrawing.h"
 #import "Signal.h"
+#import "Util.h"
 
 @interface  SelectedCellData (CellDrawing)
 - (NSInteger)heightForDescriptorData;
@@ -91,14 +92,21 @@
 
     headerLabel.text = @"Possible Values";
 
-    textLabel.numberOfLines = signal.allValuePairs.count;
+    textLabel.numberOfLines = signal.allValuePairs.count + 1;
 
     NSMutableString *text = [NSMutableString string];
-    for (NSNumber *value in signal.allEnumKeys)
+    for (NSNumber *value in [signal.allEnumKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                                                                     if ([obj1 intValue] > [obj2 intValue])
+                                                                                         return NSOrderedDescending;
+                                                                                     else if ([obj1 intValue] < [obj2 intValue])
+                                                                                         return NSOrderedAscending;
+                                                                                     return NSOrderedSame;
+                                                                           }])
     {
         [text appendString:[NSString stringWithFormat:@"%@: %@", value, [signal stringDescriptionForValue:value]]];
         [text appendString:@"\n"];
     }
+
     textLabel.text = text;
 
     [self addSubview:headerLabel];
@@ -187,12 +195,15 @@
 
 - (void)buildOutCachedDataView:(UIView *)view withSelectedCellData:(SelectedCellData *)data
 {
+    if (data.cachedValues.count == 0)
+        return;
+
     UILabel *headerLabel = [AllSignalsViewController headerLabelWithFrame:CGRectMake(0, 0, view.frame.size.width, LINE_HEIGHT)];
-    UILabel *textLabel   = [AllSignalsViewController labelWithFrame:CGRectMake(0, LINE_HEIGHT, view.frame.size.width, LINE_HEIGHT * data.cachedValues.count)];
+    UILabel *textLabel   = [AllSignalsViewController labelWithFrame:CGRectMake(0, LINE_HEIGHT, view.frame.size.width, LINE_HEIGHT * data.cachedValues.count + 1)];
 
     headerLabel.text = @"Cached Values";
 
-    textLabel.numberOfLines = data.cachedValues.count;
+    textLabel.numberOfLines = data.cachedValues.count + 1;
 
     NSMutableString *text = [NSMutableString string];
     for (NSNumber *value in data.cachedValues)
@@ -262,6 +273,8 @@
 
 - (UITableViewCell *)drawCell:(UITableViewCell *)cell forSelectedCellData:(SelectedCellData *)selectedCellData
 {
+    DLog(@"");
+
     UIActivityIndicatorView *activityIndicatorView = [cell.contentView viewWithTag:TAG_CELL_ACTIVITY_INDICATOR];
 
     UIView  *oldDescriptorDataView                 = [cell.contentView viewWithTag:TAG_CELL_DESCRIPTOR_DATA_VIEW];

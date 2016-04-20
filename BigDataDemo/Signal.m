@@ -135,7 +135,7 @@
     return [[Signal alloc] initWithSignalName:signalName descriptorDictionary:descriptor];
 }
 
-- (NSString *)stringDescriptionForValue:(NSString *)value
+- (NSString *)stringDescriptionForValue:(id)value
 {
     return ((NSString *)self.valuePairs[value]);
 }
