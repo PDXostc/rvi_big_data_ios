@@ -43,21 +43,21 @@
 @property (nonatomic, strong) Signal       *lowBeamIndication;
 @property (nonatomic, strong) Signal       *mainBeamIndication;
 
-@property (nonatomic, strong) Signal       *speedCachedAttributes;
-@property (nonatomic, strong) Signal       *engineRPMsCachedAttributes;
-@property (nonatomic, strong) Signal       *throttlePositionCachedAttributes;
-@property (nonatomic, strong) Signal       *steeringWheelAngleCachedAttributes;
-@property (nonatomic, strong) Signal       *doorStatusCachedAttributes;
-@property (nonatomic, strong) Signal       *driverWindowPositionCachedAttributes;
-@property (nonatomic, strong) Signal       *passengerWindowPositionCachedAttributes;
-@property (nonatomic, strong) Signal       *rearDriverWindowPositionCachedAttributes;
-@property (nonatomic, strong) Signal       *rearPassengerWindowPositionCachedAttributes;
-@property (nonatomic, strong) Signal       *driverSeatBeltBuckleStateCachedAttributes;
-@property (nonatomic, strong) Signal       *passengerSeatBeltBuckleStateCachedAttributes;
-@property (nonatomic, strong) Signal       *beltReminderSensorLRCachedAttributes;
-@property (nonatomic, strong) Signal       *beltReminderSensorRRCachedAttributes;
-@property (nonatomic, strong) Signal       *lowBeamIndicationCachedAttributes;
-@property (nonatomic, strong) Signal       *mainBeamIndicationCachedAttributes;
+@property (nonatomic, strong) NSNumber     *speedCachedAttributes;
+@property (nonatomic, strong) NSNumber     *engineRPMsCachedAttributes;
+@property (nonatomic, strong) NSNumber     *throttlePositionCachedAttributes;
+@property (nonatomic, strong) NSNumber     *steeringWheelAngleCachedAttributes;
+@property (nonatomic, strong) NSNumber     *doorStatusCachedAttributes;
+@property (nonatomic, strong) NSNumber     *driverWindowPositionCachedAttributes;
+@property (nonatomic, strong) NSNumber     *passengerWindowPositionCachedAttributes;
+@property (nonatomic, strong) NSNumber     *rearDriverWindowPositionCachedAttributes;
+@property (nonatomic, strong) NSNumber     *rearPassengerWindowPositionCachedAttributes;
+@property (nonatomic, strong) NSNumber     *driverSeatBeltBuckleStateCachedAttributes;
+@property (nonatomic, strong) NSNumber     *passengerSeatBeltBuckleStateCachedAttributes;
+@property (nonatomic, strong) NSNumber     *beltReminderSensorLRCachedAttributes;
+@property (nonatomic, strong) NSNumber     *beltReminderSensorRRCachedAttributes;
+@property (nonatomic, strong) NSNumber     *lowBeamIndicationCachedAttributes;
+@property (nonatomic, strong) NSNumber     *mainBeamIndicationCachedAttributes;
 @end
 
 @implementation Vehicle
@@ -102,6 +102,8 @@
     if ((self = [super init]))
     {
         _defaultSignalsMap = [Vehicle signalsMap];
+
+        _doorStatusCachedAttributes = @63;
     }
 
     return self;
