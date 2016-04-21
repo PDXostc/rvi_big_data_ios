@@ -48,7 +48,7 @@
 
         case SIGNAL_TYPE_ENUMERATION:
 
-            heightForDescriptorData += LINE_HEIGHT + (self.signal.allValuePairs.count * LINE_HEIGHT);
+            heightForDescriptorData += LINE_HEIGHT + ((self.signal.allValuePairs.count + 1) * LINE_HEIGHT);
             break;
     }
 
@@ -59,7 +59,7 @@
 {
     if (!self.cachedValues.count) return 0;
 
-    return LINE_HEIGHT + (self.cachedValues.count * LINE_HEIGHT) + VERTICAL_PADDING;
+    return LINE_HEIGHT + ((self.cachedValues.count + 1) * LINE_HEIGHT) + VERTICAL_PADDING;
 }
 
 - (NSInteger)heightForCurrentValue
@@ -88,7 +88,7 @@
 - (void)populateWithEnumerationDescriptorData:(Signal *)signal
 {
     UILabel *headerLabel = [AllSignalsViewController headerLabelWithFrame:CGRectMake(0, 0, self.frame.size.width, LINE_HEIGHT)];
-    UILabel *textLabel   = [AllSignalsViewController labelWithFrame:CGRectMake(0, LINE_HEIGHT, self.frame.size.width, LINE_HEIGHT * signal.allValuePairs.count)];
+    UILabel *textLabel   = [AllSignalsViewController labelWithFrame:CGRectMake(0, LINE_HEIGHT, self.frame.size.width, LINE_HEIGHT * (signal.allValuePairs.count + 1))];
 
     headerLabel.text = @"Possible Values";
 
@@ -199,7 +199,7 @@
         return;
 
     UILabel *headerLabel = [AllSignalsViewController headerLabelWithFrame:CGRectMake(0, 0, view.frame.size.width, LINE_HEIGHT)];
-    UILabel *textLabel   = [AllSignalsViewController labelWithFrame:CGRectMake(0, LINE_HEIGHT, view.frame.size.width, LINE_HEIGHT * data.cachedValues.count + 1)];
+    UILabel *textLabel   = [AllSignalsViewController labelWithFrame:CGRectMake(0, LINE_HEIGHT, view.frame.size.width, LINE_HEIGHT * (data.cachedValues.count + 1))];
 
     headerLabel.text = @"Cached Values";
 
@@ -252,7 +252,7 @@
             [fallThroughView populateWithRangeDescriptorData:data.signal];
 
         case SIGNAL_TYPE_ENUMERATION:
-            primaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, view.frame.size.width, LINE_HEIGHT * data.signal.allValuePairs.count)];
+            primaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, view.frame.size.width, LINE_HEIGHT * (data.signal.allValuePairs.count + 1))];
             [primaryView populateWithEnumerationDescriptorData:data.signal];
 
             break;

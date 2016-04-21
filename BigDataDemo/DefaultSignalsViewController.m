@@ -154,13 +154,18 @@ typedef enum
 
 - (IBAction)onTestSliderValueChanged:(id)sender
 {
-    DLog(@"Value: %f", ((UISlider *)sender).value);
-    [self handleThrottlePositionChange:(NSInteger)((UISlider *)sender).value];
+    //DLog(@"Value: %f", ((UISlider *)sender).value);
+
+    NSInteger convertedRange = (NSInteger)((((UISlider *)sender).value - 100.0) * 3.6);
+
+    DLog(@"Value: %f, new value: %d", ((UISlider *)sender).value, convertedRange);
+
+    [self handleSteeringWheelAngleChange:convertedRange];
+    //[self handleThrottlePositionChange:(NSInteger)((UISlider *)sender).value];
 }
 
 - (void)handleSteeringWheelAngleChange:(NSInteger)value
 {
-    self.throttlePressureLabel.text = [NSString stringWithFormat:@"%d", value];
     [self animateChangeInSteeringAngle:self.steeringAngleView from:0.0 to:value total:15601];
 }
 

@@ -350,7 +350,7 @@
                                     <constraint firstAttribute="height" priority="250" constant="150" id="kif-ZH-5zR"/>
                                 </constraints>
                             </view>
-                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
                                 <rect key="frame" x="128" y="285" width="345" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="341" id="TNp-yp-9Hg"/>
@@ -359,7 +359,7 @@
                                     <action selector="onTestSliderValueChanged:" destination="BFV-32-eOf" eventType="valueChanged" id="FQb-dI-Djq"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Throttle Pressure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjI-b2-a1b">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Throttle Position" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjI-b2-a1b">
                                 <rect key="frame" x="20" y="224" width="150" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="4kF-IL-pBG"/>

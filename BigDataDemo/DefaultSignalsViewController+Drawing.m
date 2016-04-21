@@ -325,7 +325,7 @@ typedef enum
 
     CALayer *layer = [steeringAngleView.layer sublayers][0];;
 
-    CGFloat newAngle = (CGFloat)((((to/total) * (MAXIMUM_TP_NEEDLE_ANGLE - MINIMUM_TP_NEEDLE_ANGLE)) + MINIMUM_TP_NEEDLE_ANGLE) * ((CGFloat)(M_PI) / 180.0));
+    CGFloat newAngle = (CGFloat)(to * ((CGFloat)(M_PI) / 180.0));
 
     CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
     animateZRotation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(newAngle, 0, 0, 1.0)];
