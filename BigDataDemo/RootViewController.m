@@ -25,10 +25,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [SignalManager start];
-    [VehicleManager start];
-    [BackendServerManager start];
+//
+//    [SignalManager start];
+//    [VehicleManager start];
+//    [BackendServerManager start];
 
     // Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.
