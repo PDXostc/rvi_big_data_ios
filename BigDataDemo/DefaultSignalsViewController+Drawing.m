@@ -86,7 +86,7 @@ typedef enum
             @{ @"RF_seatbelt_on_indicator.png"         : @"rfSeatbeltOnIndicatorImageView"       },
             @{ @"RR_seatbelt_off_indicator.png"        : @"rrSeatbeltOffIndicatorImageView"      },
             @{ @"RR_seatbelt_on_indicator.png"         : @"rrSeatbeltOnIndicatorImageView"       }
-    ];
+     ];
 
     for (NSDictionary *dictionary in compositeImageNamesAndProperties)
     {
