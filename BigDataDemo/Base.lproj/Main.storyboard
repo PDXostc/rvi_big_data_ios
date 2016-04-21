@@ -177,7 +177,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.30848343610387174" green="0.69086638443256077" blue="0.6844609219323442" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="mft-jP-SJx" firstAttribute="top" secondItem="r1k-EC-dmS" secondAttribute="bottom" constant="25" id="1UG-7h-faN"/>
                             <constraint firstItem="Oqd-h8-4f5" firstAttribute="top" secondItem="mft-jP-SJx" secondAttribute="bottom" constant="35" id="1YS-l0-ojP"/>
@@ -350,7 +350,7 @@
                                     <constraint firstAttribute="height" priority="250" constant="150" id="kif-ZH-5zR"/>
                                 </constraints>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
+                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="g0V-8X-5Jc">
                                 <rect key="frame" x="128" y="285" width="345" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="341" id="TNp-yp-9Hg"/>
@@ -359,7 +359,7 @@
                                     <action selector="onTestSliderValueChanged:" destination="BFV-32-eOf" eventType="valueChanged" id="FQb-dI-Djq"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Throttle Pressure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjI-b2-a1b">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Throttle Position" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjI-b2-a1b">
                                 <rect key="frame" x="20" y="224" width="150" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="4kF-IL-pBG"/>
@@ -499,7 +499,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.3411764705882353" green="0.76078431372549016" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="916-l7-glL" firstAttribute="top" secondItem="UHc-Vd-GW5" secondAttribute="bottom" id="d34-Aj-gfV"/>
                             <constraint firstItem="916-l7-glL" firstAttribute="leading" secondItem="chf-Cx-LT4" secondAttribute="leadingMargin" constant="-20" id="eaH-rr-Y7t"/>

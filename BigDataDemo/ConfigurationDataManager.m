@@ -69,6 +69,8 @@
     if ([vehicleId isEqualToString:[ConfigurationDataManager getVehicleId]])
         return;
 
+    vehicleId = [vehicleId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
     [ConfigurationDataManager setString:vehicleId forKey:kVehicleIdPrefsKey];
     [[ConfigurationDataManager sharedManager] setVehicleId:vehicleId];
 }
@@ -83,6 +85,8 @@
     if ([serverUrl isEqualToString:[ConfigurationDataManager getServerUrl]])
         return;
 
+    serverUrl = [serverUrl stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
     [ConfigurationDataManager setString:serverUrl forKey:kServerUrlPrefsKey];
     [[ConfigurationDataManager sharedManager] setServerUrl:serverUrl];
 }
@@ -96,6 +100,8 @@
 {
     if ([serverPort isEqualToString:[ConfigurationDataManager getServerPort]])
         return;
+
+    serverPort = [serverPort stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     [ConfigurationDataManager setString:serverPort forKey:kServerPortPrefsKey];
     [[ConfigurationDataManager sharedManager] setServerPort:serverPort];
