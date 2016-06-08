@@ -72,26 +72,8 @@ typedef enum
     DLog(@"");
     [super viewDidLoad];
 
-    self.allSuperWideExteriorImages       = [NSMutableSet set];
-    self.recentlyClosedIndicatorImages    = [NSMutableSet set];
-    self.currentlyShowingOpenDoorImages   = [NSMutableSet set];
-    self.currentlyShowingClosedDoorImages = [NSMutableSet set];
-    self.currentlyHiddenClosedDoorImages  = [NSMutableSet set];
-    self.currentlyShowingWindowImages     = [NSMutableSet set];
-
-    [self drawCompositeCarView:self.compositeCarView];
     [self drawSteeringAngleView:self.steeringAngleView];
     [self drawThrottlePositionView:self.throttlePositionView];
-
-    self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
-                                                         self.vehicleOutlineInteriorImageView,
-                                                         self.lfSeatbeltOffIndicatorImageView,
-                                                         self.rfSeatbeltOffIndicatorImageView,
-                                                         self.lrSeatbeltOffIndicatorImageView,
-                                                         self.rrSeatbeltOffIndicatorImageView,
-                                                         nil];
-
-    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0), @(0)] mutableCopy];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -103,7 +85,7 @@ typedef enum
 
     self.driversSide = [self.vehicle.driverSide isEqualToString:@"LEFT"] ? DRIVER_LEFT : DRIVER_RIGHT;
 
-    [self resetView];
+    [self redrawCompositCar];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -142,6 +124,30 @@ typedef enum
     [super viewDidDisappear:animated];
 
     [self unregisterObservers];
+}
+
+- (void)redrawCompositCar
+{
+    self.allSuperWideExteriorImages       = [NSMutableSet set];
+    self.recentlyClosedIndicatorImages    = [NSMutableSet set];
+    self.currentlyShowingOpenDoorImages   = [NSMutableSet set];
+    self.currentlyShowingClosedDoorImages = [NSMutableSet set];
+    self.currentlyHiddenClosedDoorImages  = [NSMutableSet set];
+    self.currentlyShowingWindowImages     = [NSMutableSet set];
+
+    [self drawCompositeCarView:self.compositeCarView numberOfDoors:self.vehicle.numberDoors numberOfSeats:self.vehicle.numberSeats];
+
+    self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
+                                                         self.vehicleOutlineInteriorImageView,
+                                                         self.lfSeatbeltOffIndicatorImageView,
+                                                         self.rfSeatbeltOffIndicatorImageView,
+                                                         self.lrSeatbeltOffIndicatorImageView,
+                                                         self.rrSeatbeltOffIndicatorImageView,
+                                                         nil];
+
+    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0), @(0)] mutableCopy];
+
+    [self resetView];
 }
 
 - (void)handleThrottlePositionChange:(NSInteger)value
@@ -568,7 +574,6 @@ typedef enum
     [self handleLowBeamChange:[self.vehicle.lowBeamIndication.currentValue boolValue]];
 }
 
-
 - (IBAction)resetInCaseOfFunnyState:(id)sender
 {
     // TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
@@ -705,15 +710,15 @@ typedef enum
     }
     else if ([keyPath isEqualToString:kVehicleNumberDoorsKeyPath])
     {
-
+        [self redrawCompositCar];
     }
     else if ([keyPath isEqualToString:kVehicleNumberWindowsKeyPath])
     {
-
+        [self redrawCompositCar];
     }
     else if ([keyPath isEqualToString:kVehicleNumberSeatsKeyPath])
     {
-
+        [self redrawCompositCar];
     }
     else if ([keyPath isEqualToString:kVehicleDriverSideKeyPath])
     {

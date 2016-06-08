@@ -19,7 +19,7 @@
 @interface DefaultSignalsViewController (Drawing)
 - (void)drawThrottlePositionView:(UIView *)throttlePressureView;
 - (void)drawSteeringAngleView:(UIView *)steeringAngleView;
-- (void)drawCompositeCarView:(UIView *)compositeCarView;
+- (void)drawCompositeCarView:(UIView *)compositeCarView numberOfDoors:(NSInteger)numberOfDoors numberOfSeats:(NSInteger)numberOfSeats;
 - (void)animateChangeInThrottlePosition:(UIView *)throttlePressureView from:(float)from to:(float)to total:(float)total;
 - (void)animateChangeInSteeringAngle:(UIView *)steeringAngleView from:(float)from to:(float)to total:(float)total;
 - (void)animateGradientView:(UIImageView *)gradientView to:(NSInteger)to byAngle:(CGFloat)angle;
