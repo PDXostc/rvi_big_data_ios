@@ -247,8 +247,8 @@ CGPoint makeGradientPointFromPoint(CGFloat x, CGFloat y)
     {
         switch (window)
         {
-            case LF: return makeGradientPointFromPoint(389, 1276);//(0.328, 0.653); /* (389, 1276) when composite view is (1240, 1820) */
-            case RF: return makeGradientPointFromPoint(851, 1276);//(0.672, 0.653); /* (851, 1276) when composite view is (1240, 1820) */
+            case LF: return makeGradientPointFromPoint(370, 1337);//(394, 1471);//(0.328, 0.653); /* (370, 1337) when composite view is (1240, 1820) */
+            case RF: return makeGradientPointFromPoint(870, 1337);//(846, 1471);//(0.672, 0.653); /* (870, 1337) when composite view is (1240, 1820) */
             default: return CGPointMake(0.0, 0.0);
         }
     }
@@ -273,8 +273,8 @@ CGPoint makeGradientPointFromPoint(CGFloat x, CGFloat y)
     {
         switch (window)
         {
-            case LF: return makeGradientPointFromPoint(389, 1276);//(0.328, 0.653); /* (389, 1276) when composite view is (1240, 1820) */
-            case RF: return makeGradientPointFromPoint(851, 1276);//(0.672, 0.653); /* (851, 1276) when composite view is (1240, 1820) */
+            case LF: return makeGradientPointFromPoint(357, 1277);//(289, 990);//(0.328, 0.653); /* (357, 1277) when composite view is (1240, 1820) */
+            case RF: return makeGradientPointFromPoint(883, 1277);//(0.672, 0.653); /* (883, 1277) when composite view is (1240, 1820) */
             default: return CGPointMake(0.0, 0.0);
         }
     }
@@ -329,7 +329,14 @@ CGPoint makeGradientPointFromPoint(CGFloat x, CGFloat y)
     gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(255.0 / 255.0)
                                                       green:(CGFloat)(255.0 / 255.0)
                                                        blue:(CGFloat)(255.0 / 255.0)
-                                                      alpha:0.5] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
+                                                      alpha:0.5] CGColor],
+                        (__bridge id)[[UIColor colorWithRed:(CGFloat)(255.0 / 255.0)
+                                                      green:(CGFloat)(255.0 / 255.0)
+                                                       blue:(CGFloat)(255.0 / 255.0)
+                                                      alpha:0.001] CGColor]];
+
+
+            //(__bridge id)[[UIColor clearColor] CGColor]];
 
     [maskImageView.layer insertSublayer:gradient atIndex:0];
 }

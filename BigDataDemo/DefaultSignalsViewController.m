@@ -85,7 +85,7 @@ typedef enum
 
     self.driversSide = [self.vehicle.driverSide isEqualToString:@"LEFT"] ? DRIVER_LEFT : DRIVER_RIGHT;
 
-    [self redrawCompositCar];
+    [self redrawCompositeCar];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -112,6 +112,14 @@ typedef enum
     }
 }
 
+- (CGFloat)windowAngleForZone:(Zone)zone numberOfDoors:(NSInteger)doors
+{
+    if (doors == 2)
+        return (CGFloat)(zone == ZONE_LF ? 11.5 : -11.5);
+
+    return (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 11.0/*4.7*/ : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
@@ -126,7 +134,7 @@ typedef enum
     [self unregisterObservers];
 }
 
-- (void)redrawCompositCar
+- (void)redrawCompositeCar
 {
     self.allSuperWideExteriorImages       = [NSMutableSet set];
     self.recentlyClosedIndicatorImages    = [NSMutableSet set];
@@ -336,7 +344,7 @@ typedef enum
         imageView.alpha  = 1.0;
     }
 
-    CGFloat windowAngle = (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 4.7 : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+    CGFloat windowAngle = [self windowAngleForZone:zone numberOfDoors:self.vehicle.numberDoors];
 
     [self animateGradientView:windowAnimatedGradientImageView to:newPosition byAngle:windowAngle];
 
@@ -710,15 +718,15 @@ typedef enum
     }
     else if ([keyPath isEqualToString:kVehicleNumberDoorsKeyPath])
     {
-        [self redrawCompositCar];
+        [self redrawCompositeCar];
     }
     else if ([keyPath isEqualToString:kVehicleNumberWindowsKeyPath])
     {
-        [self redrawCompositCar];
+        [self redrawCompositeCar];
     }
     else if ([keyPath isEqualToString:kVehicleNumberSeatsKeyPath])
     {
-        [self redrawCompositCar];
+        [self redrawCompositeCar];
     }
     else if ([keyPath isEqualToString:kVehicleDriverSideKeyPath])
     {
