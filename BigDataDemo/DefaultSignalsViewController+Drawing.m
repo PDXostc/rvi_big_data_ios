@@ -455,7 +455,7 @@ CGPoint makeGradientPointFromPoint(CGFloat x, CGFloat y)
 
     CALayer *layer = [steeringAngleView.layer sublayers][0];;
 
-    CGFloat newAngle = (CGFloat)(to * ((CGFloat)(M_PI) / 180.0));
+    CGFloat newAngle = (CGFloat)(to * ((CGFloat)(M_PI) / 180.0) * -1.0);
 
     CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
     animateZRotation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(newAngle, 0, 0, 1.0)];
