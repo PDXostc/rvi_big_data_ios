@@ -117,7 +117,7 @@ typedef enum
     if (doors == 2)
         return (CGFloat)(zone == ZONE_LF ? 11.5 : -11.5);
 
-    return (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 11.0/*4.7*/ : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+    return (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 4.7 : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
 }
 
 - (void)viewWillDisappear:(BOOL)animated
