@@ -16,20 +16,84 @@
 #import "DefaultSignalsViewController+Drawing.h"
 #import "Util.h"
 
+//typedef enum
+//{
+//    NONE = 0,
+//    TOP_LEFT = 1,
+//    TOP_RIGHT = 2,
+//    BOTTOM_LEFT = 4,
+//    BOTTOM_RIGHT = 8
+//} RoundedCorners;
+
 typedef enum
 {
-    NONE = 0,
-    TOP_LEFT = 1,
-    TOP_RIGHT = 2,
-    BOTTOM_LEFT = 4,
-    BOTTOM_RIGHT = 8
-} RoundedCorners;
+    LF,
+    RF,
+    LR,
+    RR,
+} Window;
 
 @implementation DefaultSignalsViewController (Drawing)
 
-- (void)drawCompositeCarView:(UIView *)compositeCarView
+- (void)addImageView:(UIImageView *)imageView toCompositeCarView:(UIView *)compositeCarView andPropertyWithName:(NSString *)propertyName
 {
-    NSArray *compositeImageNamesAndProperties = @[
+    [self setValue:imageView forKey:propertyName];
+
+    imageView.frame = compositeCarView.bounds;
+
+    /* Hide all but the door closed image views, as they're default showing... */
+    if (![propertyName containsString:@"DoorClosedImageView"])
+        imageView.hidden = YES;
+        /* and put them in the currentlyShowingClosedDoorImages set. */
+    else
+        [self.currentlyShowingClosedDoorImages addObject:imageView];
+
+    imageView.contentScaleFactor = UIViewContentModeScaleAspectFit;
+
+    [compositeCarView addSubview:imageView];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:compositeCarView
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:compositeCarView
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:compositeCarView
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:compositeCarView
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+}
+
+//- (void)removeImageView:(UIImageView *)imageView fromCompositeCarView:(UIView *)compositeCarView andPropertyWithName:(NSString *)propertyName
+//{
+//    [imageView removeFromSuperview];
+//    [self setValue:nil forKey:propertyName];
+//}
+
+- (void)drawCompositeCarView:(UIView *)compositeCarView numberOfDoors:(NSInteger)numberOfDoors numberOfSeats:(NSInteger)numberOfSeats
+{
+    NSArray *exteriorCompositeImageNamesAndProperties = @[
             @{ @"vehicle_outline_exterior.png"         : @"vehicleOutlineExteriorImageView"      },
             @{ @"LF_door_closed.png"                   : @"lfDoorClosedImageView"                },
             @{ @"LF_door_closed_indicator.png"         : @"lfDoorClosedIndicatorImageView"       },
@@ -77,6 +141,9 @@ typedef enum
             @{ @"low_beams.png"                        : @"lowBeamsImageView"                    },
             @{ @"trunk_closed_indicator.png"           : @"trunkClosedIndicatorImageView"        },
             @{ @"trunk_open_indicator.png"             : @"trunkOpenIndicatorImageView"          },
+     ];
+
+    NSArray *interiorCompositeImageNamesAndProperties = @[
             @{ @"vehicle_outline_interior.png"         : @"vehicleOutlineInteriorImageView"      },
             @{ @"LF_seatbelt_off_indicator.png"        : @"lfSeatbeltOffIndicatorImageView"      },
             @{ @"LF_seatbelt_on_indicator.png"         : @"lfSeatbeltOnIndicatorImageView"       },
@@ -88,80 +155,72 @@ typedef enum
             @{ @"RR_seatbelt_on_indicator.png"         : @"rrSeatbeltOnIndicatorImageView"       }
      ];
 
-    for (NSDictionary *dictionary in compositeImageNamesAndProperties)
+    NSString *doorPrefix = numberOfDoors == 2 ? @"2DR_" : numberOfDoors == 4 ? @"4DR_" : @"";
+    NSString *seatPrefix = numberOfSeats == 2 ? @"2SE_" : numberOfSeats == 4 ? @"4SE_" : numberOfSeats == 5 ? @"5SE_" : @"";
+
+    [[compositeCarView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+    for (NSDictionary *dictionary in exteriorCompositeImageNamesAndProperties)
     {
-        NSString    *imageName    = dictionary.allKeys[0];
-        NSString    *propertyName = dictionary.allValues[0];
+        NSString *imageName    = dictionary.allKeys[0];
+        NSString *propertyName = dictionary.allValues[0];
 
-        UIImageView *imageView    = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@%@", doorPrefix, imageName]]];
 
-        [self setValue:imageView forKey:propertyName];
+        if (imageView)
+        {
+            [self addImageView:imageView toCompositeCarView:compositeCarView andPropertyWithName:propertyName];
 
-        imageView.frame  = compositeCarView.bounds;
+            /* Turn this into a masking layer and draw the gradient */
+            if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])
+                [self morphAnimatedWindowGradientView:imageView
+                               withGradientStartPoint:[self startPointForWindow:LF doors:numberOfDoors]
+                                            stopPoint:[self stopPointForWindow: LF doors:numberOfDoors]];
+            else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"])
+                [self morphAnimatedWindowGradientView:imageView
+                               withGradientStartPoint:[self startPointForWindow:RF doors:numberOfDoors]
+                                            stopPoint:[self stopPointForWindow: RF doors:numberOfDoors]];
+            else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"])
+                [self morphAnimatedWindowGradientView:imageView
+                               withGradientStartPoint:[self startPointForWindow:LR doors:numberOfDoors]
+                                            stopPoint:[self stopPointForWindow: LR doors:numberOfDoors]];
+            else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"])
+                [self morphAnimatedWindowGradientView:imageView
+                               withGradientStartPoint:[self startPointForWindow:RR doors:numberOfDoors]
+                                            stopPoint:[self stopPointForWindow: RR doors:numberOfDoors]];
 
-        /* Hide all but the door closed image views, as they're default showing... */
-        if (![propertyName containsString:@"DoorClosedImageView"])
-            imageView.hidden = YES;
-        /* and put them in the currentlyShowingClosedDoorImages set. */
+            /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
+             * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
+             * that should be hidden. */
+            if ([propertyName containsString:@"Window"])
+                [self.allSuperWideExteriorImages addObject:imageView];
+            else if ([propertyName containsString:@"DoorOpenImageView"])
+                [self.allSuperWideExteriorImages addObject:imageView];
+            else if ([propertyName containsString:@"DoorClosed"])
+                [self.allSuperWideExteriorImages addObject:imageView];
+
+        }
         else
-            [self.currentlyShowingClosedDoorImages addObject:imageView];
+        {
+            [self setValue:nil forKey:propertyName];
+        }
+    }
 
-        imageView.contentScaleFactor = UIViewContentModeScaleAspectFit;
+    for (NSDictionary *dictionary in interiorCompositeImageNamesAndProperties)
+    {
+        NSString *imageName    = dictionary.allKeys[0];
+        NSString *propertyName = dictionary.allValues[0];
 
-        [compositeCarView addSubview:imageView];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@%@", seatPrefix, imageName]]];
 
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:compositeCarView
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                              attribute:NSLayoutAttributeLeading
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:compositeCarView
-                                                              attribute:NSLayoutAttributeLeading
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                              attribute:NSLayoutAttributeBottom
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:compositeCarView
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-
-        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                              attribute:NSLayoutAttributeTrailing
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:compositeCarView
-                                                              attribute:NSLayoutAttributeTrailing
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-
-        /* Turn this into a masking layer and draw the gradient */
-        if ([propertyName containsString:@"lfWindowAnimatedGradientImageView"])      /* (389, 1210) and (434, 895) when composite view is (1240, 1754) but then we add another 5.7% to the bottom and 8% to each side so it doesn't cut off when animated making it (1340, 1854) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.328, 0.653) stopPoint:CGPointMake(0.354, 0.483)];//(0.314, 0.69) stopPoint:CGPointMake(0.35, 0.51)];
-        else if ([propertyName containsString:@"rfWindowAnimatedGradientImageView"]) /* (851, 1210) and (806, 895) when composite view is (1240, 1754) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.672, 0.653) stopPoint:CGPointMake(0.639, 0.483)];//(0.686, 0.69) stopPoint:CGPointMake(0.65, 0.51)];
-        else if ([propertyName containsString:@"lrWindowAnimatedGradientImageView"]) /* (394, 1403) and (310, 1145) when composite view is (1240, 1754) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.331, 0.757) stopPoint:CGPointMake(0.269, 0.618)];//(0.318, 0.8) stopPoint:CGPointMake(0.25, 0.653)];
-        else if ([propertyName containsString:@"rrWindowAnimatedGradientImageView"]) /* (846, 1403) and (930, 1145) when composite view is (1240, 1754) */
-            [self morphAnimatedWindowGradientView:imageView withGradientStartPoint:CGPointMake(0.669, 0.757) stopPoint:CGPointMake(0.731, 0.618)];//(0.682, 0.8) stopPoint:CGPointMake(0.75, 0.653)];
-
-        /* All the window-related indicator images, and the door open indicator images extend off of the side of the car outline and should
-         * be hidden when the interior outline appears. Instead of writing them all out, use a little regex to stick them in the set of images
-         * that should be hidden. */
-        if ([propertyName containsString:@"Window"])
-            [self.allSuperWideExteriorImages addObject:imageView];
-        else if ([propertyName containsString:@"DoorOpenImageView"])
-            [self.allSuperWideExteriorImages addObject:imageView];
-        else if ([propertyName containsString:@"DoorClosed"])
-            [self.allSuperWideExteriorImages addObject:imageView];
-
+        if (imageView)
+        {
+            [self addImageView:imageView toCompositeCarView:compositeCarView andPropertyWithName:propertyName];
+        }
+        else
+        {
+            [self setValue:nil forKey:propertyName];
+        }
     }
 
     self.vehicleOutlineExteriorImageView.hidden = NO;
@@ -169,8 +228,72 @@ typedef enum
 
 #define WINDOW_VIEW_ANCHOR_H_POSITION   0.5
 #define WINDOW_VIEW_ANCHOR_V_POSITION   0.65
+#define COMPOSITE_VIEW_WIDTH            1240
+#define COMPOSITE_VIEW_HEIGHT           1820
+#define COMPOSITE_VIEW_AMOUNT_BIGGER_H  100.0
+#define COMPOSITE_VIEW_AMOUNT_BIGGER_V  50.0
 #define WINDOW_VIEW_PERCENTAGE_BIGGER_H 0.04
 #define WINDOW_VIEW_PERCENTAGE_BIGGER_V 0.057
+
+CGPoint makeGradientPointFromPoint(CGFloat x, CGFloat y)
+{
+    return CGPointMake((CGFloat)((x + (COMPOSITE_VIEW_AMOUNT_BIGGER_H / 2)) / (COMPOSITE_VIEW_WIDTH  + COMPOSITE_VIEW_AMOUNT_BIGGER_H)),
+                       (CGFloat)((y + (COMPOSITE_VIEW_AMOUNT_BIGGER_V    )) / (COMPOSITE_VIEW_HEIGHT + COMPOSITE_VIEW_AMOUNT_BIGGER_V)));
+}
+
+- (CGPoint)startPointForWindow:(Window)window doors:(NSInteger)doors
+{
+    if (doors == 2)
+    {
+        switch (window)
+        {
+            case LF: return makeGradientPointFromPoint(370, 1337);//(394, 1471);//(0.328, 0.653); /* (370, 1337) when composite view is (1240, 1820) */
+            case RF: return makeGradientPointFromPoint(870, 1337);//(846, 1471);//(0.672, 0.653); /* (870, 1337) when composite view is (1240, 1820) */
+            default: return CGPointMake(0.0, 0.0);
+        }
+    }
+    else if (doors == 4)
+    {
+        switch (window)
+        {
+            case LF: return makeGradientPointFromPoint(389, 1276);//(0.328, 0.653); /* (389, 1276) when composite view is (1240, 1820) */
+            case RF: return makeGradientPointFromPoint(851, 1276);//(0.672, 0.653); /* (851, 1276) when composite view is (1240, 1820) */
+            case LR: return makeGradientPointFromPoint(394, 1469);//(0.331, 0.757); /* (394, 1469) when composite view is (1240, 1820) */
+            case RR: return makeGradientPointFromPoint(846, 1469);//(0.669, 0.757); /* (846, 1469) when composite view is (1240, 1820) */
+        }
+
+    }
+
+    return CGPointMake(0.0, 0.0);
+}
+
+- (CGPoint)stopPointForWindow:(Window)window doors:(NSInteger)doors
+{
+    if (doors == 2)
+    {
+        switch (window)
+        {
+            case LF: return makeGradientPointFromPoint(357, 1277);//(289, 990);//(0.328, 0.653); /* (357, 1277) when composite view is (1240, 1820) */
+            case RF: return makeGradientPointFromPoint(883, 1277);//(0.672, 0.653); /* (883, 1277) when composite view is (1240, 1820) */
+            default: return CGPointMake(0.0, 0.0);
+        }
+    }
+    else if (doors == 4)
+    {
+        /* (389, 1210) and (434, 895) when composite view is (1240, 1754) but then we add another 5.7% to the bottom and 8% to each side
+         * so it doesn't cut off when animated making it (1340, 1854) */
+
+        switch (window) {
+            case LF: return makeGradientPointFromPoint(434, 961) ; /* (434, 961) when composite view is (1240, 1820) */
+            case RF: return makeGradientPointFromPoint(806, 961) ; /* (806, 961) when composite view is (1240, 1820) */
+            case LR: return makeGradientPointFromPoint(310, 1211); /* (310, 1211) when composite view is (1240, 1820) */
+            case RR: return makeGradientPointFromPoint(930, 1211); /* (930, 1211) when composite view is (1240, 1820) */
+        }
+
+    }
+
+    return CGPointMake(0.0, 0.0);
+}
 
 - (void)morphAnimatedWindowGradientView:(UIImageView *)maskImageView withGradientStartPoint:(CGPoint)startPoint stopPoint:(CGPoint)stopPoint
 {
@@ -206,7 +329,14 @@ typedef enum
     gradient.colors = @[(__bridge id)[[UIColor colorWithRed:(CGFloat)(255.0 / 255.0)
                                                       green:(CGFloat)(255.0 / 255.0)
                                                        blue:(CGFloat)(255.0 / 255.0)
-                                                      alpha:0.5] CGColor], (__bridge id)[[UIColor clearColor] CGColor]];
+                                                      alpha:0.5] CGColor],
+                        (__bridge id)[[UIColor colorWithRed:(CGFloat)(255.0 / 255.0)
+                                                      green:(CGFloat)(255.0 / 255.0)
+                                                       blue:(CGFloat)(255.0 / 255.0)
+                                                      alpha:0.001] CGColor]];
+
+
+            //(__bridge id)[[UIColor clearColor] CGColor]];
 
     [maskImageView.layer insertSublayer:gradient atIndex:0];
 }
@@ -224,11 +354,11 @@ typedef enum
     CALayer *needleLayer         = [CALayer layer];
     CALayer *topLayer            = [CALayer layer];
 
-    backgroundMaskLayer.contents = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
-    glowLayer.contents           = (id)[UIImage imageNamed:@"throttle_pressure_glow_layer.png"].CGImage;
-    middleLayer.contents         = (id)[UIImage imageNamed:@"throttle_pressure_bottom_layer.png"].CGImage;
-    needleLayer.contents         = (id)[UIImage imageNamed:@"throttle_pressure_needle.png"].CGImage;
-    topLayer.contents            = (id)[UIImage imageNamed:@"throttle_pressure_top_layer.png"].CGImage;
+    backgroundMaskLayer.contents = (id)[UIImage imageNamed:@"throttle_position_glow_layer.png"].CGImage;
+    glowLayer.contents           = (id)[UIImage imageNamed:@"throttle_position_glow_layer.png"].CGImage;
+    middleLayer.contents         = (id)[UIImage imageNamed:@"throttle_position_bottom_layer.png"].CGImage;
+    needleLayer.contents         = (id)[UIImage imageNamed:@"throttle_position_needle.png"].CGImage;
+    topLayer.contents            = (id)[UIImage imageNamed:@"throttle_position_top_layer.png"].CGImage;
 
     backgroundLayer.frame =
             backgroundMaskLayer.frame =
@@ -325,7 +455,7 @@ typedef enum
 
     CALayer *layer = [steeringAngleView.layer sublayers][0];;
 
-    CGFloat newAngle = (CGFloat)(to * ((CGFloat)(M_PI) / 180.0));
+    CGFloat newAngle = (CGFloat)(to * ((CGFloat)(M_PI) / 180.0) * -1.0);
 
     CABasicAnimation *animateZRotation = [CABasicAnimation animationWithKeyPath:@"transform"];
     animateZRotation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(newAngle, 0, 0, 1.0)];

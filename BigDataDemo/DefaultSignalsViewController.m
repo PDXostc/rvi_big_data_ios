@@ -72,26 +72,8 @@ typedef enum
     DLog(@"");
     [super viewDidLoad];
 
-    self.allSuperWideExteriorImages       = [NSMutableSet set];
-    self.recentlyClosedIndicatorImages    = [NSMutableSet set];
-    self.currentlyShowingOpenDoorImages   = [NSMutableSet set];
-    self.currentlyShowingClosedDoorImages = [NSMutableSet set];
-    self.currentlyHiddenClosedDoorImages  = [NSMutableSet set];
-    self.currentlyShowingWindowImages     = [NSMutableSet set];
-
-    [self drawCompositeCarView:self.compositeCarView];
     [self drawSteeringAngleView:self.steeringAngleView];
     [self drawThrottlePositionView:self.throttlePositionView];
-
-    self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
-                                                         self.vehicleOutlineInteriorImageView,
-                                                         self.lfSeatbeltOffIndicatorImageView,
-                                                         self.rfSeatbeltOffIndicatorImageView,
-                                                         self.lrSeatbeltOffIndicatorImageView,
-                                                         self.rrSeatbeltOffIndicatorImageView,
-                                                         nil];
-
-    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0), @(0)] mutableCopy];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -103,7 +85,7 @@ typedef enum
 
     self.driversSide = [self.vehicle.driverSide isEqualToString:@"LEFT"] ? DRIVER_LEFT : DRIVER_RIGHT;
 
-    [self resetView];
+    [self redrawCompositeCar];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -130,6 +112,14 @@ typedef enum
     }
 }
 
+- (CGFloat)windowAngleForZone:(Zone)zone numberOfDoors:(NSInteger)doors
+{
+    if (doors == 2)
+        return (CGFloat)(zone == ZONE_LF ? 11.5 : -11.5);
+
+    return (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 4.7 : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     DLog(@"");
@@ -142,6 +132,30 @@ typedef enum
     [super viewDidDisappear:animated];
 
     [self unregisterObservers];
+}
+
+- (void)redrawCompositeCar
+{
+    self.allSuperWideExteriorImages       = [NSMutableSet set];
+    self.recentlyClosedIndicatorImages    = [NSMutableSet set];
+    self.currentlyShowingOpenDoorImages   = [NSMutableSet set];
+    self.currentlyShowingClosedDoorImages = [NSMutableSet set];
+    self.currentlyHiddenClosedDoorImages  = [NSMutableSet set];
+    self.currentlyShowingWindowImages     = [NSMutableSet set];
+
+    [self drawCompositeCarView:self.compositeCarView numberOfDoors:self.vehicle.numberDoors numberOfSeats:self.vehicle.numberSeats];
+
+    self.currentlyShowingSeatBeltIndicatorImages = [NSMutableSet setWithObjects:
+                                                         self.vehicleOutlineInteriorImageView,
+                                                         self.lfSeatbeltOffIndicatorImageView,
+                                                         self.rfSeatbeltOffIndicatorImageView,
+                                                         self.lrSeatbeltOffIndicatorImageView,
+                                                         self.rrSeatbeltOffIndicatorImageView,
+                                                         nil];
+
+    self.previousWindowPositionForZone = [@[@(0), @(0), @(0), @(0), @(0)] mutableCopy];
+
+    [self resetView];
 }
 
 - (void)handleThrottlePositionChange:(NSInteger)value
@@ -330,7 +344,7 @@ typedef enum
         imageView.alpha  = 1.0;
     }
 
-    CGFloat windowAngle = (CGFloat)(((zone == ZONE_LF || zone == ZONE_RF) ? 4.7 : 5.2) * ((zone == ZONE_RF || zone == ZONE_RR) ? -1.0 : 1.0));
+    CGFloat windowAngle = [self windowAngleForZone:zone numberOfDoors:self.vehicle.numberDoors];
 
     [self animateGradientView:windowAnimatedGradientImageView to:newPosition byAngle:windowAngle];
 
@@ -568,7 +582,6 @@ typedef enum
     [self handleLowBeamChange:[self.vehicle.lowBeamIndication.currentValue boolValue]];
 }
 
-
 - (IBAction)resetInCaseOfFunnyState:(id)sender
 {
     // TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
@@ -705,15 +718,15 @@ typedef enum
     }
     else if ([keyPath isEqualToString:kVehicleNumberDoorsKeyPath])
     {
-
+        [self redrawCompositeCar];
     }
     else if ([keyPath isEqualToString:kVehicleNumberWindowsKeyPath])
     {
-
+        [self redrawCompositeCar];
     }
     else if ([keyPath isEqualToString:kVehicleNumberSeatsKeyPath])
     {
-
+        [self redrawCompositeCar];
     }
     else if ([keyPath isEqualToString:kVehicleDriverSideKeyPath])
     {

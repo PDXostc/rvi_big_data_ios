@@ -314,10 +314,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sh-vf-yne" userLabel="View - Vehicle Composite Image Container">
-                                <rect key="frame" x="121" y="52" width="359" height="508"/>
+                                <rect key="frame" x="121" y="30" width="359" height="541"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="0sh-vf-yne" secondAttribute="height" multiplier="359:508" id="daK-aM-ZFd"/>
+                                    <constraint firstAttribute="width" secondItem="0sh-vf-yne" secondAttribute="height" multiplier="359:508" constant="-23.320866141732267" id="daK-aM-ZFd"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uiu-B0-0jX">
@@ -386,9 +386,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="QU0-Ok-PrZ" firstAttribute="top" secondItem="0sh-vf-yne" secondAttribute="bottom" constant="40" id="4QA-5E-fNe"/>
+                            <constraint firstItem="QU0-Ok-PrZ" firstAttribute="top" secondItem="0sh-vf-yne" secondAttribute="bottom" constant="29" id="4QA-5E-fNe"/>
                             <constraint firstItem="xtw-YJ-dTF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uiu-B0-0jX" secondAttribute="trailing" constant="20" id="53h-Hq-A1X"/>
-                            <constraint firstItem="0sh-vf-yne" firstAttribute="top" secondItem="mVV-ps-7eW" secondAttribute="bottom" priority="250" constant="32" id="80L-nB-HgN"/>
+                            <constraint firstItem="0sh-vf-yne" firstAttribute="top" secondItem="mVV-ps-7eW" secondAttribute="bottom" priority="250" constant="10" id="80L-nB-HgN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xtw-YJ-dTF" secondAttribute="trailing" id="Aff-YY-G0H"/>
                             <constraint firstItem="0sh-vf-yne" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="v2X-JS-hiq" secondAttribute="leadingMargin" constant="8" id="D3d-xu-rD6"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="0sh-vf-yne" secondAttribute="trailing" constant="8" id="DcP-F6-K6x"/>
@@ -399,7 +399,7 @@
                             <constraint firstItem="g0V-8X-5Jc" firstAttribute="centerX" secondItem="v2X-JS-hiq" secondAttribute="centerX" id="OmJ-Us-oB9"/>
                             <constraint firstItem="KjI-b2-a1b" firstAttribute="width" secondItem="uiu-B0-0jX" secondAttribute="width" id="PXV-yo-qNF"/>
                             <constraint firstAttribute="leadingMargin" secondItem="uiu-B0-0jX" secondAttribute="leading" id="RML-lf-ihK"/>
-                            <constraint firstItem="0sh-vf-yne" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mVV-ps-7eW" secondAttribute="bottom" constant="32" id="RNo-oG-aCX"/>
+                            <constraint firstItem="0sh-vf-yne" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mVV-ps-7eW" secondAttribute="bottom" constant="10" id="RNo-oG-aCX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0sh-vf-yne" secondAttribute="trailing" priority="250" constant="100" id="Rac-ee-hR2"/>
                             <constraint firstItem="xtw-YJ-dTF" firstAttribute="bottom" secondItem="uiu-B0-0jX" secondAttribute="bottom" id="UtH-7g-EHP"/>
                             <constraint firstItem="xtw-YJ-dTF" firstAttribute="leading" secondItem="uiu-B0-0jX" secondAttribute="trailing" priority="250" constant="260" id="VY1-Lf-YSK"/>
